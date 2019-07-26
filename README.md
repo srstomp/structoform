@@ -1,2 +1,2 @@
-# structoform
+# Structoform
 A form builder for React
