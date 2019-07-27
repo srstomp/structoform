@@ -1,7 +1,7 @@
-import SelectInput from '.SelectInput'
-import InputField from '.InputField'
-import Checkbox from '.Checkbox'
-import Form from '.Form'
+import SelectInput from './components/SelectInput'
+import InputField from './components/InputField'
+import Checkbox from './components/Checkbox'
+import Form from './components/Form'
 
 export {
     SelectInput,
