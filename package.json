@@ -1,29 +1,36 @@
 {
   "name": "structoform",
-  "version": "0.0.1",
-  "description": "A simple form builder for React",
-  "main": "build/index.js",
-  "peerDependencies": {
-    "react": "^16.8.6",
-    "prop-types": "^15.7.2",
-  },
-  "dependencies": {
-    "react": "^16.8.6",
-    "webpack": "^2.6.1"
-  },
+  "version": "1.0.0",
+  "description": "React form components",
+  "main": "dist/index.js",
+  "files": [
+    "dist/*"
+  ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "webpack --watch",
-    "build": "webpack"
+    "prepublishOnly": "babel ./src --out-dir ./dist -s inline"
   },
-  "author": {
-    "name": "Steve Stomp",
-    "email": "info@codeandcoding.com"
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/srstomp/structoform.git"
+  },
+  "author": "Steve Stomp",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/srstomp/structoform/issues"
+  },
+  "homepage": "https://github.com/srstomp/structoform#readme",
+  "peerDependencies": {
+    "react": "^16.8.6"
   },
   "devDependencies": {
     "@babel/cli": "^7.5.5",
     "@babel/core": "^7.5.5",
     "@babel/preset-env": "^7.5.5",
     "@babel/preset-react": "^7.0.0"
+  },
+  "dependencies": {
+    "lodash": "^4.17.15",
+    "prop-types": "^15.7.2"
   }
 }
