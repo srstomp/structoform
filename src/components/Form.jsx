@@ -1,6 +1,6 @@
 import _ from 'lodash'
-import { TextField, SelectInput, Checkbox } from "./index"
-import {useForm} from "../hooks"
+import PropTypes from 'prop-types';
+import { TextField, SelectInput, Checkbox, useForm } from "../index"
 
 const Form = ({description, direction, layout, submitLabel, initValues = []}) => {
 

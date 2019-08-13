@@ -7,14 +7,15 @@ const useForm = (callback, validators) => {
     const [isSubmitting, setIsSubmitting] = useState(false)
 
     useEffect(() => {
-        if (Object.keys(errors).length === 0 && isSubmitting) {
+        if (Object.values(errors).every(x => x === null) && isSubmitting) {
             callback()
         }
-        //console.log(errors)
+        console.log(errors)
         // eslint-disable-next-line
-    }, [errors])
+    }, [isSubmitting, errors])
 
     const handleSubmit = (event) => {
+
         // Access the event properties. https://reactjs.org/docs/events.html
         event.persist()
 
@@ -30,6 +31,7 @@ const useForm = (callback, validators) => {
                 }
             })
         )
+
         setIsSubmitting(true)
     }
 
@@ -59,22 +61,22 @@ const validate = (value, validators) => {
     let errors = validators.rules.map(rule => {
         switch (Object.keys(rule)[0]) {
             case validate.types.REQUIRED:
-                return value ? '' : copy.nl.error_is_required
+                return value ? null : copy.nl.error_is_required
             case validate.types.EMAIL:
-                return /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(value) ? '' : copy.nl.error_invalid_email
+                return /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(value) ? null : copy.nl.error_invalid_email
             case validate.types.IS_SELECTED:
-                return value ? '' : copy.nl.error_is_selected
+                return value ? null : copy.nl.error_is_selected
             case validate.types.IS_CHECKED:
-                return value ? '' : copy.nl.error_is_checked
+                return value ? null : copy.nl.error_is_checked
             case validate.types.IS_NUMBER:
-                return /^(?=.*[0-9])/.test(value) ? '' : copy.nl.error_not_numeric
+                return /^(?=.*[0-9])/.test(value) ? null : copy.nl.error_not_numeric
             case validate.types.IS_PASSWORD:
-                return value ? '' : copy.nl.error_is_password
+                return value ? null : copy.nl.error_is_password
             default:
-                return ''
+                return null
         }
     })
-    return errors
+    return errors.every(x => x === null) ? null : errors
 }
 
 validate.types = {
