@@ -1,8 +1,9 @@
+import React from 'react';
 import _ from 'lodash'
 import PropTypes from 'prop-types';
-import { TextField, SelectInput, Checkbox, useForm } from "../index"
+import {TextField, SelectField, Checkbox, useForm} from "../index"
 
-const Form = ({description, direction, layout, submitLabel, initValues = []}) => {
+const Form = ({description, direction, layout, submitLabel, customButton = null, initValues = []}) => {
 
     const validationRules = {...layout}
     Object.keys(validationRules).map((item, i) =>
@@ -32,12 +33,12 @@ const Form = ({description, direction, layout, submitLabel, initValues = []}) =>
             case 'email':
             case 'phone':
             case 'number':
-                return <InputField key={index} type={value.type} name={key} label={value.label} direction={dir}
+                return <TextField key={index} type={value.type} name={key} label={value.label} direction={dir}
                                    onChange={handleChange} showError={isSubmitting}
                                    placeholder={value.placeholder || ''} errorMessage={_.head(errors[key]) || ''}
                                    value={values[key]}/>
             case 'select':
-                return <SelectInput key={key} label={value.label} values={value.values || []} onChange={handleChange}
+                return <SelectField key={key} label={value.label} values={value.values || []} onChange={handleChange}
                                     direction={dir} name={key} showError={isSubmitting}
                                     errorMessage={_.head(errors[key]) || ''}/>
             case 'checkbox':
@@ -57,7 +58,12 @@ const Form = ({description, direction, layout, submitLabel, initValues = []}) =>
                     return getItem(key, layout[key], i)
                 })
             }
-            <Button label={submitLabel} style={Button.styles.TEAL} type='submit' customClass='form-item__btn--submit'/>
+            {
+                customButton ? customButton :
+                    <button type='submit'>
+                        {submitLabel}
+                    </button>
+            }
         </form>
     )
 }
@@ -68,6 +74,7 @@ Form.propTypes = {
     description: PropTypes.string,
     layout: PropTypes.object.isRequired,
     direction: PropTypes.string,
-    submitLabel: PropTypes.string.isRequired,
+    submitLabel: PropTypes.string,
+    customButton: PropTypes.object,
     initValues: PropTypes.array,
 }

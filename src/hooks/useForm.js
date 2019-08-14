@@ -1,5 +1,5 @@
 import {useState, useEffect} from 'react'
-import { copy } from '../constants/copy';
+import { copy } from '../constants/helper';
 
 const useForm = (callback, validators) => {
     const [values, setValues] = useState({})
