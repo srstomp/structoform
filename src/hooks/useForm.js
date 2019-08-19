@@ -10,12 +10,12 @@ const useForm = (callback, validators) => {
         if (Object.values(errors).every(x => x === null) && isSubmitting) {
             callback()
         }
+        //setIsSubmitting(false)
         console.log(errors)
         // eslint-disable-next-line
     }, [isSubmitting, errors])
 
     const handleSubmit = (event) => {
-
         // Access the event properties. https://reactjs.org/docs/events.html
         event.persist()
 

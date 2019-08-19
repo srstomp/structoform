@@ -34,16 +34,16 @@ const Form = ({description, direction, layout, submitLabel, customButton = null,
             case 'phone':
             case 'number':
                 return <TextField key={index} type={value.type} name={key} label={value.label} direction={dir}
-                                   onChange={handleChange} showError={isSubmitting}
+                                   onChange={handleChange} showError={(errors[key] || '') !== ''}
                                    placeholder={value.placeholder || ''} errorMessage={_.head(errors[key]) || ''}
                                    value={values[key]}/>
             case 'select':
                 return <SelectField key={key} label={value.label} values={value.values || []} onChange={handleChange}
-                                    direction={dir} name={key} showError={isSubmitting}
+                                    direction={dir} name={key} showError={(errors[key] || '') !== ''}
                                     errorMessage={_.head(errors[key]) || ''}/>
             case 'checkbox':
                 return <Checkbox key={key} label={value.label} name={key} value={getValue(key)}
-                                 showError={isSubmitting} onChange={handleChange}
+                                 showError={(errors[key] || '') !== ''} onChange={handleChange}
                                  errorMessage={_.head(errors[key]) || ''}/>
             default:
                 throw new Error(`Unhandled form type: ${value.type}`)

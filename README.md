@@ -6,7 +6,11 @@ A form builder for React
 * TextField
 * SelectField
 
-### Things to dot
+## Steps for local developement
+* run `npm link`
+* run `npm run prepublishOnly`
+
+### Things todo
 - [ ] Date Field
 - [ ] Password Field
 - [ ] Number Field
