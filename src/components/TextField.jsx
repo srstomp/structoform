@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from "prop-types";
 import { id } from '../constants/helper';
-import '../assets/sass/_form.scss'
 
 const TextField = ({label, name, value = '', direction, type, placeholder, onChange, errorMessage, showError = false,
                        className = ""}) =>

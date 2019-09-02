@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { id } from '../constants/helper';
-import '../assets/sass/_form.scss'
 
 const Checkbox = ({label, name, value = '', onChange, showError = false, className = ""}) =>
     <div className={`form-item ${className}`}>

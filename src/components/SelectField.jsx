@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { id } from '../constants/helper';
 import TextField from "./TextField";
-import '../assets/sass/_form.scss'
 
 const SelectField = ({label, name, values, direction, onChange, errorMessage, showError = false, className = ""}) =>
     <div className={`form-item form-item${direction} ${className}`}>

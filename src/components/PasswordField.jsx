@@ -1,7 +1,6 @@
 import React, {useState, useRef} from 'react';
 import PropTypes from "prop-types";
 import { id } from '../constants/helper';
-import '../assets/sass/_form.scss'
 
 const PasswordField = ({label, name, value, direction, type, placeholder, onChange, errorMessage, showError = false,
                            className = ""}) => {

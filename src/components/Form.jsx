@@ -2,7 +2,6 @@ import React from 'react';
 import _ from 'lodash'
 import PropTypes from 'prop-types';
 import {TextField, SelectField, Checkbox, useForm} from "../index"
-import '../assets/sass/_form.scss'
 
 const Form = ({description, direction, layout, submitLabel, customButton = null, initValues = [], className = ""}) => {
 
