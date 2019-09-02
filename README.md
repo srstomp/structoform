@@ -8,13 +8,14 @@ A form builder for React
 
 ## Steps for local developement
 * run `npm link`
-* run `npm run prepublishOnly`
+* run `npm run prepublishOnly` to build the package
 
 ### Things todo
+- [ ] Write documentation
+- [ ] Add tests
 - [ ] Date Field
 - [ ] Password Field
-- [ ] Number Field
 - [ ] Phone Field
 - [X] Add validators
 - [ ] Autosuggest / Autocomplete
-- [ ] Support Custom styling
+- [X] Support Custom styling
