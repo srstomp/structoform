@@ -2,8 +2,9 @@ import React from 'react';
 import _ from 'lodash'
 import PropTypes from 'prop-types';
 import {TextField, SelectField, Checkbox, useForm} from "../index"
+import '../assets/sass/_form.scss'
 
-const Form = ({description, direction, layout, submitLabel, customButton = null, initValues = []}) => {
+const Form = ({description, direction, layout, submitLabel, customButton = null, initValues = [], className = ""}) => {
 
     const validationRules = {...layout}
     Object.keys(validationRules).map((item, i) =>
@@ -51,7 +52,7 @@ const Form = ({description, direction, layout, submitLabel, customButton = null,
     }
 
     return (
-        <form className='form' onSubmit={handleSubmit} noValidate>
+        <form className={`form ${className}`} onSubmit={handleSubmit} noValidate >
             <span>{description}</span>
             {
                 Object.keys(layout).map((key, i) => {
