@@ -10,8 +10,7 @@
     "build-css": "node-sass --output-style compressed src/assets/styles/ -o dist/css",
     "autoprefixer": "postcss -u autoprefixer -r dist/css/*",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "prepare": "babel ./src --out-dir ./dist -s inline && npm run build-css && npm run autoprefixer",
-    "prepublishOnly": "babel ./src --out-dir ./dist -s inline && npm run build-css && npm run autoprefixer"
+    "prepare": "babel ./src --out-dir ./dist -s inline && npm run build-css && npm run autoprefixer"
   },
   "repository": {
     "type": "git",
