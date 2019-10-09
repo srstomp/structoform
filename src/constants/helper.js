@@ -1,5 +1,10 @@
 const id = Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 16)
 
+const direction = {
+    row: '--row',
+    column: '--column',
+}
+
 const copy = {
     nl: {
         // errors
@@ -15,5 +20,6 @@ const copy = {
 
 export {
     id,
-    copy
+    copy,
+    direction
 }

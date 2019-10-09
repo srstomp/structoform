@@ -1,8 +1,8 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { id } from '../constants/helper';
+import React from 'react'
+import PropTypes from 'prop-types'
+import { id } from '../constants/helper'
 
-const Checkbox = ({label, name, value = '', onChange, showError = false, className = ""}) =>
+const Checkbox = ({label, name, value = false, onChange, showError = false, className = ''}) =>
     <div className={`form-item ${className}`}>
         <div className="form-item__inner">
             <input className='form-item__input' type='checkbox' name={name} value={value} onChange={onChange}
@@ -16,6 +16,8 @@ export default Checkbox
 Checkbox.propTypes = {
     label: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
+    value: PropTypes.bool,
     onChange: PropTypes.func,
-    showError: PropTypes.bool
+    showError: PropTypes.bool,
+    className: PropTypes.string
 }

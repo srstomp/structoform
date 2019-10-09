@@ -1,17 +1,19 @@
-import React from 'react';
+import React from 'react'
 import _ from 'lodash'
-import PropTypes from 'prop-types';
-import {TextField, SelectField, Checkbox, useForm} from "../index"
-import TextArea from "./TextArea";
+import PropTypes from 'prop-types'
+import { TextField, SelectField, Checkbox, useForm } from "../index"
+import TextArea from "./TextArea"
 
-const Form = ({description, direction, layout, submitLabel, customButton = null, initValues = [], className = ""}) => {
+const Form = ({layout, description, direction, initValues = [], className = '', children}) => {
 
     const validationRules = {...layout}
+
     Object.keys(validationRules).map((item, i) =>
         validationRules[item] = {type: validationRules[item].type, rules: validationRules[item].validators}
     )
 
-    const {values, errors, handleSubmit, handleChange, isSubmitting} = useForm(() => submit(), validationRules)
+    const { values, errors, handleSubmit, handleChange, isSubmitting } = useForm(() => submit(), validationRules)
+
     const dir = direction === 'row' ? TextField.direction.row : TextField.direction.column
 
     const getValue = (key) => {
@@ -47,7 +49,7 @@ const Form = ({description, direction, layout, submitLabel, customButton = null,
                                  showError={(errors[key] || '') !== ''} onChange={handleChange}
                                  errorMessage={_.head(errors[key]) || ''}/>
             case 'textarea':
-                return <TextArea label={value.label} name={key} direction={dir} onChange={handleChange}
+                return <TextArea key={key} label={value.label} name={key} direction={dir} onChange={handleChange}
                                  showError={(errors[key] || '') !== ''} placeholder={value.placeholder || ''}
                                  errorMessage={_.head(errors[key]) || ''} value={values[key]}/>
             default:
@@ -63,12 +65,7 @@ const Form = ({description, direction, layout, submitLabel, customButton = null,
                     return getItem(key, layout[key], i)
                 })
             }
-            {
-                customButton ? customButton :
-                    <button type='submit'>
-                        {submitLabel}
-                    </button>
-            }
+            { children || <button type='submit'>'Submit'</button> }
         </form>
     )
 }
