@@ -67,7 +67,8 @@
     }
   }
 
-  &__input[type="text"], &__input[type="email"], &__input[type="password"], &__input[type="phone"], &__input[type="number"] {
+  &__input[type="text"], &__input[type="email"], &__input[type="password"],
+  &__input[type="phone"], &__input[type="number"], &__textarea {
     border-radius: 6px;
     padding: 0.75rem 0.75rem;
     border: 1px solid $steel;
