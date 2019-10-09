@@ -2,6 +2,7 @@ import React from 'react';
 import _ from 'lodash'
 import PropTypes from 'prop-types';
 import {TextField, SelectField, Checkbox, useForm} from "../index"
+import TextArea from "./TextArea";
 
 const Form = ({description, direction, layout, submitLabel, customButton = null, initValues = [], className = ""}) => {
 
@@ -45,6 +46,10 @@ const Form = ({description, direction, layout, submitLabel, customButton = null,
                 return <Checkbox key={key} label={value.label} name={key} value={getValue(key)}
                                  showError={(errors[key] || '') !== ''} onChange={handleChange}
                                  errorMessage={_.head(errors[key]) || ''}/>
+            case 'textarea':
+                return <TextArea label={value.label} name={key} direction={dir} onChange={handleChange}
+                                 showError={(errors[key] || '') !== ''} placeholder={value.placeholder || ''}
+                                 errorMessage={_.head(errors[key]) || ''} value={values[key]}/>
             default:
                 throw new Error(`Unhandled form type: ${value.type}`)
         }

@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from "prop-types";
 import { id } from '../constants/helper';
 
-const TextArea = ({label, name, value = '', direction, type, placeholder, onChange, errorMessage, showError = false,
+const TextArea = ({label, name, value = '', direction, placeholder, onChange, errorMessage, showError = false,
                        className = ""}) =>
     <div className={`form-item form-item${direction} ${className}`}>
         {label !== '' ? <label className={`form-item__label`} htmlFor={id}>{label}</label> : null}
@@ -27,7 +27,6 @@ TextArea.propTypes = {
     name: PropTypes.string.isRequired,
     value: PropTypes.string,
     direction: PropTypes.oneOf(Object.values(TextField.direction)),
-    type: PropTypes.string.isRequired,
     placeholder: PropTypes.string,
     onChange: PropTypes.func,
     errorMessage: PropTypes.string,
