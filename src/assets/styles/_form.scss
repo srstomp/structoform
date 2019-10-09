@@ -88,6 +88,13 @@
     }
   }
 
+  &__textarea {
+    height: 200px;
+    resize: none;
+    font-size: 1em;
+    line-height: 1.5em;
+  }
+
   &__input-button {
     position: absolute;
     right: 0.25rem;

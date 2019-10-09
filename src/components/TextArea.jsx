@@ -26,7 +26,7 @@ TextArea.propTypes = {
     label: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     value: PropTypes.string,
-    direction: PropTypes.oneOf(Object.values(TextField.direction)),
+    direction: PropTypes.oneOf(Object.values(TextArea.direction)),
     placeholder: PropTypes.string,
     onChange: PropTypes.func,
     errorMessage: PropTypes.string,
