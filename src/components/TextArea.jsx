@@ -10,8 +10,7 @@ const TextArea = ({label, name, value = '', direction, placeholder, onChange, er
 
         <div className="form-item__inner">
             <textarea className={`form-item__textarea ${showError ? 'error' : ''}`} placeholder={placeholder}
-                      onChange={onChange} name={name} htmlFor={id}>
-                { value }
+                      onChange={onChange} name={name} htmlFor={id} value={value}>
             </textarea>
             <span className={`form-item__error-label ${showError ? '' : 'hide'}`}>{errorMessage}</span>
         </div>

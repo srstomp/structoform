@@ -3,8 +3,9 @@ import _ from 'lodash'
 import PropTypes from 'prop-types'
 import { TextField, SelectField, Checkbox, useForm } from "../index"
 import TextArea from "./TextArea"
+import { direction } from '../constants/helper'
 
-const Form = ({layout, description, direction, initValues = [], className = '', children}) => {
+const Form = ({layout, description, layoutDirection, initValues = [], className = '', children}) => {
 
     const validationRules = {...layout}
 
@@ -14,7 +15,7 @@ const Form = ({layout, description, direction, initValues = [], className = '', 
 
     const { values, errors, handleSubmit, handleChange, isSubmitting } = useForm(() => submit(), validationRules)
 
-    const dir = direction === 'row' ? TextField.direction.row : TextField.direction.column
+    const dir = layoutDirection === 'row' ? direction.row : direction.column
 
     const getValue = (key) => {
         // If no inputes are given, then return default valutes or empty string
