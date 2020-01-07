@@ -5,7 +5,7 @@ import { TextField, SelectField, Checkbox, useForm } from "../index"
 import TextArea from "./TextArea"
 import { direction } from '../constants/helper'
 
-const Form = ({layout, layoutDirection, initValues = [], className = '', children}) => {
+const Form = ({ className = '', layout, layoutDirection, initValues = [], submitButton, setValues, setErrors }) => {
 
     const validationRules = {...layout}
 
@@ -27,7 +27,9 @@ const Form = ({layout, layoutDirection, initValues = [], className = '', childre
 
     const submit = (e) => {
         console.log('errors:', errors)
+        setErrors(errors)
         console.log('values:', values)
+        setValues(values)
     }
 
     const getItem = (key, value, index) => {
@@ -59,13 +61,13 @@ const Form = ({layout, layoutDirection, initValues = [], className = '', childre
     }
 
     return (
-        <form className={`form ${className}`} onSubmit={handleSubmit} noValidate >
+        <form className={`form ${className}`} onSubmit={handleSubmit} onChange={handleChange} noValidate >
             {
                 Object.keys(layout).map((key, i) => {
                     return getItem(key, layout[key], i)
                 })
             }
-            { children || <button type='submit'>'Submift'</button> }
+            { submitButton }
         </form>
     )
 }
@@ -73,9 +75,8 @@ const Form = ({layout, layoutDirection, initValues = [], className = '', childre
 export default Form
 
 Form.propTypes = {
+    className: PropTypes.string,
     layout: PropTypes.object.isRequired,
-    direction: PropTypes.string,
-    submitLabel: PropTypes.string,
-    customButton: PropTypes.object,
+    layoutDirection: PropTypes.string,
     initValues: PropTypes.array,
 }
