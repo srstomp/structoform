@@ -26,6 +26,7 @@ const useForm = (callback, validators) => {
         // Validate & store error message for each input element
         Object.keys(validators).forEach(item =>
             Object.values(event.target.elements).forEach((obj) => {
+                //console.log(obj, item)
                 if (obj.name === item) {
                     setErrors(errors => ({ ...errors, [obj.name]: validate(obj.value, validators[item])} ))
                 }
@@ -39,12 +40,27 @@ const useForm = (callback, validators) => {
         // Access the event properties. https://reactjs.org/docs/events.html
         event.persist()
 
+        console.log(event)
+
         // Remove current error on typing
-        setErrors(errors => ({ ...errors, [event.target.name]: ''} ))
+        setErrors(errors => ({ ...errors, [event.target.name]: null} ))
 
         // Store values of input elements
-        setValues(values => ({ ...values, [event.target.name]: event.target.type !== 'checkbox' ? event.target.value : event.target.checked}))
+        setValues(values => ({ ...values, [event.target.name]: value(event.target)}))
     }
+
+    const value = (target => {
+        console.log(target.type)
+        switch (target.type) {
+            case 'checkbox':
+                return target.checked
+            case 'select':
+                console.log(target)
+                return target.selected
+            default:
+                return target.value
+        }
+    })
 
     return {
         values,

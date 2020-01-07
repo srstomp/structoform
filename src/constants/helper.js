@@ -1,4 +1,19 @@
-const id = Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 16)
+const id =  Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 16)
+
+const gen4 = () => Math.random().toString(16).slice(-4)
+
+const uniqueId = (prefix) => {
+    return (prefix || '').concat([
+        gen4(),
+        gen4(),
+        gen4(),
+        gen4(),
+        gen4(),
+        gen4(),
+        gen4(),
+        gen4()
+    ].join(''))
+}
 
 const direction = {
     row: '--row',
@@ -20,6 +35,7 @@ const copy = {
 
 export {
     id,
+    uniqueId,
     copy,
     direction
 }

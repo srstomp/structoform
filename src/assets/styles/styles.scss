@@ -1,2 +1,213 @@
-@import 'colors';
-@import "form";
+$night: #131C4E;
+$red: #C20013;
+$teal: #4DCBC3;
+$light-grey: #E5E5E5;
+$grey: #9E9E9E;
+$graphite: #4A4A4A;
+
+.form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.form-item {
+  margin-bottom: 24px;
+
+  &--column{
+    display: flex;
+    flex-direction: column;
+  }
+
+  &--row {
+    display: flex;
+    flex-direction: row;
+
+    .form-item__label {
+      width: 40%;
+    }
+  }
+
+  &__inner {
+    width: 100%;
+  }
+
+  &__label {
+    margin: 0 0 6px 0;
+    display: block;
+    font-size: 0.875rem;
+  }
+
+  &__select {
+    border-radius: 6px;
+    padding: 0.75rem;
+    border: 1px solid $light-grey;
+    outline: none;
+    box-shadow: none;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    appearance: none;
+    background-color: #fff;
+    display: block;
+    background-image: url("data:image/svg+xml,%3C%3Fxml version='1.0' encoding='UTF-8'%3F%3E%3Csvg width='14px' height='9px' viewBox='0 0 14 9' version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'%3E%3C!-- Generator: Sketch 53.2 (72643) - https://sketchapp.com --%3E%3Ctitle%3EIcons/24/Chevron%3C/title%3E%3Cdesc%3ECreated with Sketch.%3C/desc%3E%3Cg id='Desktop' stroke='none' stroke-width='1' fill='none' fill-rule='evenodd'%3E%3Cg id='user-management----overview-2.0' transform='translate(-5.000000, -9.000000)'%3E%3Crect id='Bounding-Box' x='0' y='0' width='24' height='24'%3E%3C/rect%3E%3Cpolygon id='Page-1-Copy-6' fill='%234DCCC4' fill-rule='nonzero' points='11.9999346 17.6153846 12.8928443 16.7706111 19 10.9618441 17.2142023 9 12 13.9571125 6.78579775 9 5 10.9618441 11.1071557 16.7706111'%3E%3C/polygon%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    background-repeat: no-repeat, repeat;
+    background-position: right 1em top 50%, 0 0;
+    background-size: 1em auto, 100%;
+    color: $night;
+    font-size: 0.875rem;
+
+    width: 100%;
+    margin: 0;
+
+    option {
+      font-size: 1rem;
+    }
+
+    &:hover, &:focus, &:active {
+      border: 1px solid $graphite;
+      box-shadow: none;
+    }
+
+    &.error {
+      border: 1px solid $red;
+      box-shadow: 0px 0px 0px 1px $red;
+    }
+
+    &--placeholder {
+      color: $grey;
+    }
+  }
+
+  &__input[type="text"], &__input[type="email"], &__input[type="password"],
+  &__input[type="phone"], &__input[type="number"], &__textarea {
+    border-radius: 6px;
+    padding: 0.75rem;
+    border: 1px solid $light-grey;
+    color: $night;
+    outline: none;
+    appearance: none;
+    width: 100%;
+    font-size: 0.875rem;
+
+    &:hover, &:focus, &:active {
+      border: 1px solid $night;
+    }
+
+    &.error {
+      border: 1px solid $red;
+      box-shadow: 0px 0px 0px 1px $red;
+    }
+  }
+
+  &__textarea {
+    height: 200px;
+    resize: none;
+    font-size: 1em;
+    line-height: 1.5em;
+  }
+
+  &__input-button {
+    position: absolute;
+    right: 0.25rem;
+    top: 0px;
+    border: none;
+    background-color: transparent;
+    outline: none;
+    cursor: pointer;
+    transform: scale(0.8) translate(0, 50%);
+  }
+
+  &__error-label {
+    display: block;
+    margin-top: 0.5rem;
+    color: $red;
+    display: block;
+
+    &.hide {
+      display: none;
+    }
+  }
+
+  // BUTTON
+  &__btn {
+    &--submit {
+      align-self: flex-end;
+      margin-top: 2.5rem;
+    }
+  }
+
+  // CHECKBOX
+  &__input[type="checkbox"] {
+    opacity: 0;
+  }
+
+  &__input[type="checkbox"] + label::after {
+    content: none;
+  }
+
+  &__input[type="checkbox"]:checked + label::before {
+    background-color: $teal;
+    border: 1px solid $light-grey;
+  }
+
+  /*Unhide the checkmark on the checked state*/
+  &__input[type="checkbox"]:checked + label::after {
+    content: "";
+  }
+
+  &__label--checkbox {
+    position: absolute;
+    padding-left: 1rem;
+
+    @media only screen and (max-width: 375px) {
+      //padding-left: 2rem;
+      display: inline-block;
+    }
+
+    a {
+      font-size: 0.875rem;
+    }
+
+    &.error {
+      &::before {
+        border: 1px solid $red;
+      }
+    }
+
+    &::before {
+      background-color: #fff;
+      position: absolute;
+      content: "";
+      display: inline-block;
+      height: 16px;
+      width: 16px;
+      border: 1px solid $light-grey;
+      top: 0px;
+      left: -20px;
+      z-index: -10;
+      transition: background-color 0.3s ease-out;
+    }
+
+    &::after {
+      position: absolute;
+      content: "";
+      display: inline-block;
+      height: 3px;
+      width: 7px;
+      border-left: 2px solid;
+      border-bottom: 2px solid;
+      transform: rotate(-45deg);
+      left: -15px;
+      top: 5px;
+      color: #fff;
+      z-index: -10;
+      transition: background-color 0.3s ease-out;
+    }
+  }
+}
+
+.form-btn {
+  display: flex;
+}
+
+

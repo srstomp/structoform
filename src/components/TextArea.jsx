@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from "prop-types";
 import { id, direction } from '../constants/helper';
 
-const TextArea = ({label, name, value = '', direction, placeholder, onChange, errorMessage, showError = false,
+const TextArea = ({label, name, value = '', direction, placeholder, onChange, errorMessage, showError,
                        className = ""}) =>
     <div className={`form-item form-item${direction} ${className}`}>
 
@@ -27,5 +27,5 @@ TextArea.propTypes = {
     placeholder: PropTypes.string,
     onChange: PropTypes.func,
     errorMessage: PropTypes.string,
-    showError: PropTypes.bool
+    showError: PropTypes.bool.isRequired
 }

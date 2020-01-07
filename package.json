@@ -1,47 +1,48 @@
 {
-  "name": "structoform",
-  "version": "1.0.1",
-  "description": "React form components",
-  "main": "dist/index.js",
-  "files": [
-    "dist/*"
-  ],
-  "scripts": {
-    "build-css": "node-sass --output-style compressed src/assets/styles/ -o dist/css",
-    "autoprefixer": "postcss -u autoprefixer -r dist/css/*",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "prepare": "babel ./src --out-dir ./dist -s inline && npm run build-css && npm run autoprefixer"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/srstomp/structoform.git"
-  },
-  "author": "Steve Stomp",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/srstomp/structoform/issues"
-  },
-  "homepage": "https://github.com/srstomp/structoform#readme",
-  "peerDependencies": {
-    "react": "^16.8.6"
-  },
-  "devDependencies": {
-    "@babel/cli": "^7.5.5",
-    "@babel/core": "^7.5.5",
-    "@babel/preset-env": "^7.5.5",
-    "@babel/preset-react": "^7.0.0",
-    "autoprefixer": "^9.6.1",
-    "node-sass": "^4.12.0",
-    "postcss-cli": "^6.1.3"
-  },
-  "dependencies": {
-    "lodash": "^4.17.15",
-    "prop-types": "^15.7.2"
-  },
-  "browserslist": [
-    ">0.2%",
-    "not dead",
-    "not ie <= 10",
-    "not op_mini all"
-  ]
+    "name": "structoform",
+    "version": "1.0.1",
+    "description": "React form components",
+    "main": "dist/index.js",
+    "files": [
+        "dist/*"
+    ],
+    "scripts": {
+        "css": "node-sass --output-style compressed src/assets/styles/styles.scss -o dist/css",
+        "autoprefixer": "postcss -u autoprefixer -r dist/css/*",
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "prepare": "babel ./src --out-dir ./dist -s inline && npm run build-css && npm run autoprefixer",
+        "prep": "babel ./src --out-dir ./dist -s inline && npm run css && npm run autoprefixer"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/srstomp/structoform.git"
+    },
+    "author": "Steve Stomp",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/srstomp/structoform/issues"
+    },
+    "homepage": "https://github.com/srstomp/structoform#readme",
+    "peerDependencies": {
+        "react": "^16.8.6"
+    },
+    "devDependencies": {
+        "@babel/cli": "^7.5.5",
+        "@babel/core": "^7.5.5",
+        "@babel/preset-env": "^7.5.5",
+        "@babel/preset-react": "^7.0.0",
+        "autoprefixer": "^9.6.1",
+        "node-sass": "^4.13.0",
+        "postcss-cli": "^6.1.3"
+    },
+    "dependencies": {
+        "lodash": "^4.17.15",
+        "prop-types": "^15.7.2"
+    },
+    "browserslist": [
+        ">0.2%",
+        "not dead",
+        "not ie <= 10",
+        "not op_mini all"
+    ]
 }
