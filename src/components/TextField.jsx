@@ -11,7 +11,7 @@ const TextField = ({label, name, placeholder, value = '', direction, type, onCha
             <div className="form-item__inner">
                 <input className={`form-item__input ${showError ? 'error' : ''}`} placeholder={placeholder}
                        type={type} onChange={onChange} name={name} htmlFor={id} value={value}/>
-                <label className={`form-item__error-label ${showError ? '' : 'hide'}`}>{errorMessage}</label>
+                <span className={`error-label ${showError ? '' : 'hide'}`}>{errorMessage}</span>
             </div>
         </FormItem>
     )

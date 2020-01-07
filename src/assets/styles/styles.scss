@@ -117,17 +117,6 @@ $graphite: #4A4A4A;
     transform: scale(0.8) translate(0, 50%);
   }
 
-  &__error-label {
-    display: block;
-    margin-top: 0.5rem;
-    color: $red;
-    display: block;
-
-    &.hide {
-      display: none;
-    }
-  }
-
   // BUTTON
   &__btn {
     &--submit {
@@ -208,6 +197,17 @@ $graphite: #4A4A4A;
 
 .form-btn {
   display: flex;
+}
+
+.error-label {
+  display: block;
+  margin-top: 0.5rem;
+  color: $red;
+  display: block;
+
+  &.hide {
+    display: none;
+  }
 }
 
 

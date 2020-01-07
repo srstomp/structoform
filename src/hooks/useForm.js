@@ -26,9 +26,9 @@ const useForm = (callback, validators) => {
         // Validate & store error message for each input element
         Object.keys(validators).forEach(item =>
             Object.values(event.target.elements).forEach((obj) => {
-                //console.log(obj, item)
+
                 if (obj.name === item) {
-                    setErrors(errors => ({ ...errors, [obj.name]: validate(obj.value, validators[item])} ))
+                    setErrors(errors => ({ ...errors, [obj.name]: validate(obj, validators[item])} ))
                 }
             })
         )
@@ -40,8 +40,6 @@ const useForm = (callback, validators) => {
         // Access the event properties. https://reactjs.org/docs/events.html
         event.persist()
 
-        console.log(event)
-
         // Remove current error on typing
         setErrors(errors => ({ ...errors, [event.target.name]: null} ))
 
@@ -50,13 +48,9 @@ const useForm = (callback, validators) => {
     }
 
     const value = (target => {
-        console.log(target.type)
         switch (target.type) {
             case 'checkbox':
                 return target.checked
-            case 'select':
-                console.log(target)
-                return target.selected
             default:
                 return target.value
         }
@@ -73,7 +67,15 @@ const useForm = (callback, validators) => {
 
 export default useForm
 
-const validate = (value, validators) => {
+const validate = (item, validators) => {
+    let value = item.value
+
+    // if node is a select item, then check if the selected value is a disabled property. Use this boolean value to
+    // check if a option is selected.
+    if (item.nodeName === 'SELECT') {
+        value = item.options[item.selectedIndex].disabled
+    }
+
     let errors = validators.rules.map(rule => {
         switch (Object.keys(rule)[0]) {
             case validate.types.REQUIRED:
@@ -81,7 +83,7 @@ const validate = (value, validators) => {
             case validate.types.EMAIL:
                 return /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(value) ? null : copy.nl.error_invalid_email
             case validate.types.IS_SELECTED:
-                return value ? null : copy.nl.error_is_selected
+                return value ? copy.nl.error_is_selected : null
             case validate.types.IS_CHECKED:
                 return value ? null : copy.nl.error_is_checked
             case validate.types.IS_NUMBER:

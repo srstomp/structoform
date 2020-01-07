@@ -25,7 +25,7 @@ const Form = ({layout, layoutDirection, initValues = [], className = '', childre
         return values[key]
     }
 
-    const submit = () => {
+    const submit = (e) => {
         console.log('errors:', errors)
         console.log('values:', values)
     }

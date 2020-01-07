@@ -29,7 +29,7 @@ const PasswordField = ({label, name, value, direction, type, placeholder, onChan
                 <input className={`form-item__input ${showError ? 'error' : ''}`} placeholder={placeholder}
                        ref={inputEl} type={type} onChange={onChange} name={name} htmlFor={id} value={value}/>
                 {passwordToggleButton()}
-                <span className={`form-item__error-label ${showError ? '' : 'hide'}`}>{errorMessage}</span>
+                <span className={`error-label ${showError ? '' : 'hide'}`}>{errorMessage}</span>
             </div>
         </FormItem>
     )
