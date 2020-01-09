@@ -25,7 +25,7 @@ const Form = ({ className = '', layout, layoutDirection, initValues = [], submit
         return values[key]
     }
 
-    const submit = (e) => {
+    const submit = () => {
         console.log('errors:', errors)
         setErrors(errors)
         console.log('values:', values)
@@ -55,6 +55,10 @@ const Form = ({ className = '', layout, layoutDirection, initValues = [], submit
                 return <TextArea key={key} label={value.label} name={key} direction={dir} onChange={handleChange}
                                  showError={!_.isEmpty(errors[key])} placeholder={value.placeholder}
                                  errorMessage={_.head(errors[key]) || ''} value={values[key]}/>
+            case 'date':
+                return <span>date</span>
+            case 'radio':
+                return <span>radio</span>
             default:
                 throw new Error(`Unhandled form type: ${value.type}`)
         }

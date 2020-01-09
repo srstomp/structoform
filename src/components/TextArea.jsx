@@ -2,9 +2,8 @@ import React from 'react';
 import PropTypes from "prop-types";
 import { id, direction } from '../constants/helper';
 
-const TextArea = ({label, name, value = '', direction, placeholder, onChange, errorMessage, showError,
-                       className = ""}) =>
-    <div className={`form-item form-item${direction} ${className}`}>
+const TextArea = ({label, name, value = '', direction, placeholder, onChange, errorMessage, showError}) =>
+    <div className={`form-item form-item${direction}`}>
 
         {label !== '' && <label className={`form-item__label`} htmlFor={id}>{label}</label>}
 
