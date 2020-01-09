@@ -15,6 +15,7 @@ const useForm = (callback, validators) => {
     }, [isSubmitting, errors])
 
     const handleSubmit = (event) => {
+        console.log('handleSubmit')
         // Access the event properties. https://reactjs.org/docs/events.html
         event.persist()
 
@@ -31,11 +32,12 @@ const useForm = (callback, validators) => {
                 }
             })
         )
-console.log(errors)
+
         setIsSubmitting(true)
     }
 
     const handleChange = (event) => {
+        console.log('handleChange')
         // Access the event properties. https://reactjs.org/docs/events.html
         event.persist()
 
@@ -90,7 +92,7 @@ const validate = (item, validators) => {
             case validate.types.IS_PASSWORD:
                 return !value && copy.nl.error_is_password
             default:
-                return null
+                throw new Error(`Unhandled validator rule: ${rule}`)
         }
     })
     return errors.filter(item => typeof(item) === 'string')
@@ -100,7 +102,6 @@ const validate = (item, validators) => {
 validate.types = {
     REQUIRED: 'isRequired',
     EMAIL: 'isEmail',
-    IS_LENGTH: 'isLength',
     IS_SELECTED: 'isSelected',
     IS_CHECKED: 'isChecked',
     IS_NUMBER: 'isNumber',
