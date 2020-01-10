@@ -7,8 +7,6 @@ const useForm = (callback, validators) => {
     const [isSubmitting, setIsSubmitting] = useState(false)
 
     useEffect(() => {
-        console.log(Object.values(errors).every(x => _.isEmpty(x)))
-
        // if (Object.values(errors).every(x => _.isEmpty(x)) && isSubmitting) {
             //callback()
        // }
@@ -22,7 +20,6 @@ const useForm = (callback, validators) => {
     }, [isSubmitting, errors])
 
     const handleSubmit = (event) => {
-        console.log('handleSubmit')
         // Access the event properties. https://reactjs.org/docs/events.html
         event.persist()
 
@@ -43,7 +40,6 @@ const useForm = (callback, validators) => {
     }
 
     const handleChange = (event) => {
-        console.log('handleChange')
         // Access the event properties. https://reactjs.org/docs/events.html
         event.persist()
 

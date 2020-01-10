@@ -26,8 +26,6 @@ const Form = ({ className = '', layout, layoutDirection, initValues = [], submit
     }
 
     const submit = () => {
-        console.log('errors:', errors)
-        console.log('values:', values)
         onSubmit(errors, values)
     }
 
@@ -40,7 +38,7 @@ const Form = ({ className = '', layout, layoutDirection, initValues = [], submit
             case 'number':
                 return <TextField key={index} type={value.type} name={key} label={value.label} direction={dir}
                                   placeholder={value.placeholder || ''} value={values[key]}
-                                  showError={!_.isEmpty(errors[key])}  errorMessage={_.head(errors[key]) || ''}/>
+                                  showError={!_.isEmpty(errors[key])} errorMessage={_.head(errors[key]) || ''}/>
             case 'select':
                 return <SelectField key={key} label={value.label} values={value.values || []} direction={dir}
                                     name={key} placeholder={value.placeholder || ''}
