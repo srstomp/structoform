@@ -3,19 +3,18 @@ import PropTypes from "prop-types"
 import { uniqueId, direction } from '../constants/helper'
 import FormItem from "./FormItem";
 
-const TextField = ({label, name, placeholder, value, direction, type, onChange, errorMessage, showError}) => {
+const TextField = ({label, name, placeholder, value, direction, type, errorMessage, showError}) => {
     const [ id ] = useState(() => uniqueId(`${_.camelCase(label)}-`))
     const [currentValue, setCurrentValue] = useState('')
 
     const handleChange = (e => {
         setCurrentValue(e.target.value)
-        onChange(e)
     })
 
     return (
         <FormItem label={label} id={id} direction={direction}>
-            <input className={`form-item__input ${showError && 'error'}`} placeholder={placeholder}
-                   type={type} onChange={handleChange} name={name} htmlFor={id} value={currentValue} defaultValue={value}/>
+            <input className={`form-item__input ${showError && 'error'}`} placeholder={placeholder} type={type}
+                   onChange={handleChange} name={name} htmlFor={id} value={currentValue} defaultValue={value}/>
             <span className={`error-label ${showError ? '' : 'hide'}`}>{errorMessage}</span>
         </FormItem>
     )
@@ -30,7 +29,6 @@ TextField.propTypes = {
     value: PropTypes.string,
     direction: PropTypes.oneOf(Object.values(direction)),
     type: PropTypes.string.isRequired,
-    onChange: PropTypes.func,
     errorMessage: PropTypes.string,
     showError: PropTypes.bool.isRequired,
 }

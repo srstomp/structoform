@@ -5,7 +5,7 @@ import { TextField, SelectField, Checkbox, useForm } from "../index"
 import TextArea from "./TextArea"
 import { direction } from '../constants/helper'
 
-const Form = ({ className = '', layout, layoutDirection, initValues = [], submitButton, setValues, setErrors }) => {
+const Form = ({ className = '', layout, layoutDirection, initValues = [], submitButton, onSubmit }) => {
 
     const validationRules = {...layout}
 
@@ -13,7 +13,7 @@ const Form = ({ className = '', layout, layoutDirection, initValues = [], submit
         validationRules[item] = {type: validationRules[item].type, rules: validationRules[item].validators}
     )
 
-    const { values, errors, handleSubmit, handleChange, isSubmitting } = useForm(() => submit(), validationRules)
+    const { values, errors, handleSubmit, handleChange } = useForm(() => submit(), validationRules)
 
     const dir = layoutDirection === 'row' ? direction.row : direction.column
 
@@ -27,9 +27,8 @@ const Form = ({ className = '', layout, layoutDirection, initValues = [], submit
 
     const submit = () => {
         console.log('errors:', errors)
-        setErrors(errors)
         console.log('values:', values)
-        setValues(values)
+        onSubmit(errors, values)
     }
 
     const getItem = (key, value, index) => {
@@ -40,13 +39,12 @@ const Form = ({ className = '', layout, layoutDirection, initValues = [], submit
             case 'phone':
             case 'number':
                 return <TextField key={index} type={value.type} name={key} label={value.label} direction={dir}
-                                   onChange={handleChange} showError={!_.isEmpty(errors[key])}
-                                   placeholder={value.placeholder || ''} errorMessage={_.head(errors[key]) || ''}
-                                   value={values[key]}/>
+                                  placeholder={value.placeholder || ''} value={values[key]}
+                                  showError={!_.isEmpty(errors[key])}  errorMessage={_.head(errors[key]) || ''}/>
             case 'select':
-                return <SelectField key={key} label={value.label} values={value.values || []} onChange={handleChange}
-                                    direction={dir} name={key} showError={!_.isEmpty(errors[key])}
-                                    placeholder={value.placeholder || ''} errorMessage={_.head(errors[key]) || ''}/>
+                return <SelectField key={key} label={value.label} values={value.values || []} direction={dir}
+                                    name={key} placeholder={value.placeholder || ''}
+                                    showError={!_.isEmpty(errors[key])} errorMessage={_.head(errors[key]) || ''}/>
             case 'checkbox':
                 return <Checkbox key={key} label={value.label} name={key} value={getValue(key)}
                                  showError={!_.isEmpty(errors[key])} onChange={handleChange}

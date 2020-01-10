@@ -7,9 +7,16 @@ const useForm = (callback, validators) => {
     const [isSubmitting, setIsSubmitting] = useState(false)
 
     useEffect(() => {
-        if (Object.values(errors).every(x => x === null) && isSubmitting) {
+        console.log(Object.values(errors).every(x => _.isEmpty(x)))
+
+       // if (Object.values(errors).every(x => _.isEmpty(x)) && isSubmitting) {
+            //callback()
+       // }
+
+        if (isSubmitting) {
             callback()
         }
+
         //setIsSubmitting(false)
         // eslint-disable-next-line
     }, [isSubmitting, errors])
@@ -26,7 +33,6 @@ const useForm = (callback, validators) => {
         // Validate & store error message for each input element
         Object.keys(validators).forEach(item =>
             Object.values(event.target.elements).forEach((obj) => {
-
                 if (obj.name === item) {
                     setErrors(errors => ({ ...errors, [obj.name]: validate(obj, validators[item])} ))
                 }
@@ -61,8 +67,7 @@ const useForm = (callback, validators) => {
         values,
         errors,
         handleSubmit,
-        handleChange,
-        isSubmitting
+        handleChange
     }
 }
 
@@ -94,8 +99,9 @@ const validate = (item, validators) => {
             default:
                 throw new Error(`Unhandled validator rule: ${rule}`)
         }
-    })
-    return errors.filter(item => typeof(item) === 'string')
+    }).filter(item => typeof(item) === 'string')
+
+    return _.isEmpty(errors) ? null : errors
 
 }
 

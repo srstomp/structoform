@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { uniqueId, direction } from '../constants/helper'
 import FormItem from "./FormItem";
 
-const SelectField = ({label, name, placeholder, values, direction, onChange, errorMessage, showError}) => {
+const SelectField = ({label, name, placeholder, values, direction, errorMessage, showError}) => {
     const [ id ] = useState(() => uniqueId(`${_.camelCase(label)}-`))
     const [ selectedValue, setSelectedValue ] = useState(placeholder)
 
@@ -11,7 +11,6 @@ const SelectField = ({label, name, placeholder, values, direction, onChange, err
 
     const didChangeSelection = (e => {
         setSelectedValue(e.target.value)
-        onChange(e)
     })
 
     return (
@@ -35,9 +34,9 @@ export default SelectField
 SelectField.propTypes = {
     label: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
+    placeholder: PropTypes.string,
     values: PropTypes.arrayOf(PropTypes.shape).isRequired,
     direction: PropTypes.oneOf(Object.values(direction)),
-    onChange: PropTypes.func,
     errorMessage: PropTypes.string,
     showError: PropTypes.bool.isRequired,
 }
