@@ -26,7 +26,7 @@ const Form = ({ className = '', layout, layoutDirection, initValues = [], submit
     }
 
     const submit = () => {
-        onSubmit(errors, values)
+        onSubmit(Object.values(errors).every(x => x === null) ? null : errors, values)
     }
 
     const getItem = (key, value, index) => {

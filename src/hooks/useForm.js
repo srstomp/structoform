@@ -15,7 +15,7 @@ const useForm = (callback, validators) => {
             callback()
         }
 
-        //setIsSubmitting(false)
+        setIsSubmitting(false)
         // eslint-disable-next-line
     }, [isSubmitting, errors])
 
