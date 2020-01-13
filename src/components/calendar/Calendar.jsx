@@ -1,7 +1,10 @@
 import React, {useState} from 'react'
 import moment from 'moment'
+import loc from 'moment/locale/nl';
 
 const Calendar = () => {
+    moment.locale('nl', loc);
+
     const [ dateObject ] = useState(moment())
 
     const firstDayOfMonth = () => {
@@ -13,11 +16,16 @@ const Calendar = () => {
     }
 
     const daysInMonth = () => moment().daysInMonth()
+    const isToday = (day) => {
+        console.log(day)
+        console.log(moment().format('D'))
+        return day === parseFloat(moment().format('D'))
+    }
 
     const Weekdays = () =>
         <tr>
             {
-                moment.weekdaysShort().map(day => <th key={day} className='calendar__weekdays'>{day}</th>)
+                moment.weekdaysMin().map(day => <th key={day} className='calendar__weekdays'>{day}</th>)
             }
         </tr>
 
@@ -30,7 +38,11 @@ const Calendar = () => {
 
         let dayCells = []
         for (let j = 1; j < daysInMonth(); j++) {
-            dayCells.push(<td className='calendar__cell' key={j}>{j}</td>)
+            dayCells.push(
+                <td className={`calendar__cell ${isToday(j) ? 'calendar__cell--today' : ''}`} key={j}>
+                    <span>{j}</span>
+                </td>
+            )
         }
 
         const totalSlots = [...blankCells, ...dayCells]

@@ -213,23 +213,49 @@ $graphite: #4A4A4A;
 .calendar {
   background-color: #fff;
   box-shadow: 0 6px 12px rgba(0,0,0,0.175);
-  border: 1px solid #000;
-  padding: 12px;
+  padding: 18px 24px 24px;
+  border-radius: 6px;
 
   &__weekdays {
     color: #000;
     font-size: 0.875rem;
-    width: 32px;
+    width: 30px;
   }
 
   &__cell {
+    font-size: 0.875rem;
     background-color: #fff;
     color: #000;
     text-align: center;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+
+    span {
+      width: 24px;
+      height: 24px;
+      margin:auto;
+      display:block;
+      line-height:24px;
+      border-radius: 12px;
+    }
+
+    &:hover > span {
+      background-color: #9E9E9E;
+      color: #fff;
+    }
+
+    &--today > span {
+      background-color: #000;
+      color: #fff;
+    }
 
     &--blank {
-      background-color: gray;
+      background-color: #fff;
+      cursor: none;
     }
+
+
   }
 }
 
