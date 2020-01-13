@@ -210,4 +210,27 @@ $graphite: #4A4A4A;
   }
 }
 
+.calendar {
+  background-color: #fff;
+  box-shadow: 0 6px 12px rgba(0,0,0,0.175);
+  border: 1px solid #000;
+  padding: 12px;
+
+  &__weekdays {
+    color: #000;
+    font-size: 0.875rem;
+    width: 32px;
+  }
+
+  &__cell {
+    background-color: #fff;
+    color: #000;
+    text-align: center;
+
+    &--blank {
+      background-color: gray;
+    }
+  }
+}
+
 
