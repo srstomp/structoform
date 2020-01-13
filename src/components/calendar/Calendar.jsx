@@ -1,9 +1,9 @@
 import React, {useState} from 'react'
 import moment from 'moment'
-import loc from 'moment/locale/nl';
+//import loc from 'moment/locale/nl';
 
 const Calendar = () => {
-    moment.locale('nl', loc);
+    //moment.locale('nl', loc);
 
     const [ dateObject ] = useState(moment())
 

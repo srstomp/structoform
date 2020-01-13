@@ -4,7 +4,6 @@ import PropTypes from 'prop-types'
 import { TextField, SelectField, DateField, Checkbox, TextArea, useForm } from "../index"
 import { direction } from '../constants/helper'
 
-
 const Form = ({ className = '', layout, layoutDirection, initValues = [], submitButton, onSubmit }) => {
 
     const validationRules = {...layout}
