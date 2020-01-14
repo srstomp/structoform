@@ -2,26 +2,36 @@ import React, {useState} from 'react'
 import moment from 'moment'
 //import loc from 'moment/locale/nl';
 
+const Chevron = () =>
+    <svg width="6px" height="10px" viewBox="0 0 6 10" version="1.1" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMaxYMax meet">
+        <g stroke="none" strokeWidth="1" fill="#131C4E" fillRule="evenodd">
+            <path d="M6.72854831,7.77276692 C7.019454,8.07574436 7.49153741,8.07574436 7.7824431,7.77276692 C8.07251897,7.46892276 8.07251897,6.9758427 7.7824431,6.67199853 L3.52694739,2.22723308 C3.23604171,1.92425564 2.76395829,1.92425564 2.47305261,2.22723308 L-1.7824431,6.67199853 C-2.07251897,6.9758427 -2.07251897,7.46892276 -1.7824431,7.77276692 C-1.49153741,8.07574436 -1.019454,8.07574436 -0.728548312,7.77276692 L3.00160645,3.87581881 L6.72854831,7.77276692 Z" transform="translate(3.000000, 5.000000) scale(-1, 1) rotate(90.000000) translate(-3.000000, -5.000000) "></path>
+        </g>
+    </svg>
+
 const Calendar = () => {
     //moment.locale('nl', loc);
-
     const [ dateObject ] = useState(moment())
 
-    const firstDayOfMonth = () => {
-        const day = moment(dateObject)
+    const selectedMonth = () =>
+        moment(dateObject)
+            .startOf('month')
+            .format('MMMM YYYY')
+
+    const firstDayOfMonth = () =>
+        moment(dateObject)
             .startOf('month')
             .format('d')
 
-        return day
-    }
 
+    // Helpers
     const daysInMonth = () => moment().daysInMonth()
-    const isToday = (day) => {
-        console.log(day)
-        console.log(moment().format('D'))
-        return day === parseFloat(moment().format('D'))
-    }
+    const isToday = (day) => day === parseFloat(moment().format('D'))
 
+    /**
+     *
+     * @returns A table row of weekdays
+     */
     const Weekdays = () =>
         <tr>
             {
@@ -29,13 +39,18 @@ const Calendar = () => {
             }
         </tr>
 
+    /**
+     *
+     * @returns An array of table rows that consist of cells representing each day of the selected month
+     */
     const Days = () => {
+        // Create a blank cell for each day before the first day of the month
         let blankCells = []
-
         for (let i = 0; i < firstDayOfMonth(); i++) {
             blankCells.push(<td className='calendar__cell calendar__cell--blank'></td>)
         }
 
+        // Create a day cell for each day of the month
         let dayCells = []
         for (let j = 1; j < daysInMonth(); j++) {
             dayCells.push(
@@ -67,16 +82,41 @@ const Calendar = () => {
         )
     }
 
+    // Clickhandlers
+    const onPrev = (e) => {
+        e.preventDefault()
+
+        // TODO -> change selected month to prev
+    }
+
+    const onNext = (e) => {
+        e.preventDefault()
+
+        // TODO -> change selected month to next
+    }
+
+    const presentMonthPicker = (e) => {
+        e.preventDefault()
+
+        // TODO -> render table and present month picker
+    }
 
     return (
-        <table className={`calendar`}>
-            <thead>
-                <Weekdays/>
-            </thead>
-            <tbody>
-                <Days/>
-            </tbody>
-        </table>
+        <div className={`calendar__wrapper`}>
+            <div className='calendar__header'>
+                <button className='calendar__pagination calendar__pagination--left' onClick={onPrev}><Chevron/></button>
+                <button className='calendar__month-button' onClick={presentMonthPicker}>{selectedMonth()}</button>
+                <button className='calendar__pagination calendar__pagination--right' onClick={onNext}><Chevron/></button>
+            </div>
+            <table className='calendar__table'>
+                <thead>
+                    <Weekdays/>
+                </thead>
+                <tbody>
+                    <Days/>
+                </tbody>
+            </table>
+        </div>
     )
 }
 

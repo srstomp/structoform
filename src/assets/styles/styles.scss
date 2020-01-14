@@ -210,11 +210,68 @@ $graphite: #4A4A4A;
   }
 }
 
+.selectedState {
+  background-color: #000;
+  color: #fff;
+}
+
+.hoverState {
+  background-color: #9E9E9E;
+  color: #000;
+}
+
 .calendar {
-  background-color: #fff;
-  box-shadow: 0 6px 12px rgba(0,0,0,0.175);
-  padding: 18px 24px 24px;
-  border-radius: 6px;
+
+  &__wrapper {
+    background-color: #fff;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+    border-radius: 6px;
+    width: 274px;
+    margin-top: 6px;
+  }
+
+  &__header {
+    border-bottom: 1px solid #E4E4E4;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 12px;
+  }
+
+  &__pagination {
+    width: 24px;
+    height: 24px;
+    background-color: #E4E4E4;
+    border-radius: 12px;
+    border: none;
+    cursor: pointer;
+    outline: none;
+
+    &--left {
+
+    }
+
+    &--right {
+      transform: rotate(180deg);
+    }
+
+    svg {
+      display: block;
+      margin: 6px auto;
+    }
+
+    &:hover {
+      background-color: #000;
+      svg > g {
+        fill: #fff;
+      }
+    }
+  }
+
+  &__table {
+    padding: 18px 24px 24px;
+  }
 
   &__weekdays {
     color: #000;
@@ -241,8 +298,8 @@ $graphite: #4A4A4A;
     }
 
     &:hover > span {
-      background-color: #9E9E9E;
-      color: #fff;
+      background-color: #E4E4E4;
+      color: #000;
     }
 
     &--today > span {
@@ -254,8 +311,20 @@ $graphite: #4A4A4A;
       background-color: #fff;
       cursor: none;
     }
+  }
 
+  &__month-button {
+    border: none;
+    width: 150px;
+    height: 24px;
+    border-radius: 12px;
+    cursor: pointer;
+    @extend .selectedState;
+    outline: none;
 
+    &:hover {
+      @extend .hoverState;
+    }
   }
 }
 
