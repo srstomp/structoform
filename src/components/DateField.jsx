@@ -8,16 +8,18 @@ const DateField = ({label, name, placeholder, value, direction, errorMessage, sh
     const [ id ] = useState(() => uniqueId(`${_.camelCase(label)}-`))
     const [currentValue, setCurrentValue] = useState('')
 
-    const handleChange = (e => {
-        setCurrentValue(e.target.value)
-    })
+    // const handleChange = (e => {
+    //     setCurrentValue(e.target.value)
+    // })
+
+    const handleDateSelection = (dateString => setCurrentValue(dateString))
 
     return (
         <FormItem label={label} id={id} direction={direction}>
-            <input className={`form-item__input ${showError && 'error'}`} placeholder={placeholder} type='date'
-                   onChange={handleChange} name={name} htmlFor={id} value={currentValue} defaultValue={value}/>
+            <input className={`form-item__input ${showError && 'error'}`} placeholder={placeholder}
+                   name={name} htmlFor={id} value={currentValue} defaultValue={value} readOnly={true}/>
             <span className={`error-label ${showError ? '' : 'hide'}`}>{errorMessage}</span>
-            <Calendar/>
+            <Calendar onSelect={handleDateSelection}/>
         </FormItem>
     )
 }

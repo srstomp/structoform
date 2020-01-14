@@ -9,15 +9,19 @@ const Chevron = () =>
         </g>
     </svg>
 
-const Calendar = () => {
+const Calendar = ({onSelect}) => {
     //moment.locale('nl', loc);
     const [ dateObject, setDateObject ] = useState(moment())
-    const [ selectedDate, setSelectedDate ] = useState(null)
+    const [ selectedDate, setSelectedDate ] = useState('')
     const [ daysInMonth, setDaysInMonth ] = useState(dateObject.daysInMonth())
 
     useEffect(() => {
         setDaysInMonth(dateObject.daysInMonth())
     }, [dateObject])
+
+    useEffect(() => {
+        onSelect(selectedDate)
+    }, [selectedDate])
 
     // Helpers
     const firstDayOfMonth = () => dateObject.startOf('month').format('d')
@@ -49,7 +53,7 @@ const Calendar = () => {
         // Create a blank cell for each day before the first day of the month
         let blankCells = []
         for (let i = 0; i < firstDayOfMonth(); i++) {
-            blankCells.push(<td className='calendar__cell calendar__cell--blank'></td>)
+            blankCells.push(<td className='calendar__cell calendar__cell--blank' key={`blank-${i}`}></td>)
         }
 
         // Create a day cell for each day of the month
@@ -58,7 +62,7 @@ const Calendar = () => {
             const day = j + 1
             dayCells.push(
                 <td className={`calendar__cell ${isToday(day) ? 'calendar__cell--today' : ''}`}
-                    key={day}
+                    key={`day-${day}`}
                     onClick={e => onDateClick(e, day)}>
                     <span>{day}</span>
                 </td>
@@ -105,12 +109,7 @@ const Calendar = () => {
 
     const onDateClick = (event, day) => {
         const dateString = `${day}/${selectedMonth('MM')}/${selectedYear()}`
-        console.log(dateString)
         setSelectedDate(dateString)
-
-        // const date = moment(dateString, 'D/MM/YYYY')
-        // console.log(date)
-        // console.log(date.toISOString())
     }
 
     return (
