@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, { useState, useEffect } from 'react'
 import moment from 'moment'
 //import loc from 'moment/locale/nl';
 
@@ -11,22 +11,24 @@ const Chevron = () =>
 
 const Calendar = () => {
     //moment.locale('nl', loc);
-    const [ dateObject ] = useState(moment())
+    const [ dateObject, setDateObject ] = useState(moment())
+    const [ selectedDate, setSelectedDate ] = useState(null)
+    const [ daysInMonth, setDaysInMonth ] = useState(dateObject.daysInMonth())
 
-    const selectedMonth = () =>
-        moment(dateObject)
-            .startOf('month')
-            .format('MMMM YYYY')
-
-    const firstDayOfMonth = () =>
-        moment(dateObject)
-            .startOf('month')
-            .format('d')
-
+    useEffect(() => {
+        setDaysInMonth(dateObject.daysInMonth())
+    }, [dateObject])
 
     // Helpers
-    const daysInMonth = () => moment().daysInMonth()
-    const isToday = (day) => day === parseFloat(moment().format('D'))
+    const firstDayOfMonth = () => dateObject.startOf('month').format('d')
+    const selectedMonth = (format = 'MMMM') => dateObject.format(format)
+    const selectedYear = (format = 'YYYY') => dateObject.format(format)
+    const isToday = (day) => {
+        if (selectedMonth('MM') === moment().format('MM')) {
+            return day === parseFloat(moment().format('D'))
+        }
+        return false
+    }
 
     /**
      *
@@ -52,10 +54,13 @@ const Calendar = () => {
 
         // Create a day cell for each day of the month
         let dayCells = []
-        for (let j = 1; j < daysInMonth(); j++) {
+        for (let j = 0; j < daysInMonth; j++) {
+            const day = j + 1
             dayCells.push(
-                <td className={`calendar__cell ${isToday(j) ? 'calendar__cell--today' : ''}`} key={j}>
-                    <span>{j}</span>
+                <td className={`calendar__cell ${isToday(day) ? 'calendar__cell--today' : ''}`}
+                    key={day}
+                    onClick={e => onDateClick(e, day)}>
+                    <span>{day}</span>
                 </td>
             )
         }
@@ -85,27 +90,34 @@ const Calendar = () => {
     // Clickhandlers
     const onPrev = (e) => {
         e.preventDefault()
-
-        // TODO -> change selected month to prev
+        setDateObject(moment(dateObject).subtract(1, 'months'))
     }
 
     const onNext = (e) => {
         e.preventDefault()
-
-        // TODO -> change selected month to next
+        setDateObject(moment(dateObject).add(1, 'months'))
     }
 
     const presentMonthPicker = (e) => {
         e.preventDefault()
-
         // TODO -> render table and present month picker
+    }
+
+    const onDateClick = (event, day) => {
+        const dateString = `${day}/${selectedMonth('MM')}/${selectedYear()}`
+        console.log(dateString)
+        setSelectedDate(dateString)
+
+        // const date = moment(dateString, 'D/MM/YYYY')
+        // console.log(date)
+        // console.log(date.toISOString())
     }
 
     return (
         <div className={`calendar__wrapper`}>
             <div className='calendar__header'>
                 <button className='calendar__pagination calendar__pagination--left' onClick={onPrev}><Chevron/></button>
-                <button className='calendar__month-button' onClick={presentMonthPicker}>{selectedMonth()}</button>
+                <button className='calendar__month-button' onClick={presentMonthPicker}>{`${selectedMonth()} ${selectedYear()}`}</button>
                 <button className='calendar__pagination calendar__pagination--right' onClick={onNext}><Chevron/></button>
             </div>
             <table className='calendar__table'>

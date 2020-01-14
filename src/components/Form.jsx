@@ -51,7 +51,7 @@ const Form = ({ className = '', layout, layoutDirection, initValues = [], submit
                                  showError={!_.isEmpty(errors[key])} placeholder={value.placeholder}
                                  errorMessage={_.head(errors[key]) || ''} value={values[key]}/>
             case 'date':
-                return <DateField key={index} type={value.type} name={key} label={value.label} direction={dir}
+                return <DateField key={index} name={key} label={value.label} direction={dir}
                                   placeholder={value.placeholder || ''} value={values[key]}
                                   showError={!_.isEmpty(errors[key])} errorMessage={_.head(errors[key]) || ''}/>
             case 'radio':
