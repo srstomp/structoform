@@ -275,6 +275,12 @@ $graphite: #4A4A4A;
     padding: 18px 24px 24px;
   }
 
+  &__tbody-year {
+    height: 160px;
+    overflow-y: scroll;
+    display:block;
+  }
+
   &__weekdays {
     color: #000;
     font-size: 0.875rem;
@@ -309,8 +315,8 @@ $graphite: #4A4A4A;
       color: #fff;
     }
 
-    &--month {
-      width: 200px;
+    &--month, &--year {
+      width: 100px;
 
       span {
         width: 100%;

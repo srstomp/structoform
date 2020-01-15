@@ -56,6 +56,7 @@ const Calendar = ({onSelect}) => {
             }
         </tr>
 
+    // TODO => cleanup
     const generateCells = (totalSlots, modulo) => {
         let rows = []
         let cells = []
@@ -112,16 +113,23 @@ const Calendar = ({onSelect}) => {
         const months = moment.monthsShort()
 
         // Create a day cell for each day of the month
-        let monthCells = []
-        for (let i = 0; i < months.length; i++) {
-            monthCells.push(
-                <td className={`calendar__cell calendar__cell--month`} key={`month-${i}`} onClick={e => onMonthClick(e, i)}>
-                    <span>{months[i]}</span>
-                </td>
-            )
-        }
+        const monthCells = months.map((month, index) =>
+            <td className={`calendar__cell calendar__cell--month`} key={`month-${month}`} onClick={e => onMonthClick(e, index)}>
+                <span>{month}</span>
+            </td>
+        )
 
-        return generateCells([...monthCells], 3)
+        return generateCells(monthCells, 3)
+    }
+
+    const YearCells = () => {
+        const currentYear = new Date().getFullYear()
+        const years = [...Array(100).keys()].map(i =>
+            <td className={`calendar__cell calendar__cell--month`} key={`year-${i}`} onClick={e => onYearClick(e, currentYear - i)}>
+                <span>{currentYear - i}</span>
+            </td>
+        )
+        return generateCells(years, 4)
     }
 
     // Clickhandlers
@@ -138,6 +146,13 @@ const Calendar = ({onSelect}) => {
     const presentMonthPicker = (e) => {
         e.preventDefault()
         setMonthSelectorActive(true)
+        setYearSelectorActive(false)
+    }
+
+    const presentYearPicker = (e) => {
+        e.preventDefault()
+        setMonthSelectorActive(false)
+        setYearSelectorActive(true)
     }
 
     const onDateClick = (event, day) => {
@@ -151,7 +166,16 @@ const Calendar = ({onSelect}) => {
         onClose()
     }
 
-    const onClose = () => setMonthSelectorActive(false)
+    const onYearClick = (event, year) => {
+        let current = parseInt(selectedMonth('YYYY'))
+        setDateObject(moment(dateObject).add(year - current, 'years'))
+        onClose()
+    }
+
+    const onClose = () => {
+        monthSelectorActive && setMonthSelectorActive(false)
+        yearSelectorActive && setYearSelectorActive(false)
+    }
 
     const DaysTable = () =>
         <table className='calendar__table'>
@@ -163,30 +187,48 @@ const Calendar = ({onSelect}) => {
             </tbody>
         </table>
 
-    const MonthList = () =>
+    const MonthsTable = () =>
         <table className='calendar__table'>
             <tbody>
                 <MonthCells/>
             </tbody>
         </table>
 
+    const YearsTable = () =>
+        <table className='calendar__table'>
+            <tbody className='calendar__tbody-year'>
+                <YearCells/>
+            </tbody>
+        </table>
+
+    const Table = () => {
+        switch (true) {
+            case monthSelectorActive:
+                return <MonthsTable/>
+            case yearSelectorActive:
+                return <YearsTable/>
+            default:
+                return <DaysTable/>
+        }
+    }
+
     return (
         <div className={`calendar__wrapper`}>
             <div className='calendar__header'>
-                { !monthSelectorActive && <button className='calendar__pagination calendar__pagination--left'
+                { (!monthSelectorActive && !yearSelectorActive) && <button className='calendar__pagination calendar__pagination--left'
                                                   onClick={onPrev}><Chevron/></button> }
                 <div className='calendar__toggle-container'>
                     <button className='calendar__toggle calendar__toggle--month'
                             onClick={presentMonthPicker}>{`${selectedMonth()}`}</button>
                     <button className='calendar__toggle calendar__toggle--year'
-                            onClick={presentMonthPicker}>{`${selectedYear()}`}</button>
+                            onClick={presentYearPicker}>{`${selectedYear()}`}</button>
                 </div>
-                { !monthSelectorActive && <button className='calendar__pagination calendar__pagination--right'
+                { (!monthSelectorActive || !yearSelectorActive) && <button className='calendar__pagination calendar__pagination--right'
                                                   onClick={onNext}><Chevron/></button> }
-                { monthSelectorActive && <button className='calendar__pagination calendar__pagination--right'
+                { (monthSelectorActive || yearSelectorActive) && <button className='calendar__pagination calendar__pagination--right'
                                                  onClick={onClose}><Close/></button> }
             </div>
-            { !monthSelectorActive ? <DaysTable/> : <MonthList/> }
+            <Table/>
         </div>
     )
 }
