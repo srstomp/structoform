@@ -13,6 +13,7 @@ $graphite: #4A4A4A;
 
 .form-item {
   margin-bottom: 24px;
+  position: relative;
 
   &--column{
     display: flex;
@@ -32,12 +33,20 @@ $graphite: #4A4A4A;
     width: 100%;
   }
 
+  &__input-wrapper {
+    display: flex;
+    position: relative;
+  }
+
   &__label {
     margin: 0 0 6px 0;
     display: block;
     font-size: 0.875rem;
   }
 
+  /*
+  SELECT
+   */
   &__select {
     border-radius: 6px;
     padding: 0.75rem;
@@ -78,8 +87,10 @@ $graphite: #4A4A4A;
     }
   }
 
-  &__input[type="text"], &__input[type="email"], &__input[type="password"],
-  &__input[type="phone"], &__input[type="number"], &__textarea {
+  /*
+  INPUT
+   */
+  &__input, &__textarea {
     border-radius: 6px;
     padding: 0.75rem;
     border: 1px solid $light-grey;
@@ -106,7 +117,7 @@ $graphite: #4A4A4A;
     line-height: 1.5em;
   }
 
-  &__input-button {
+  &__input-button, &__input-icon {
     position: absolute;
     right: 0.25rem;
     top: 0px;
@@ -117,7 +128,13 @@ $graphite: #4A4A4A;
     transform: scale(0.8) translate(0, 50%);
   }
 
-  // BUTTON
+  &__input-icon {
+    cursor: auto;
+  }
+
+  /*
+  BUTTON
+   */
   &__btn {
     &--submit {
       align-self: flex-end;
@@ -125,7 +142,9 @@ $graphite: #4A4A4A;
     }
   }
 
-  // CHECKBOX
+  /*
+  CHECKBOX
+   */
   &__input[type="checkbox"] {
     opacity: 0;
   }
@@ -210,4 +229,157 @@ $graphite: #4A4A4A;
   }
 }
 
+.selectedState {
+  background-color: #000;
+  color: #fff;
+}
 
+.hoverState {
+  background-color: #9E9E9E;
+  color: #000;
+}
+
+/*
+CALENDAR
+ */
+.calendar {
+
+  &__wrapper {
+    background-color: #fff;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+    border-radius: 6px;
+    width: 274px;
+    margin-top: 6px;
+    position: absolute;
+    z-index: 50;
+  }
+
+  &__header {
+    border-bottom: 1px solid #E4E4E4;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 12px;
+    position: relative;
+  }
+
+  &__pagination {
+    width: 24px;
+    height: 24px;
+    background-color: #E4E4E4;
+    border-radius: 12px;
+    border: none;
+    cursor: pointer;
+    outline: none;
+    position: absolute;
+
+    &--left {
+      left: 12px;
+    }
+
+    &--right {
+      transform: rotate(180deg);
+      right: 12px;
+    }
+
+    svg {
+      display: block;
+      margin: 6px auto;
+    }
+
+    &:hover {
+      background-color: #000;
+      svg > g {
+        fill: #fff;
+      }
+    }
+  }
+
+  &__table {
+    padding: 18px 24px 24px;
+  }
+
+  &__tbody-year {
+    height: 160px;
+    overflow-y: scroll;
+    display:block;
+  }
+
+  &__weekdays {
+    color: #000;
+    font-size: 0.875rem;
+    width: 30px;
+  }
+
+  &__cell {
+    font-size: 0.875rem;
+    background-color: #fff;
+    color: #000;
+    text-align: center;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+
+    span {
+      width: 24px;
+      height: 24px;
+      margin:auto;
+      display:block;
+      line-height:24px;
+      border-radius: 12px;
+    }
+
+    &:hover > span {
+      background-color: #E4E4E4;
+      color: #000;
+    }
+
+    &--today > span {
+      background-color: #000;
+      color: #fff;
+    }
+
+    &--selected > span {
+      background-color: #fff;
+      color: #000;
+      border: 1px solid #000;
+    }
+
+    &--month, &--year {
+      width: 100px;
+
+      span {
+        width: 100%;
+      }
+    }
+
+    &--blank {
+      background-color: #fff;
+      cursor: none;
+    }
+  }
+
+  &__toggle {
+    border: none;
+    height: 24px;
+    padding: 0 12px;
+    border-radius: 12px;
+    cursor: pointer;
+    @extend .selectedState;
+    outline: none;
+
+    &:hover {
+      @extend .hoverState;
+    }
+
+    &--month {
+      border-radius: 12px 0 0 12px;
+    }
+
+    &--year {
+      border-radius: 0 12px 12px 0;
+      margin-left: 3px;
+    }
+  }
+}

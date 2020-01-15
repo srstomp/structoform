@@ -1,8 +1,7 @@
 import React from 'react'
 import _ from 'lodash'
 import PropTypes from 'prop-types'
-import { TextField, SelectField, Checkbox, useForm } from "../index"
-import TextArea from "./TextArea"
+import { TextField, SelectField, DateField, Checkbox, TextArea, useForm } from "../index"
 import { direction } from '../constants/helper'
 
 const Form = ({ className = '', layout, layoutDirection, initValues = [], submitButton, onSubmit }) => {
@@ -52,7 +51,9 @@ const Form = ({ className = '', layout, layoutDirection, initValues = [], submit
                                  showError={!_.isEmpty(errors[key])} placeholder={value.placeholder}
                                  errorMessage={_.head(errors[key]) || ''} value={values[key]}/>
             case 'date':
-                return <span>date</span>
+                return <DateField key={index} name={key} label={value.label} direction={dir}
+                                  placeholder={value.placeholder || ''} value={values[key]}
+                                  showError={!_.isEmpty(errors[key])} errorMessage={_.head(errors[key]) || ''}/>
             case 'radio':
                 return <span>radio</span>
             default:
