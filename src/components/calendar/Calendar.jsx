@@ -25,6 +25,7 @@ const Calendar = ({onSelect}) => {
     const [ selectedDate, setSelectedDate ] = useState('')
     const [ daysInMonth, setDaysInMonth ] = useState(dateObject.daysInMonth())
     const [ monthSelectorActive, setMonthSelectorActive] = useState(false)
+    const [ yearSelectorActive, setYearSelectorActive] = useState(false)
 
     useEffect(() => {
         setDaysInMonth(dateObject.daysInMonth())
@@ -35,7 +36,6 @@ const Calendar = ({onSelect}) => {
     }, [selectedDate])
 
     // Helpers
-    const firstDayOfMonth = () => dateObject.startOf('month').format('d')
     const selectedMonth = (format = 'MMMM') => dateObject.format(format)
     const selectedYear = (format = 'YYYY') => dateObject.format(format)
     const isToday = (day) => {
@@ -56,14 +56,39 @@ const Calendar = ({onSelect}) => {
             }
         </tr>
 
+    const generateCells = (totalSlots, modulo) => {
+        let rows = []
+        let cells = []
+
+        totalSlots.forEach((row, i) => {
+            if (i % modulo !== 0) {
+                cells.push(row) // if index not equal 7 that means not go to next week
+            } else {
+                rows.push(cells) // when reach next week we contain all td in last week to rows
+                cells = [] // empty container
+                cells.push(row) // in current loop we still push current row to new container
+            }
+
+            if (i === totalSlots.length - 1) { // when end loop we add remain date
+                rows.push(cells);
+            }
+        })
+
+        return (
+            rows.map((d, i) => <tr key={i}>{d}</tr>)
+        )
+    }
+
     /**
      *
      * @returns An array of table rows that consist of cells representing each day of the selected month
      */
-    const Days = () => {
+    const DayCells = () => {
+        const firstDayOfMonth = dateObject.startOf('month').format('d')
+
         // Create a blank cell for each day before the first day of the month
         let blankCells = []
-        for (let i = 0; i < firstDayOfMonth(); i++) {
+        for (let i = 0; i < firstDayOfMonth; i++) {
             blankCells.push(<td className='calendar__cell calendar__cell--blank' key={`blank-${i}`}></td>)
         }
 
@@ -80,26 +105,23 @@ const Calendar = ({onSelect}) => {
             )
         }
 
-        const totalSlots = [...blankCells, ...dayCells]
-        let rows = []
-        let cells = []
+        return generateCells([...blankCells, ...dayCells], 7)
+    }
 
-        totalSlots.forEach((row, i) => {
-            if (i % 7 !== 0) {
-                cells.push(row) // if index not equal 7 that means not go to next week
-            } else {
-                rows.push(cells) // when reach next week we contain all td in last week to rows
-                cells = [] // empty container
-                cells.push(row) // in current loop we still push current row to new container
-            }
-            if (i === totalSlots.length - 1) { // when end loop we add remain date
-                rows.push(cells);
-            }
-        })
+    const MonthCells = () => {
+        const months = moment.monthsShort()
 
-        return (
-            rows.map((d, i) => <tr key={i}>{d}</tr>)
-        )
+        // Create a day cell for each day of the month
+        let monthCells = []
+        for (let i = 0; i < months.length; i++) {
+            monthCells.push(
+                <td className={`calendar__cell calendar__cell--month`} key={`month-${i}`} onClick={e => onMonthClick(e, i)}>
+                    <span>{months[i]}</span>
+                </td>
+            )
+        }
+
+        return generateCells([...monthCells], 3)
     }
 
     // Clickhandlers
@@ -115,7 +137,7 @@ const Calendar = ({onSelect}) => {
 
     const presentMonthPicker = (e) => {
         e.preventDefault()
-        // TODO -> render table and present month picker
+        setMonthSelectorActive(true)
     }
 
     const onDateClick = (event, day) => {
@@ -123,23 +145,28 @@ const Calendar = ({onSelect}) => {
         setSelectedDate(dateString)
     }
 
+    const onMonthClick = (event, month) => {
+        let current = parseInt(selectedMonth('M'))
+        setDateObject(moment(dateObject).add((month + 1) - current, 'months'))
+        onClose()
+    }
+
+    const onClose = () => setMonthSelectorActive(false)
+
     const DaysTable = () =>
         <table className='calendar__table'>
             <thead>
                 <Weekdays/>
             </thead>
             <tbody>
-                <Days/>
+                <DayCells/>
             </tbody>
         </table>
 
     const MonthList = () =>
         <table className='calendar__table'>
-            <thead>
-                <Weekdays/>
-            </thead>
             <tbody>
-                <Days/>
+                <MonthCells/>
             </tbody>
         </table>
 
@@ -156,9 +183,8 @@ const Calendar = ({onSelect}) => {
                 </div>
                 { !monthSelectorActive && <button className='calendar__pagination calendar__pagination--right'
                                                   onClick={onNext}><Chevron/></button> }
-                { monthSelectorActive && <button className='calendar__pagination calendar__pagination--right'>
-                    <Close/>
-                </button> }
+                { monthSelectorActive && <button className='calendar__pagination calendar__pagination--right'
+                                                 onClick={onClose}><Close/></button> }
             </div>
             { !monthSelectorActive ? <DaysTable/> : <MonthList/> }
         </div>

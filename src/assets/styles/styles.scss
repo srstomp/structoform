@@ -234,8 +234,9 @@ $graphite: #4A4A4A;
     height: 48px;
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
     padding: 0 12px;
+    position: relative;
   }
 
   &__pagination {
@@ -246,13 +247,15 @@ $graphite: #4A4A4A;
     border: none;
     cursor: pointer;
     outline: none;
+    position: absolute;
 
     &--left {
-
+      left: 12px;
     }
 
     &--right {
       transform: rotate(180deg);
+      right: 12px;
     }
 
     svg {
@@ -304,6 +307,14 @@ $graphite: #4A4A4A;
     &--today > span {
       background-color: #000;
       color: #fff;
+    }
+
+    &--month {
+      width: 200px;
+
+      span {
+        width: 100%;
+      }
     }
 
     &--blank {
