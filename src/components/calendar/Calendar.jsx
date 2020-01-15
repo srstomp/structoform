@@ -19,10 +19,11 @@ const Close = () =>
         </g>
     </svg>
 
-const Calendar = ({onSelect}) => {
-    //moment.locale('nl', loc);
+const Calendar = ({onSelect, date}) => {
+    //moment.locale('nl', loc);te
     const [ dateObject, setDateObject ] = useState(moment())
-    const [ selectedDate, setSelectedDate ] = useState('')
+    const [ selectedDate ] = useState(date)
+    const [ newDate, setNewDate ] = useState('')
     const [ daysInMonth, setDaysInMonth ] = useState(dateObject.daysInMonth())
     const [ monthSelectorActive, setMonthSelectorActive] = useState(false)
     const [ yearSelectorActive, setYearSelectorActive] = useState(false)
@@ -32,15 +33,37 @@ const Calendar = ({onSelect}) => {
     }, [dateObject])
 
     useEffect(() => {
-        onSelect(selectedDate)
-    }, [selectedDate])
+        // TODO -> refactor this piece of code
+        if (newDate === '' && selectedDate !== '') {
+            let d = moment(selectedDate, 'D/MM/YYYY')
+            let month = parseInt(d.format('MM'))
+            let year = parseInt(d.format('YYYY'))
+            const currentMonth = new Date().getMonth()
+            const currentYear = new Date().getFullYear()
+
+            setDateObject(moment(dateObject).add((month - 1) - currentMonth,'months').add(year - currentYear, 'years'))
+        } else {
+            onSelect(newDate)
+        }
+    }, [newDate, date])
 
     // Helpers
     const selectedMonth = (format = 'MMMM') => dateObject.format(format)
     const selectedYear = (format = 'YYYY') => dateObject.format(format)
+
     const isToday = (day) => {
-        if (selectedMonth('MM') === moment().format('MM')) {
+        if (selectedMonth('MM') === moment().format('MM') &&
+            selectedYear('YYYY') === moment().format('YYYY')) {
             return day === parseFloat(moment().format('D'))
+        }
+        return false
+    }
+
+    const isSelectedDate = (day) => {
+        let d = moment(selectedDate, 'D/MM/YYYY')
+        if (selectedMonth('MM') === d.format('MM') &&
+            selectedYear('YYYY') === d.format('YYYY')) {
+            return day === parseFloat(d.format('D'))
         }
         return false
     }
@@ -98,7 +121,7 @@ const Calendar = ({onSelect}) => {
         for (let j = 0; j < daysInMonth; j++) {
             const day = j + 1
             dayCells.push(
-                <td className={`calendar__cell ${isToday(day) ? 'calendar__cell--today' : ''}`}
+                <td className={`calendar__cell ${isToday(day) ? 'calendar__cell--today' : ''} ${isSelectedDate(day) ? 'calendar__cell--selected' : ''}`}
                     key={`day-${day}`}
                     onClick={e => onDateClick(e, day)}>
                     <span>{day}</span>
@@ -133,31 +156,20 @@ const Calendar = ({onSelect}) => {
     }
 
     // Clickhandlers
-    const onPrev = (e) => {
-        e.preventDefault()
-        setDateObject(moment(dateObject).subtract(1, 'months'))
+    const onPaginationClick = (event, val) => {
+        event.preventDefault()
+        setDateObject(moment(dateObject).add(val, 'months'))
     }
 
-    const onNext = (e) => {
-        e.preventDefault()
-        setDateObject(moment(dateObject).add(1, 'months'))
-    }
-
-    const presentMonthPicker = (e) => {
-        e.preventDefault()
-        setMonthSelectorActive(true)
-        setYearSelectorActive(false)
-    }
-
-    const presentYearPicker = (e) => {
-        e.preventDefault()
-        setMonthSelectorActive(false)
-        setYearSelectorActive(true)
+    const presentPicker = (event, type) => {
+        event.preventDefault()
+        setMonthSelectorActive(type === 'month')
+        setYearSelectorActive(type === 'year')
     }
 
     const onDateClick = (event, day) => {
         const dateString = `${day}/${selectedMonth('MM')}/${selectedYear()}`
-        setSelectedDate(dateString)
+        setNewDate(dateString)
     }
 
     const onMonthClick = (event, month) => {
@@ -216,15 +228,15 @@ const Calendar = ({onSelect}) => {
         <div className={`calendar__wrapper`}>
             <div className='calendar__header'>
                 { (!monthSelectorActive && !yearSelectorActive) && <button className='calendar__pagination calendar__pagination--left'
-                                                  onClick={onPrev}><Chevron/></button> }
+                                                  onClick={e => onPaginationClick(e, -1)}><Chevron/></button> }
                 <div className='calendar__toggle-container'>
                     <button className='calendar__toggle calendar__toggle--month'
-                            onClick={presentMonthPicker}>{`${selectedMonth()}`}</button>
+                            onClick={event => presentPicker(event, 'month')}>{`${selectedMonth()}`}</button>
                     <button className='calendar__toggle calendar__toggle--year'
-                            onClick={presentYearPicker}>{`${selectedYear()}`}</button>
+                            onClick={event => presentPicker(event, 'year')}>{`${selectedYear()}`}</button>
                 </div>
                 { (!monthSelectorActive || !yearSelectorActive) && <button className='calendar__pagination calendar__pagination--right'
-                                                  onClick={onNext}><Chevron/></button> }
+                                                  onClick={e => onPaginationClick(e, 1)}><Chevron/></button> }
                 { (monthSelectorActive || yearSelectorActive) && <button className='calendar__pagination calendar__pagination--right'
                                                  onClick={onClose}><Close/></button> }
             </div>

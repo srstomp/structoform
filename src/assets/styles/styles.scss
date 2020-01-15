@@ -13,6 +13,7 @@ $graphite: #4A4A4A;
 
 .form-item {
   margin-bottom: 24px;
+  position: relative;
 
   &--column{
     display: flex;
@@ -32,12 +33,20 @@ $graphite: #4A4A4A;
     width: 100%;
   }
 
+  &__input-wrapper {
+    display: flex;
+    position: relative;
+  }
+
   &__label {
     margin: 0 0 6px 0;
     display: block;
     font-size: 0.875rem;
   }
 
+  /*
+  SELECT
+   */
   &__select {
     border-radius: 6px;
     padding: 0.75rem;
@@ -78,6 +87,9 @@ $graphite: #4A4A4A;
     }
   }
 
+  /*
+  INPUT
+   */
   &__input, &__textarea {
     border-radius: 6px;
     padding: 0.75rem;
@@ -105,7 +117,7 @@ $graphite: #4A4A4A;
     line-height: 1.5em;
   }
 
-  &__input-button {
+  &__input-button, &__input-icon {
     position: absolute;
     right: 0.25rem;
     top: 0px;
@@ -116,7 +128,13 @@ $graphite: #4A4A4A;
     transform: scale(0.8) translate(0, 50%);
   }
 
-  // BUTTON
+  &__input-icon {
+    cursor: auto;
+  }
+
+  /*
+  BUTTON
+   */
   &__btn {
     &--submit {
       align-self: flex-end;
@@ -124,7 +142,9 @@ $graphite: #4A4A4A;
     }
   }
 
-  // CHECKBOX
+  /*
+  CHECKBOX
+   */
   &__input[type="checkbox"] {
     opacity: 0;
   }
@@ -219,6 +239,9 @@ $graphite: #4A4A4A;
   color: #000;
 }
 
+/*
+CALENDAR
+ */
 .calendar {
 
   &__wrapper {
@@ -227,6 +250,8 @@ $graphite: #4A4A4A;
     border-radius: 6px;
     width: 274px;
     margin-top: 6px;
+    position: absolute;
+    z-index: 50;
   }
 
   &__header {
@@ -315,6 +340,12 @@ $graphite: #4A4A4A;
       color: #fff;
     }
 
+    &--selected > span {
+      background-color: #fff;
+      color: #000;
+      border: 1px solid #000;
+    }
+
     &--month, &--year {
       width: 100px;
 
@@ -352,5 +383,3 @@ $graphite: #4A4A4A;
     }
   }
 }
-
-
