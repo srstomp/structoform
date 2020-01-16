@@ -1,7 +1,8 @@
 import React, {useState} from 'react'
 import PropTypes from "prop-types"
 import { uniqueId, direction } from '../constants/helper'
-import FormItem from "./FormItem";
+import FormItem from './FormItem'
+import _ from 'lodash'
 
 const TextField = ({label, name, placeholder, value, direction, type, errorMessage, showError}) => {
     const [ id ] = useState(() => uniqueId(`${_.camelCase(label)}-`))
