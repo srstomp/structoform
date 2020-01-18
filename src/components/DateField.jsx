@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import ReactDOM from 'react-dom'
 import PropTypes from "prop-types"
 import { uniqueId, direction } from '../constants/helper'
@@ -17,45 +17,54 @@ const CalendarIcon = () =>
 const DateField = ({label, name, placeholder, value, direction, errorMessage, showError}) => {
     const [ id ] = useState(() => uniqueId(`${_.camelCase(label)}-`))
     const [ currentValue, setCurrentValue ] = useState('')
+
+    const node = useRef();
+    const refValue = useRef();
     const [ isCalendarPresent, setIsCalendarPresent ] = useState(false)
 
-    // const handleChange = (e => {
-    //     setCurrentValue(e.target.value)
-    // })
-
     useEffect(() => {
-        setIsCalendarPresent(false)
-        console.log(currentValue)
-    }, [currentValue])
+        if (refValue.current !== currentValue) {
+            refValue.current = currentValue
+            setIsCalendarPresent(false)
+        }
 
-    // const handleDateSelection = ({dateString}) => {
-    //     console.log('handleDateSelection')
-    //     console.log(dateString)
-    //     //return (dateString => setCurrentValue(dateString))
-    // }
+        if (isCalendarPresent) {
+            document.addEventListener("mousedown", handleClickOutside);
+        } else {
+            document.removeEventListener("mousedown", handleClickOutside);
+        }
 
-    const handleDateSelection = dateString => {
-        setCurrentValue(dateString)
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
+    }, [isCalendarPresent, currentValue])
+
+    const handleClickOutside = e => {
+        if (node.current.contains(e.target)) {
+            // inside click
+            return;
+        }
+        // outside click
+        setIsCalendarPresent(false);
     }
 
-
-    const presentCalendar = () => {
-        console.log('presentCalendar')
-        setIsCalendarPresent(true)
-        // ReactDOM.createPortal(
-        //     <Calendar onSelect={handleDateSelection}/>, document.body
-        // )
-    }
+    const handleInputClick = () => setIsCalendarPresent(true)
+    const handleDateSelection = dateString => setCurrentValue(dateString)
 
     return (
         <FormItem label={label} id={id} direction={direction}>
             <div className="form-item__input-wrapper">
-                <input className={`form-item__input ${showError && 'error'}`} placeholder={placeholder} onClick={() => presentCalendar()}
+                <input className={`form-item__input ${showError && 'error'}`} placeholder={placeholder} onClick={handleInputClick}
                        name={name} htmlFor={id} value={currentValue} defaultValue={value} readOnly={true}/>
                 <CalendarIcon/>
             </div>
             <span className={`error-label ${showError ? '' : 'hide'}`}>{errorMessage}</span>
-            { isCalendarPresent && <Calendar onSelect={handleDateSelection} date={currentValue}/> }
+            <div ref={node}>
+                {
+                    isCalendarPresent && <Calendar onSelect={handleDateSelection} date={currentValue}/>
+                }
+            </div>
+
         </FormItem>
     )
 }
