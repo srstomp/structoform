@@ -43,9 +43,8 @@ const Form = ({ className = '', layout, layoutDirection, initValues = [], submit
                                     name={key} placeholder={value.placeholder || ''}
                                     showError={!_.isEmpty(errors[key])} errorMessage={_.head(errors[key]) || ''}/>
             case 'checkbox':
-                return <Checkbox key={key} label={value.label} name={key} value={getValue(key)}
-                                 showError={!_.isEmpty(errors[key])} onChange={handleChange}
-                                 errorMessage={_.head(errors[key]) || ''}/>
+                return <Checkbox key={key} label={value.label} name={key} value={getValue(key) || false}
+                                 showError={!_.isEmpty(errors[key])} errorMessage={_.head(errors[key]) || ''}/>
             case 'textarea':
                 return <TextArea key={key} label={value.label} name={key} direction={dir} onChange={handleChange}
                                  showError={!_.isEmpty(errors[key])} placeholder={value.placeholder}

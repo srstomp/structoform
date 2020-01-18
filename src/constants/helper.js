@@ -29,7 +29,7 @@ const copy = {
         'error_is_selected': 'Er is geen geldige waarde geselecteerd',
         'error_is_password': 'Er is geen wachtwoord ingevuld',
         'error_not_numeric': 'Er is geen numerieke waarde ingevuld',
-        'error_is_checked': 'Je ben niet akkoord gegaan',
+        'error_is_checked': 'Dit veld is niet geaccepteerd',
     }
 }
 

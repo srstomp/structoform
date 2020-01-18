@@ -78,6 +78,13 @@ const validate = (item, validators) => {
         value = item.options[item.selectedIndex].disabled
     }
 
+    if (item.nodeName === 'INPUT' && item.type === 'checkbox') {
+        value = item.checked
+        console.log(item, value)
+    }
+//console.log(item.nodeName, console.log(value), item.type)
+
+
     let errors = validators.rules.map(rule => {
         switch (rule) {
             case validate.types.REQUIRED:
