@@ -55,7 +55,9 @@ const Form = ({ className = '', layout, layoutDirection, initValues = [], submit
                                   placeholder={value.placeholder || ''} value={values[key]}
                                   showError={!_.isEmpty(errors[key])} errorMessage={_.head(errors[key]) || ''}/>
             case 'radio':
-                return <RadioButtonGroup key={index} items={value.values} group={key}/>
+                return <RadioButtonGroup key={index} label={value.label} inline={value.inline} items={value.values}
+                                         group={key} showError={!_.isEmpty(errors[key])}
+                                         errorMessage={_.head(errors[key]) || ''}/>
             default:
                 throw new Error(`Unhandled form type: ${value.type}`)
         }

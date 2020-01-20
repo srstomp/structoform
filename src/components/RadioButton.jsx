@@ -2,8 +2,9 @@ import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import { uniqueId } from '../constants/helper'
 
-const RadioButton = ({label, value, group, onChange}) => {
+const RadioButton = ({label, value, group, onChange, isChecked}) => {
     const [ id ] = useState(() => uniqueId(`${_.camelCase(label)}-`))
+
 
     const handleChange = (e) => {
         console.log(e.target.checked)
@@ -11,8 +12,8 @@ const RadioButton = ({label, value, group, onChange}) => {
     }
 
     return (
-        <div className={`form-item`}>
-            <input type='radio' value={value} name={group} onChange={handleChange} id={id}
+        <div className='radio-wrapper'>
+            <input type='radio' value={value} name={group} onChange={handleChange} id={id} checked={isChecked}
                    className='form-item__radio'/>
             <label htmlFor={id}>{label}</label>
         </div>
