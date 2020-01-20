@@ -165,12 +165,16 @@ $md-radio-ripple-size: 15px;
     display: none;
 
     &:checked + label:before {
-      border-color: $light-grey;
+      border-color: $grey;
       animation: ripple 0.2s linear forwards;
     }
 
     &:checked + label:after {
       transform: scale(1);
+    }
+
+    & + label {
+
     }
   }
 

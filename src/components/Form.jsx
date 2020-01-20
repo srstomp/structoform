@@ -3,6 +3,7 @@ import _ from 'lodash'
 import PropTypes from 'prop-types'
 import { TextField, SelectField, DateField, Checkbox, TextArea, useForm } from "../index"
 import { direction } from '../constants/helper'
+import RadioButtonGroup from "./RadioButtonGroup";
 
 const Form = ({ className = '', layout, layoutDirection, initValues = [], submitButton, onSubmit }) => {
 
@@ -54,7 +55,7 @@ const Form = ({ className = '', layout, layoutDirection, initValues = [], submit
                                   placeholder={value.placeholder || ''} value={values[key]}
                                   showError={!_.isEmpty(errors[key])} errorMessage={_.head(errors[key]) || ''}/>
             case 'radio':
-                return <span>radio</span>
+                return <RadioButtonGroup key={index} items={value.values} group={key}/>
             default:
                 throw new Error(`Unhandled form type: ${value.type}`)
         }
