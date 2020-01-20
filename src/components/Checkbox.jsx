@@ -13,7 +13,7 @@ const Checkbox = ({label, name, value, showError}) => {
 
     return (
         <div className={`form-item`}>
-            <input className={`form-item__input`} type='checkbox' name={name} onChange={handleChange} checked={isChecked}
+            <input className={`form-item__checkbox`} type='checkbox' name={name} onChange={handleChange} checked={isChecked}
                    id={id}/>
             <label className={`${showError ? 'error-label' : ''}`} htmlFor={id}>{label}</label>
             {/*<span className={`error-label ${showError ? '' : 'hide'}`}>{errorMessage}</span>*/}

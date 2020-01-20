@@ -1,9 +1,9 @@
 import React, { useEffect, useState, useRef } from 'react'
 import ReactDOM from 'react-dom'
-import PropTypes from "prop-types"
+import PropTypes from 'prop-types'
 import { uniqueId, direction } from '../constants/helper'
-import FormItem from "./FormItem";
-import Calendar from "./calendar/Calendar";
+import FormItem from './FormItem'
+import Calendar from './Calendar'
 
 const CalendarIcon = () =>
     <svg width="25px" height="24px" viewBox="0 0 25 24" version="1.1" xmlns="http://www.w3.org/2000/svg" className='form-item__input-icon'>
@@ -64,7 +64,6 @@ const DateField = ({label, name, placeholder, value, direction, errorMessage, sh
                     isCalendarPresent && <Calendar onSelect={handleDateSelection} date={currentValue}/>
                 }
             </div>
-
         </FormItem>
     )
 }
