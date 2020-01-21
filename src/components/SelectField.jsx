@@ -1,22 +1,28 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { uniqueId, direction } from '../constants/helper'
-import FormItem from "./FormItem";
+import FormItem from './FormItem'
 
-const SelectField = ({label, name, placeholder, values, direction, errorMessage, showError}) => {
+const SelectField = ({label, name, placeholder, values, direction, errorMessage, showError, onChange}) => {
     const [ id ] = useState(() => uniqueId(`${_.camelCase(label)}-`))
-    const [ selectedValue, setSelectedValue ] = useState(placeholder)
+    const [ currentValue, setCurrentValue ] = useState(placeholder)
+    const [ isChecked, setIsChecked ] = useState(false)
 
-    const placeholderStyling = () => `${selectedValue === placeholder && 'form-item__select--placeholder'}`
+    useEffect(() => {
+        onChange(name, isChecked ? currentValue : null)
+    }, [currentValue])
 
-    const didChangeSelection = (e => {
-        setSelectedValue(e.target.value)
+    const placeholderStyling = () => `${currentValue === placeholder && 'form-item__select--placeholder'}`
+
+    const handleChange = (e => {
+        setIsChecked(true)
+        setCurrentValue(e.target.value)
     })
 
     return (
         <FormItem label={label} id={id} direction={direction}>
             <select className={`form-item__select ${placeholderStyling()} ${errorMessage !== '' ? 'error' : ''}`}
-                    htmlFor={id} name={name} onChange={didChangeSelection} value={selectedValue}>
+                    htmlFor={id} name={name} onChange={handleChange} value={currentValue}>
                 <option disabled default>{placeholder}</option>
                 {
                     values.map((item, i) => {
@@ -39,4 +45,5 @@ SelectField.propTypes = {
     direction: PropTypes.oneOf(Object.values(direction)),
     errorMessage: PropTypes.string,
     showError: PropTypes.bool.isRequired,
+    onChange: PropTypes.func.isRequired
 }

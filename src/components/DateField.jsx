@@ -1,9 +1,9 @@
 import React, { useEffect, useState, useRef } from 'react'
 import ReactDOM from 'react-dom'
-import PropTypes from "prop-types"
+import PropTypes from 'prop-types'
 import { uniqueId, direction } from '../constants/helper'
-import FormItem from "./FormItem";
-import Calendar from "./calendar/Calendar";
+import FormItem from './FormItem'
+import Calendar from './Calendar'
 
 const CalendarIcon = () =>
     <svg width="25px" height="24px" viewBox="0 0 25 24" version="1.1" xmlns="http://www.w3.org/2000/svg" className='form-item__input-icon'>
@@ -14,7 +14,7 @@ const CalendarIcon = () =>
         </g>
     </svg>
 
-const DateField = ({label, name, placeholder, value, direction, errorMessage, showError}) => {
+const DateField = ({label, name, placeholder, value, direction, errorMessage, showError, onChange}) => {
     const [ id ] = useState(() => uniqueId(`${_.camelCase(label)}-`))
     const [ currentValue, setCurrentValue ] = useState('')
 
@@ -25,37 +25,43 @@ const DateField = ({label, name, placeholder, value, direction, errorMessage, sh
     useEffect(() => {
         if (refValue.current !== currentValue) {
             refValue.current = currentValue
+
+            onChange(name, currentValue)
+
             setIsCalendarPresent(false)
         }
 
         if (isCalendarPresent) {
-            document.addEventListener("mousedown", handleClickOutside);
+            document.addEventListener('mousedown', handleClickOutside)
         } else {
-            document.removeEventListener("mousedown", handleClickOutside);
+            document.removeEventListener('mousedown', handleClickOutside)
         }
 
-        return () => {
-            document.removeEventListener("mousedown", handleClickOutside);
-        };
+        return () => document.removeEventListener('mousedown', handleClickOutside)
+
     }, [isCalendarPresent, currentValue])
 
     const handleClickOutside = e => {
         if (node.current.contains(e.target)) {
             // inside click
-            return;
+            return
         }
         // outside click
         setIsCalendarPresent(false);
     }
 
     const handleInputClick = () => setIsCalendarPresent(true)
+
     const handleDateSelection = dateString => setCurrentValue(dateString)
+
+    const handleChange = e => setCurrentValue(e.target.value)
 
     return (
         <FormItem label={label} id={id} direction={direction}>
             <div className="form-item__input-wrapper">
-                <input className={`form-item__input ${showError && 'error'}`} placeholder={placeholder} onClick={handleInputClick}
-                       name={name} htmlFor={id} value={currentValue} defaultValue={value} readOnly={true}/>
+                <input className={`form-item__input ${showError && 'error'}`} placeholder={placeholder}
+                       onClick={handleInputClick} name={name} htmlFor={id} onChange={handleChange}
+                       value={currentValue} defaultValue={value}/>
                 <CalendarIcon/>
             </div>
             <span className={`error-label ${showError ? '' : 'hide'}`}>{errorMessage}</span>
@@ -64,7 +70,6 @@ const DateField = ({label, name, placeholder, value, direction, errorMessage, sh
                     isCalendarPresent && <Calendar onSelect={handleDateSelection} date={currentValue}/>
                 }
             </div>
-
         </FormItem>
     )
 }
@@ -79,4 +84,5 @@ DateField.propTypes = {
     direction: PropTypes.oneOf(Object.values(direction)),
     errorMessage: PropTypes.string,
     showError: PropTypes.bool.isRequired,
+    onChange: PropTypes.func.isRequired
 }

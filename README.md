@@ -5,6 +5,7 @@ A form builder for React
 * Checkbox
 * DateField
 * SelectField
+* Radio Button
 * TextArea
 * TextField
 
@@ -17,6 +18,7 @@ A form builder for React
 - [ ] Write documentation
 - [ ] Add tests
 - [ ] Password Field
-- [ ] Radio Button
 - [ ] Phone Field
 - [ ] Autosuggest / Autocomplete
+- [ ] Restrict input of DateField
+- [ ] Refactor validation logic

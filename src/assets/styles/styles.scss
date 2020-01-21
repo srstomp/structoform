@@ -5,6 +5,27 @@ $light-grey: #E5E5E5;
 $grey: #9E9E9E;
 $graphite: #4A4A4A;
 
+@keyframes ripple {
+  0% {
+    box-shadow: 0px 0px 0px 1px rgba(0, 0, 0, 0.0);
+  }
+
+  50% {
+    box-shadow: 0px 0px 0px 5px rgba(0, 0, 0, 0.1);
+  }
+
+  100% {
+    box-shadow: 0px 0px 0px 5px rgba(0, 0, 0, 0);
+  }
+}
+
+
+*, *:before, *:after {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
 .form {
   display: flex;
   flex-direction: column;
@@ -50,7 +71,7 @@ $graphite: #4A4A4A;
   &__select {
     border-radius: 6px;
     padding: 0.75rem;
-    border: 1px solid $light-grey;
+    border: 1px solid $grey;
     outline: none;
     box-shadow: none;
     -moz-appearance: none;
@@ -93,7 +114,7 @@ $graphite: #4A4A4A;
   &__input, &__textarea {
     border-radius: 6px;
     padding: 0.75rem;
-    border: 1px solid $light-grey;
+    border: 1px solid $grey;
     color: $night;
     outline: none;
     appearance: none;
@@ -136,84 +157,167 @@ $graphite: #4A4A4A;
   }
 
   /*
+  RADIO BUTTON
+   */
+  &__radio {
+
+    &__wrapper {
+      display: flex;
+      flex-direction: column;
+    }
+    &[type='radio'] {
+      display: none;
+    }
+
+    &:checked + label:before {
+      border-color: $grey;
+      //animation: ripple 0.2s linear forwards;
+    }
+
+    &:checked + label:after {
+      transform: scale(1);
+    }
+
+    & + label {
+      display: inline-block;
+      height: 20px;
+      position: relative;
+      padding: 0 30px;
+      margin-bottom: 0;
+      cursor: pointer;
+      vertical-align: bottom;
+
+      &:before, &:after {
+        position: absolute;
+        content: '';
+        border-radius: 50%;
+        transition: all .3s ease;
+        transition-property: transform, border-color;
+      }
+
+      &:before {
+        left: 0;
+        top: 0;
+        width: 20px;
+        height: 20px;
+        border: 1px solid $grey;
+      }
+
+      &:after {
+        top: (20px - 12px) / 2;
+        left: (20px - 12px) / 2;
+        width: 12px;
+        height: 12px;
+        transform: scale(0);
+        background: $teal;
+      }
+    }
+  }
+
+  &__radiogroup {
+
+    &--column{
+      display: flex;
+      flex-direction: column;
+
+      .radio-wrapper {
+        margin-bottom: 12px;
+      }
+    }
+
+    &--row {
+      display: flex;
+      flex-direction: row;
+    }
+  }
+  /*
   CHECKBOX
    */
-  /* Base for label styling */
-  &__input[type="checkbox"]:not(:checked),
-  &__input[type="checkbox"]:checked {
-    position: absolute;
-    left: -9999px;
-  }
-
-  &__input[type="checkbox"]:not(:checked) + label,
-  &__input[type="checkbox"]:checked + label {
-    position: relative;
-    padding-left: 1.95em;
-    cursor: pointer;
-
-    /* checkbox aspect */
-    &:before {
-      content: '';
+  &__checkbox {
+    /* Base for label styling */
+    &:not(:checked), &:checked {
       position: absolute;
-      left: 0;
-      top: -2px;
-      width: 1.25em;
-      height: 1.25em;
-      border: 1px solid $light-grey;
-      background: #ffffff;
-      border-radius: 4px;
+      left: -9999px;
+
+      & + label {
+        position: relative;
+        padding-left: 1.95em;
+        cursor: pointer;
+
+        /* checkbox aspect */
+        &:before {
+          content: '';
+          position: absolute;
+          left: 0;
+          top: -2px;
+          width: 1.25em;
+          height: 1.25em;
+          border: 1px solid $grey;
+          background: #ffffff;
+          border-radius: 4px;
+        }
+
+        /* checked mark aspect */
+        &:after {
+          content: '\2713';
+          position: absolute;
+          top: 0.0em;
+          left: .15em;
+          font-size: 1.2em;
+          line-height: 0.8;
+          color: #ffffff;
+          transition: all .2s;
+          font-family: 'Lucida Sans Unicode', 'Arial Unicode MS', Arial;
+        }
+
+        &.error-label:before {
+          border: 1px solid $red;
+        }
+      }
+
+      /* accessibility */
+      &:focus + label:before,
+      &:focus + label:before {
+        border: 1px solid $night;
+      }
     }
 
-    /* checked mark aspect */
-    &:after {
-      content: '\2713';
-      position: absolute;
-      top: 0.05em;
-      left: .22em;
-      font-size: 1.2em;
-      line-height: 0.8;
-      color: #ffffff;
-      transition: all .2s;
-      font-family: 'Lucida Sans Unicode', 'Arial Unicode MS', Arial;
+    &:checked + label {
+      &:before {
+        background: $teal;
+        border: 1px solid $teal;
+      }
+
+      &:after {
+        opacity: 1;
+        transform: scale(1);
+      }
     }
-  }
 
-  &__input[type="checkbox"]:not(:checked) + label.error-label:before {
-    border: 1px solid $red;
-  }
+    &:not(:checked) + label:after {
+      opacity: 0;
+      transform: scale(0);
+    }
 
-  &__input[type="checkbox"]:checked + label:before {
-    background: $teal;
-    border: 1px solid $teal;
-  }
-  /* checked mark aspect changes */
-  &__input[type="checkbox"]:not(:checked) + label:after {
-    opacity: 0;
-    transform: scale(0);
-  }
-  &__input[type="checkbox"]:checked + label:after {
-    opacity: 1;
-    transform: scale(1);
-  }
+    /* disabled checkbox */
+    &:disabled {
+      & + label {
+        color: #aaa;
+      }
 
+      &:checked + label,
+      &:not(:checked) + label {
+        &:before {
+          box-shadow: none;
+          border-color: #bbb;
+          background-color: #ddd;
+        }
 
-  /* disabled checkbox */
-  &__input[type="checkbox"]:disabled:not(:checked) + label:before,
-  &__input[type="checkbox"]:disabled:checked + label:before {
-    box-shadow: none;
-    border-color: #bbb;
-    background-color: #ddd;
-  }
-  &__input[type="checkbox"]:disabled:checked + label:after {
-    color: #999;
-  }
-  &__input[type="checkbox"]:disabled + label {
-    color: #aaa;
-  }
-  /* accessibility */
-  &__input[type="checkbox"]:checked:focus + label:before,
-  &__input[type="checkbox"]:not(:checked):focus + label:before {
-    border: 1px solid $night;
+        &:after {
+          color: #999;
+        }
+      }
+    }
   }
 }
 
@@ -226,16 +330,6 @@ $graphite: #4A4A4A;
   &.hide {
     display: none;
   }
-}
-
-.selectedState {
-  background-color: #000;
-  color: #fff;
-}
-
-.hoverState {
-  background-color: #9E9E9E;
-  color: #000;
 }
 
 /*
@@ -254,7 +348,7 @@ CALENDAR
   }
 
   &__header {
-    border-bottom: 1px solid #E4E4E4;
+    border-bottom: 1px solid $grey;
     height: 48px;
     display: flex;
     align-items: center;
@@ -266,7 +360,7 @@ CALENDAR
   &__pagination {
     width: 24px;
     height: 24px;
-    background-color: #E4E4E4;
+    background-color: $grey;
     border-radius: 12px;
     border: none;
     cursor: pointer;
@@ -288,7 +382,7 @@ CALENDAR
     }
 
     &:hover {
-      background-color: #000;
+      background-color: $night;
       svg > g {
         fill: #fff;
       }
@@ -306,7 +400,7 @@ CALENDAR
   }
 
   &__weekdays {
-    color: #000;
+    color: $night;
     font-size: 0.875rem;
     width: 30px;
   }
@@ -314,7 +408,7 @@ CALENDAR
   &__cell {
     font-size: 0.875rem;
     background-color: #fff;
-    color: #000;
+    color: $night;
     text-align: center;
     width: 30px;
     height: 30px;
@@ -330,19 +424,19 @@ CALENDAR
     }
 
     &:hover > span {
-      background-color: #E4E4E4;
-      color: #000;
+      background-color: $grey;
+      color: $night;
     }
 
     &--today > span {
-      background-color: #000;
+      background-color: $night;
       color: #fff;
     }
 
     &--selected > span {
       background-color: #fff;
-      color: #000;
-      border: 1px solid #000;
+      color: $night;
+      border: 1px solid $night;
     }
 
     &--month, &--year {
@@ -365,11 +459,13 @@ CALENDAR
     padding: 0 12px;
     border-radius: 12px;
     cursor: pointer;
-    @extend .selectedState;
     outline: none;
+    background-color: $night;
+    color: #fff;
 
     &:hover {
-      @extend .hoverState;
+      background-color: $grey;
+      color: $night;
     }
 
     &--month {
