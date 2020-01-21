@@ -1,20 +1,22 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { uniqueId } from '../constants/helper'
 import _ from "lodash";
 
-const Checkbox = ({label, name, value, showError}) => {
+const Checkbox = ({label, name, value, showError, onChange}) => {
     const [ id ] = useState(() => uniqueId(`${_.camelCase(label)}-`))
     const [ isChecked, setIsChecked ] = useState(false)
 
-    const handleChange = (e) => {
-        setIsChecked(e.target.checked)
-    }
+    const handleChange = e => setIsChecked(e.target.checked)
+
+    useEffect(() => {
+        onChange(name, isChecked)
+    }, [isChecked])
 
     return (
         <div className={`form-item`}>
-            <input className={`form-item__checkbox`} type='checkbox' name={name} onChange={handleChange} checked={isChecked}
-                   id={id}/>
+            <input className={`form-item__checkbox`} type='checkbox' name={name} onChange={handleChange}
+                   checked={isChecked} id={id}/>
             <label className={`${showError ? 'error-label' : ''}`} htmlFor={id}>{label}</label>
             {/*<span className={`error-label ${showError ? '' : 'hide'}`}>{errorMessage}</span>*/}
         </div>
@@ -28,5 +30,5 @@ Checkbox.propTypes = {
     name: PropTypes.string.isRequired,
     value: PropTypes.bool,
     showError: PropTypes.bool,
-    errorMessage: PropTypes.string
+    onChange: PropTypes.func.isRequired
 }

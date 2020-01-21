@@ -6,13 +6,13 @@ import _ from 'lodash'
 
 const TextField = ({label, name, placeholder, value, direction, type, errorMessage, showError, onChange}) => {
     const [ id ] = useState(() => uniqueId(`${_.camelCase(label)}-`))
-    const [currentValue, setCurrentValue] = useState('')
+    const [currentValue, setCurrentValue] = useState(null)
 
     useEffect(() => {
-        onChange(currentValue)
+        onChange(name, currentValue)
     }, [currentValue])
 
-    const handleChange = (e => setCurrentValue(e.target.value))
+    const handleChange = e => setCurrentValue(e.target.value)
 
     return (
         <FormItem label={label} id={id} direction={direction}>
@@ -34,4 +34,5 @@ TextField.propTypes = {
     type: PropTypes.string.isRequired,
     errorMessage: PropTypes.string,
     showError: PropTypes.bool.isRequired,
+    onChange: PropTypes.func.isRequired
 }

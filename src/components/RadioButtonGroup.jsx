@@ -3,15 +3,18 @@ import PropTypes from 'prop-types'
 import {direction, uniqueId} from '../constants/helper'
 import RadioButton from './RadioButton'
 import _ from "lodash";
-import FormItem from "./FormItem";
 
-const RadioButtonGroup = ({items, group, label, inline, errorMessage, showError}) => {
+const RadioButtonGroup = ({items, name, label, inline, errorMessage, showError, onChange}) => {
     const [ id ] = useState(() => uniqueId(`${_.camelCase(label)}-`))
-    const [ selectedValue, setSelectedValue] = useState(null)
+    const [ currentValue, setCurrentValue] = useState(null)
+
+    useEffect(() => {
+        onChange(name, currentValue)
+    }, [currentValue])
 
     const handleChange = (e) => {
         e.preventDefault()
-        setSelectedValue(e.target.value)
+        setCurrentValue(e.target.value)
     }
 
     return (
@@ -20,8 +23,8 @@ const RadioButtonGroup = ({items, group, label, inline, errorMessage, showError}
             <div className={`form-item__radiogroup${inline ? direction.row : direction.column}`}>
                 {
                     items.map(item => <RadioButton key={uniqueId(`${_.camelCase(item.label)}-`)} label={item.label}
-                                                   value={item.value} group={group} onChange={handleChange}
-                                                   isChecked={item.value === selectedValue}/>)
+                                                   value={item.value} group={name} onChange={handleChange}
+                                                   isChecked={item.value === currentValue}/>)
                 }
             </div>
             <span className={`error-label ${showError ? '' : 'hide'}`}>{errorMessage}</span>
@@ -33,9 +36,10 @@ export default RadioButtonGroup
 
 RadioButtonGroup.propTypes = {
     items: PropTypes.arrayOf(PropTypes.shape).isRequired,
-    group: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
     label: PropTypes.string.isRequired,
     inline: PropTypes.bool.isRequired,
     errorMessage: PropTypes.string,
     showError: PropTypes.bool.isRequired,
+    onChange: PropTypes.func.isRequired
 }

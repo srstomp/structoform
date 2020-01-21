@@ -32,9 +32,6 @@ const useForm = (callback, validators) => {
             Object.values(event.target.elements).forEach((obj) => {
                 if (obj.name === item) {
                     setErrors(errors => ({ ...errors, [obj.name]: validate(obj, validators[item])} ))
-
-                    // Store values of input elements
-                    ///setValues(values => ({ ...values, [obj.name]: value(obj)}))
                 }
             })
         )
@@ -42,16 +39,17 @@ const useForm = (callback, validators) => {
         setIsSubmitting(true)
     }
 
-    const handleChange = (event, value) => {
+    const handleChange = (key, value) => {
 
         // Access the event properties. https://reactjs.org/docs/events.html
-        event.persist()
+        // event.persist()
 
         // Remove current error on typing
         setErrors(errors => ({ ...errors, [event.target.name]: null} ))
             //[\d/]
         // Store values of input elements
-        setValues(values => ({ ...values, [event.target.name]: value}))
+        // setValues(values => ({ ...values, [event.target.name]: value}))
+        setValues(values => ({ ...values, [key]: value}))
     }
 
     const value = (target => {

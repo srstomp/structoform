@@ -14,38 +14,37 @@ const CalendarIcon = () =>
         </g>
     </svg>
 
-const DateField = ({label, name, placeholder, value, direction, errorMessage, showError}) => {
+const DateField = ({label, name, placeholder, value, direction, errorMessage, showError, onChange}) => {
     const [ id ] = useState(() => uniqueId(`${_.camelCase(label)}-`))
-    const [ currentValue, setCurrentValue ] = useState('')
+    const [ currentValue, setCurrentValue ] = useState(null)
 
     const node = useRef();
     const refValue = useRef();
-    const input = useRef();
     const [ isCalendarPresent, setIsCalendarPresent ] = useState(false)
 
     useEffect(() => {
-        if (isCalendarPresent) {
-            document.addEventListener("mousedown", handleClickOutside)
-        } else {
-            document.removeEventListener("mousedown", handleClickOutside)
-        }
-
-        return () => document.removeEventListener("mousedown", handleClickOutside)
-
-    }, [isCalendarPresent])
-
-    useEffect(() => {
         if (refValue.current !== currentValue) {
-            console.log(refValue.current, currentValue)
             refValue.current = currentValue
+
+            onChange(name, currentValue)
+
             setIsCalendarPresent(false)
         }
-    }, [currentValue])
+
+        if (isCalendarPresent) {
+            document.addEventListener('mousedown', handleClickOutside)
+        } else {
+            document.removeEventListener('mousedown', handleClickOutside)
+        }
+
+        return () => document.removeEventListener('mousedown', handleClickOutside)
+
+    }, [isCalendarPresent, currentValue])
 
     const handleClickOutside = e => {
         if (node.current.contains(e.target)) {
             // inside click
-            return;
+            return
         }
         // outside click
         setIsCalendarPresent(false);
@@ -53,36 +52,16 @@ const DateField = ({label, name, placeholder, value, direction, errorMessage, sh
 
     const handleInputClick = () => setIsCalendarPresent(true)
 
-    const handleDateSelection = dateString => {
-        //setCurrentValue(dateString)
-        console.log('handleDateSelection')
+    const handleDateSelection = dateString => setCurrentValue(dateString)
 
-        dispatchCustomEvent(dateString)
-    }
-
-    const handleChange = (e => {
-        console.log('handleChange')
-        console.log(e)
-        setCurrentValue(e.target.value)
-    })
-
-    const dispatchCustomEvent = (value) => {
-        let inputField = input.current
-        var nativeInputValueSetter = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, "value").set
-        nativeInputValueSetter.call(inputField, value)
-
-        var inputEvent = new Event('change', {bubbles: true})
-        inputField.dispatchEvent(inputEvent)
-
-        console.log('dispatchCustomEvent')
-    }
+    const handleChange = e => setCurrentValue(e.target.value)
 
     return (
         <FormItem label={label} id={id} direction={direction}>
             <div className="form-item__input-wrapper">
                 <input className={`form-item__input ${showError && 'error'}`} placeholder={placeholder}
                        onClick={handleInputClick} name={name} htmlFor={id} onChange={handleChange}
-                       value={currentValue} defaultValue={value} ref={input}/>
+                       value={currentValue} defaultValue={value}/>
                 <CalendarIcon/>
             </div>
             <span className={`error-label ${showError ? '' : 'hide'}`}>{errorMessage}</span>
@@ -105,4 +84,5 @@ DateField.propTypes = {
     direction: PropTypes.oneOf(Object.values(direction)),
     errorMessage: PropTypes.string,
     showError: PropTypes.bool.isRequired,
+    onChange: PropTypes.func.isRequired
 }
