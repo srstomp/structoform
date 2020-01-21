@@ -37,11 +37,11 @@ const Form = ({ className = '', layout, layoutDirection, initValues = [], submit
             case 'phone':
             case 'number':
                 return <TextField key={index} type={value.type} name={key} label={value.label} direction={dir}
-                                  placeholder={value.placeholder || ''} value={values[key]}
+                                  placeholder={value.placeholder || ''} value={values[key]} onChange={handleChange}
                                   showError={!_.isEmpty(errors[key])} errorMessage={_.head(errors[key]) || ''}/>
             case 'select':
                 return <SelectField key={key} label={value.label} values={value.values || []} direction={dir}
-                                    name={key} placeholder={value.placeholder || ''}
+                                    name={key} placeholder={value.placeholder || ''} onChange={handleChange}
                                     showError={!_.isEmpty(errors[key])} errorMessage={_.head(errors[key]) || ''}/>
             case 'checkbox':
                 return <Checkbox key={key} label={value.label} name={key} value={getValue(key) || false}
@@ -51,12 +51,12 @@ const Form = ({ className = '', layout, layoutDirection, initValues = [], submit
                                  showError={!_.isEmpty(errors[key])} placeholder={value.placeholder}
                                  errorMessage={_.head(errors[key]) || ''} value={values[key]}/>
             case 'date':
-                return <DateField key={index} name={key} label={value.label} direction={dir}
+                return <DateField key={index} name={key} label={value.label} direction={dir} onChange={handleChange}
                                   placeholder={value.placeholder || ''} value={values[key]}
                                   showError={!_.isEmpty(errors[key])} errorMessage={_.head(errors[key]) || ''}/>
             case 'radio':
                 return <RadioButtonGroup key={index} label={value.label} inline={value.inline} items={value.values}
-                                         group={key} showError={!_.isEmpty(errors[key])}
+                                         group={key} showError={!_.isEmpty(errors[key])} onChange={handleChange}
                                          errorMessage={_.head(errors[key]) || ''}/>
             default:
                 throw new Error(`Unhandled form type: ${value.type}`)
@@ -64,7 +64,7 @@ const Form = ({ className = '', layout, layoutDirection, initValues = [], submit
     }
 
     return (
-        <form className={`form ${className}`} onSubmit={handleSubmit} onChange={handleChange} noValidate >
+        <form className={`form ${className}`} onSubmit={handleSubmit} noValidate >
             {
                 Object.keys(layout).map((key, i) => {
                     return getItem(key, layout[key], i)

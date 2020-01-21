@@ -20,24 +20,27 @@ const DateField = ({label, name, placeholder, value, direction, errorMessage, sh
 
     const node = useRef();
     const refValue = useRef();
+    const input = useRef();
     const [ isCalendarPresent, setIsCalendarPresent ] = useState(false)
 
     useEffect(() => {
+        if (isCalendarPresent) {
+            document.addEventListener("mousedown", handleClickOutside)
+        } else {
+            document.removeEventListener("mousedown", handleClickOutside)
+        }
+
+        return () => document.removeEventListener("mousedown", handleClickOutside)
+
+    }, [isCalendarPresent])
+
+    useEffect(() => {
         if (refValue.current !== currentValue) {
+            console.log(refValue.current, currentValue)
             refValue.current = currentValue
             setIsCalendarPresent(false)
         }
-
-        if (isCalendarPresent) {
-            document.addEventListener("mousedown", handleClickOutside);
-        } else {
-            document.removeEventListener("mousedown", handleClickOutside);
-        }
-
-        return () => {
-            document.removeEventListener("mousedown", handleClickOutside);
-        };
-    }, [isCalendarPresent, currentValue])
+    }, [currentValue])
 
     const handleClickOutside = e => {
         if (node.current.contains(e.target)) {
@@ -49,13 +52,37 @@ const DateField = ({label, name, placeholder, value, direction, errorMessage, sh
     }
 
     const handleInputClick = () => setIsCalendarPresent(true)
-    const handleDateSelection = dateString => setCurrentValue(dateString)
+
+    const handleDateSelection = dateString => {
+        //setCurrentValue(dateString)
+        console.log('handleDateSelection')
+
+        dispatchCustomEvent(dateString)
+    }
+
+    const handleChange = (e => {
+        console.log('handleChange')
+        console.log(e)
+        setCurrentValue(e.target.value)
+    })
+
+    const dispatchCustomEvent = (value) => {
+        let inputField = input.current
+        var nativeInputValueSetter = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, "value").set
+        nativeInputValueSetter.call(inputField, value)
+
+        var inputEvent = new Event('change', {bubbles: true})
+        inputField.dispatchEvent(inputEvent)
+
+        console.log('dispatchCustomEvent')
+    }
 
     return (
         <FormItem label={label} id={id} direction={direction}>
             <div className="form-item__input-wrapper">
-                <input className={`form-item__input ${showError && 'error'}`} placeholder={placeholder} onClick={handleInputClick}
-                       name={name} htmlFor={id} value={currentValue} defaultValue={value} readOnly={true}/>
+                <input className={`form-item__input ${showError && 'error'}`} placeholder={placeholder}
+                       onClick={handleInputClick} name={name} htmlFor={id} onChange={handleChange}
+                       value={currentValue} defaultValue={value} ref={input}/>
                 <CalendarIcon/>
             </div>
             <span className={`error-label ${showError ? '' : 'hide'}`}>{errorMessage}</span>

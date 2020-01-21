@@ -32,6 +32,9 @@ const useForm = (callback, validators) => {
             Object.values(event.target.elements).forEach((obj) => {
                 if (obj.name === item) {
                     setErrors(errors => ({ ...errors, [obj.name]: validate(obj, validators[item])} ))
+
+                    // Store values of input elements
+                    ///setValues(values => ({ ...values, [obj.name]: value(obj)}))
                 }
             })
         )
@@ -39,18 +42,20 @@ const useForm = (callback, validators) => {
         setIsSubmitting(true)
     }
 
-    const handleChange = (event) => {
+    const handleChange = (event, value) => {
+
         // Access the event properties. https://reactjs.org/docs/events.html
         event.persist()
 
         // Remove current error on typing
         setErrors(errors => ({ ...errors, [event.target.name]: null} ))
-
+            //[\d/]
         // Store values of input elements
-        setValues(values => ({ ...values, [event.target.name]: value(event.target)}))
+        setValues(values => ({ ...values, [event.target.name]: value}))
     }
 
     const value = (target => {
+        console.log('target', target)
         switch (target.type) {
             case 'checkbox':
                 return target.checked
@@ -76,10 +81,14 @@ const validate = (item, validators) => {
     // check if a option is selected.
     if (item.nodeName === 'SELECT') {
         value = item.options[item.selectedIndex].disabled
+    } else if (item.nodeName === 'INPUT' && item.type === 'checkbox') {
+        value = item.checked
     }
 
-    if (item.nodeName === 'INPUT' && item.type === 'checkbox') {
-        value = item.checked
+    console.log(item)
+
+    if (item.nodeName === 'INPUT' && item.type === 'radio') {
+
     }
 
     let errors = validators.rules.map(rule => {
@@ -102,7 +111,6 @@ const validate = (item, validators) => {
     }).filter(item => typeof(item) === 'string')
 
     return _.isEmpty(errors) ? null : errors
-
 }
 
 validate.types = {

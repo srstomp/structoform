@@ -1,16 +1,18 @@
-import React, {useState} from 'react'
+import React, { useState, useEffect } from 'react'
 import PropTypes from "prop-types"
 import { uniqueId, direction } from '../constants/helper'
 import FormItem from './FormItem'
 import _ from 'lodash'
 
-const TextField = ({label, name, placeholder, value, direction, type, errorMessage, showError}) => {
+const TextField = ({label, name, placeholder, value, direction, type, errorMessage, showError, onChange}) => {
     const [ id ] = useState(() => uniqueId(`${_.camelCase(label)}-`))
     const [currentValue, setCurrentValue] = useState('')
 
-    const handleChange = (e => {
-        setCurrentValue(e.target.value)
-    })
+    useEffect(() => {
+        onChange(currentValue)
+    }, [currentValue])
+
+    const handleChange = (e => setCurrentValue(e.target.value))
 
     return (
         <FormItem label={label} id={id} direction={direction}>
