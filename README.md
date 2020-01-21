@@ -21,3 +21,4 @@ A form builder for React
 - [ ] Phone Field
 - [ ] Autosuggest / Autocomplete
 - [ ] Restrict input of DateField
+- [ ] Support multiple languages
