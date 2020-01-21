@@ -6,6 +6,7 @@ import PasswordField from './components/PasswordField'
 import Checkbox from './components/Checkbox'
 import Form from './components/Form'
 import useForm from './hooks/useForm'
+import RadioButtonGroup from './components/RadioButtonGroup'
 
 export {
     SelectField,
@@ -15,5 +16,6 @@ export {
     Checkbox,
     TextArea,
     Form,
-    useForm
+    useForm,
+    RadioButtonGroup
 }

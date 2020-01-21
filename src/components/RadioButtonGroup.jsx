@@ -6,7 +6,7 @@ import _ from "lodash";
 
 const RadioButtonGroup = ({items, name, label, inline, errorMessage, showError, onChange}) => {
     const [ id ] = useState(() => uniqueId(`${_.camelCase(label)}-`))
-    const [ currentValue, setCurrentValue] = useState(null)
+    const [ currentValue, setCurrentValue] = useState('')
 
     useEffect(() => {
         onChange(name, currentValue)

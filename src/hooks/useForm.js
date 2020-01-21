@@ -7,10 +7,6 @@ const useForm = (callback, validators) => {
     const [isSubmitting, setIsSubmitting] = useState(false)
 
     useEffect(() => {
-       // if (Object.values(errors).every(x => _.isEmpty(x)) && isSubmitting) {
-            //callback()
-       // }
-
         if (isSubmitting) {
             callback()
         }
@@ -27,40 +23,28 @@ const useForm = (callback, validators) => {
             event.preventDefault()
         }
 
-        // Validate & store error message for each input element
-        Object.keys(validators).forEach(item =>
-            Object.values(event.target.elements).forEach((obj) => {
-                if (obj.name === item) {
-                    setErrors(errors => ({ ...errors, [obj.name]: validate(obj, validators[item])} ))
+        Object.keys(validators).forEach( validator => {
+            Object.keys(values).forEach((key) => {
+
+                if ( key === validator ) {
+                    console.log(key, validator)
+                    console.log(values[key], validators[validator])
+                    setErrors(errors => ( { ...errors, [key]: validate(values[key], validators[validator])} ))
                 }
             })
-        )
+        })
 
         setIsSubmitting(true)
     }
 
+//[\d/]
     const handleChange = (key, value) => {
-
-        // Access the event properties. https://reactjs.org/docs/events.html
-        // event.persist()
-
         // Remove current error on typing
-        setErrors(errors => ({ ...errors, [event.target.name]: null} ))
-            //[\d/]
+        setErrors(errors => ({ ...errors, [key]: null}))
+
         // Store values of input elements
-        // setValues(values => ({ ...values, [event.target.name]: value}))
         setValues(values => ({ ...values, [key]: value}))
     }
-
-    const value = (target => {
-        console.log('target', target)
-        switch (target.type) {
-            case 'checkbox':
-                return target.checked
-            default:
-                return target.value
-        }
-    })
 
     return {
         values,
@@ -72,22 +56,7 @@ const useForm = (callback, validators) => {
 
 export default useForm
 
-const validate = (item, validators) => {
-    let value = item.value
-
-    // if node is a select item, then check if the selected value is a disabled property. Use this boolean value to
-    // check if a option is selected.
-    if (item.nodeName === 'SELECT') {
-        value = item.options[item.selectedIndex].disabled
-    } else if (item.nodeName === 'INPUT' && item.type === 'checkbox') {
-        value = item.checked
-    }
-
-    console.log(item)
-
-    if (item.nodeName === 'INPUT' && item.type === 'radio') {
-
-    }
+const validate = (value, validators) => {
 
     let errors = validators.rules.map(rule => {
         switch (rule) {
@@ -96,7 +65,7 @@ const validate = (item, validators) => {
             case validate.types.EMAIL:
                 return !/^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(value) && copy.nl.error_invalid_email
             case validate.types.IS_SELECTED:
-                return value && copy.nl.error_is_selected
+                return !value && copy.nl.error_is_selected
             case validate.types.IS_CHECKED:
                 return !value && copy.nl.error_is_checked
             case validate.types.IS_NUMBER:

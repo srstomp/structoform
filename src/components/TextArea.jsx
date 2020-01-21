@@ -5,7 +5,7 @@ import _ from 'lodash'
 
 const TextArea = ({label, name, value = '', direction, placeholder, onChange, errorMessage, showError}) => {
     const [ id ] = useState(() => uniqueId(`${_.camelCase(label)}-`))
-    const [ currentValue, setCurrentValue ] = useState(null)
+    const [ currentValue, setCurrentValue ] = useState('')
 
     useEffect(() => {
         onChange(name, currentValue)

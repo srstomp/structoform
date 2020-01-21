@@ -1,9 +1,8 @@
 import React from 'react'
 import _ from 'lodash'
 import PropTypes from 'prop-types'
-import { TextField, SelectField, DateField, Checkbox, TextArea, useForm } from "../index"
+import { TextField, SelectField, DateField, Checkbox, TextArea, RadioButtonGroup, useForm } from "../index"
 import { direction } from '../constants/helper'
-import RadioButtonGroup from "./RadioButtonGroup";
 
 const Form = ({ className = '', layout, layoutDirection, initValues = [], submitButton, onSubmit }) => {
 

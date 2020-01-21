@@ -6,7 +6,7 @@ import _ from 'lodash'
 
 const TextField = ({label, name, placeholder, value, direction, type, errorMessage, showError, onChange}) => {
     const [ id ] = useState(() => uniqueId(`${_.camelCase(label)}-`))
-    const [currentValue, setCurrentValue] = useState(null)
+    const [currentValue, setCurrentValue] = useState('')
 
     useEffect(() => {
         onChange(name, currentValue)

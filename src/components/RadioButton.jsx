@@ -5,7 +5,6 @@ import { uniqueId } from '../constants/helper'
 const RadioButton = ({label, value, group, onChange, isChecked}) => {
     const [ id ] = useState(() => uniqueId(`${_.camelCase(label)}-`))
 
-
     const handleChange = (e) => {
         console.log(e.target.checked)
         onChange(e)
@@ -24,7 +23,7 @@ export default RadioButton
 
 RadioButton.propTypes = {
     label: PropTypes.string.isRequired,
-    value: PropTypes.object.isRequired,
+    value: PropTypes.string.isRequired,
     group: PropTypes.string.isRequired,
     onChange: PropTypes.func.isRequired
 }

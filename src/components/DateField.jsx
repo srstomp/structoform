@@ -16,7 +16,7 @@ const CalendarIcon = () =>
 
 const DateField = ({label, name, placeholder, value, direction, errorMessage, showError, onChange}) => {
     const [ id ] = useState(() => uniqueId(`${_.camelCase(label)}-`))
-    const [ currentValue, setCurrentValue ] = useState(null)
+    const [ currentValue, setCurrentValue ] = useState('')
 
     const node = useRef();
     const refValue = useRef();
