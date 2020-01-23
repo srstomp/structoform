@@ -21,7 +21,7 @@ const SelectField = ({label, name, placeholder, values, direction, errorMessage,
 
     return (
         <FormItem label={label} id={id} direction={direction}>
-            <select className={`form-item__select ${placeholderStyling()} ${errorMessage !== '' ? 'error' : ''}`}
+            <select className={`form-item__select ${placeholderStyling()} ${showError ? 'error' : ''}`}
                     htmlFor={id} name={name} onChange={handleChange} value={currentValue}>
                 <option disabled default>{placeholder}</option>
                 {
