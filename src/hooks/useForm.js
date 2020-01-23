@@ -25,10 +25,7 @@ const useForm = (callback, validators) => {
 
         Object.keys(validators).forEach( validator => {
             Object.keys(values).forEach((key) => {
-
                 if ( key === validator ) {
-                    console.log(key, validator)
-                    console.log(values[key], validators[validator])
                     setErrors(errors => ( { ...errors, [key]: validate(values[key], validators[validator])} ))
                 }
             })
@@ -37,7 +34,6 @@ const useForm = (callback, validators) => {
         setIsSubmitting(true)
     }
 
-//[\d/]
     const handleChange = (key, value) => {
         // Remove current error on typing
         setErrors(errors => ({ ...errors, [key]: null}))

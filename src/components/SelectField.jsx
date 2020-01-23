@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { uniqueId, direction } from '../constants/helper'
 import FormItem from './FormItem'
 
-const SelectField = ({label, name, placeholder, values, direction, errorMessage, showError, onChange}) => {
+const SelectField = ({label, name, placeholder, values, direction, disabled = false, errorMessage, showError, onChange}) => {
     const [ id ] = useState(() => uniqueId(`${_.camelCase(label)}-`))
     const [ currentValue, setCurrentValue ] = useState(placeholder)
     const [ isChecked, setIsChecked ] = useState(false)
@@ -22,7 +22,7 @@ const SelectField = ({label, name, placeholder, values, direction, errorMessage,
     return (
         <FormItem label={label} id={id} direction={direction}>
             <select className={`form-item__select ${placeholderStyling()} ${showError ? 'error' : ''}`}
-                    htmlFor={id} name={name} onChange={handleChange} value={currentValue}>
+                    htmlFor={id} name={name} onChange={handleChange} value={currentValue} disabled={false}>
                 <option disabled default>{placeholder}</option>
                 {
                     values.map((item, i) => {
@@ -43,6 +43,7 @@ SelectField.propTypes = {
     placeholder: PropTypes.string,
     values: PropTypes.arrayOf(PropTypes.shape).isRequired,
     direction: PropTypes.oneOf(Object.values(direction)),
+    disabled: PropTypes.bool.isRequired,
     errorMessage: PropTypes.string,
     showError: PropTypes.bool.isRequired,
     onChange: PropTypes.func.isRequired
