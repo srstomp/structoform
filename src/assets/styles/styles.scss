@@ -1,7 +1,7 @@
 $night: #131C4E;
 $red: #C20013;
 $teal: #4DCBC3;
-$light-grey: #E5E5E5;
+$light-grey: #E4E4E4;
 $grey: #9E9E9E;
 $graphite: #4A4A4A;
 
@@ -79,7 +79,7 @@ $graphite: #4A4A4A;
     appearance: none;
     background-color: #fff;
     display: block;
-    background-image: url("data:image/svg+xml,%3C%3Fxml version='1.0' encoding='UTF-8'%3F%3E%3Csvg width='14px' height='9px' viewBox='0 0 14 9' version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'%3E%3C!-- Generator: Sketch 53.2 (72643) - https://sketchapp.com --%3E%3Ctitle%3EIcons/24/Chevron%3C/title%3E%3Cdesc%3ECreated with Sketch.%3C/desc%3E%3Cg id='Desktop' stroke='none' stroke-width='1' fill='none' fill-rule='evenodd'%3E%3Cg id='user-management----overview-2.0' transform='translate(-5.000000, -9.000000)'%3E%3Crect id='Bounding-Box' x='0' y='0' width='24' height='24'%3E%3C/rect%3E%3Cpolygon id='Page-1-Copy-6' fill='%234DCCC4' fill-rule='nonzero' points='11.9999346 17.6153846 12.8928443 16.7706111 19 10.9618441 17.2142023 9 12 13.9571125 6.78579775 9 5 10.9618441 11.1071557 16.7706111'%3E%3C/polygon%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    background-image: url("data:image/svg+xml,%3C%3Fxml version='1.0' encoding='UTF-8'%3F%3E%3Csvg width='14px' height='9px' viewBox='0 0 14 9' version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'%3E%3C!-- Generator: Sketch 53.2 (72643) - https://sketchapp.com --%3E%3Ctitle%3EIcons/24/Chevron%3C/title%3E%3Cdesc%3ECreated with Sketch.%3C/desc%3E%3Cg stroke='none' stroke-width='1' fill='none' fill-rule='evenodd'%3E%3Cg id='user-management----overview-2.0' transform='translate(-5.000000, -9.000000)'%3E%3Crect id='Bounding-Box' x='0' y='0' width='24' height='24'%3E%3C/rect%3E%3Cpolygon id='Page-1-Copy-6' fill='%234DCCC4' fill-rule='nonzero' points='11.9999346 17.6153846 12.8928443 16.7706111 19 10.9618441 17.2142023 9 12 13.9571125 6.78579775 9 5 10.9618441 11.1071557 16.7706111'%3E%3C/polygon%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
     background-repeat: no-repeat, repeat;
     background-position: right 1em top 50%, 0 0;
     background-size: 1em auto, 100%;
@@ -105,6 +105,12 @@ $graphite: #4A4A4A;
 
     &--placeholder {
       color: $grey;
+    }
+
+    &:disabled {
+      border-color: $light-grey;
+      background-color: $light-grey;
+      background-image: url("data:image/svg+xml,%3C%3Fxml version='1.0' encoding='UTF-8'%3F%3E%3Csvg width='14px' height='9px' viewBox='0 0 14 9' version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'%3E%3C!-- Generator: Sketch 53.2 (72643) - https://sketchapp.com --%3E%3Ctitle%3EIcons/24/Chevron%3C/title%3E%3Cdesc%3ECreated with Sketch.%3C/desc%3E%3Cg stroke='none' stroke-width='1' fill='none' fill-rule='evenodd'%3E%3Cg id='user-management----overview-2.0' transform='translate(-5.000000, -9.000000)'%3E%3Crect id='Bounding-Box' x='0' y='0' width='24' height='24'%3E%3C/rect%3E%3Cpolygon id='Page-1-Copy-6' fill='%239E9E9E' fill-rule='nonzero' points='11.9999346 17.6153846 12.8928443 16.7706111 19 10.9618441 17.2142023 9 12 13.9571125 6.78579775 9 5 10.9618441 11.1071557 16.7706111'%3E%3C/polygon%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
     }
   }
 
