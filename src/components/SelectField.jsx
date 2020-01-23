@@ -22,7 +22,7 @@ const SelectField = ({label, name, placeholder, values, direction, disabled = fa
     return (
         <FormItem label={label} id={id} direction={direction}>
             <select className={`form-item__select ${placeholderStyling()} ${showError ? 'error' : ''}`}
-                    htmlFor={id} name={name} onChange={handleChange} value={currentValue} disabled={false}>
+                    htmlFor={id} name={name} onChange={handleChange} value={currentValue} disabled={disabled}>
                 <option disabled default>{placeholder}</option>
                 {
                     values.map((item, i) => {
