@@ -1,5 +1,4 @@
 import React, { useEffect, useState, useRef } from 'react'
-import ReactDOM from 'react-dom'
 import PropTypes from 'prop-types'
 import { uniqueId, direction } from '../constants/helper'
 import FormItem from './FormItem'
