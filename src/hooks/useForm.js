@@ -53,13 +53,18 @@ const useForm = (callback, validators) => {
 export default useForm
 
 const validate = (value, validators) => {
+    let errors = validators.rules.map(validator => {
+        const rule = _.isPlainObject(validator) ? validator : {type: validator}
 
-    let errors = validators.rules.map(rule => {
-        switch (rule) {
+        switch (_.get(rule, 'type')) {
             case validate.types.REQUIRED:
                 return !value && copy.nl.error_is_required
             case validate.types.EMAIL:
                 return !/^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(value) && copy.nl.error_invalid_email
+            case validate.types.REGEX:
+                return !new RegExp(_.get(rule, 'parameter')).test(value) && copy.nl.error_generic
+            case validate.types.FUNCTION:
+                return !_.get(rule, 'parameter')(value) && copy.nl.error_generic
             case validate.types.IS_SELECTED:
                 return !value && copy.nl.error_is_selected
             case validate.types.IS_CHECKED:
@@ -69,7 +74,7 @@ const validate = (value, validators) => {
             case validate.types.IS_PASSWORD:
                 return !value && copy.nl.error_is_password
             default:
-                throw new Error(`Unhandled validator rule: ${rule}`)
+                throw new Error(`Unhandled validator rule: ${_.get(rule, 'type')}`)
         }
     }).filter(item => typeof(item) === 'string')
 
@@ -79,6 +84,8 @@ const validate = (value, validators) => {
 validate.types = {
     REQUIRED: 'isRequired',
     EMAIL: 'isEmail',
+    REGEX: 'checkRegex',
+    FUNCTION: 'checkFunction',
     IS_SELECTED: 'isSelected',
     IS_CHECKED: 'isChecked',
     IS_NUMBER: 'isNumber',
