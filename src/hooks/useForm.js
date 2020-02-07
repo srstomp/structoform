@@ -54,25 +54,26 @@ export default useForm
 
 const validate = (value, validators) => {
     let errors = validators.rules.map(validator => {
-        const rule = _.isPlainObject(validator) ? validator : {type: validator}
+        const rule = _.isPlainObject(validator) ? validator : { type: validator }
+        const getErrorMessage = (fallback) => _.get(rule, 'errorMessage') || fallback
 
         switch (_.get(rule, 'type')) {
             case validate.types.REQUIRED:
-                return !value && copy.nl.error_is_required
+                return !value && getErrorMessage(copy.nl.error_is_required)
             case validate.types.EMAIL:
-                return !/^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(value) && copy.nl.error_invalid_email
+                return !/^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(value) && getErrorMessage(copy.nl.error_invalid_email)
             case validate.types.REGEX:
-                return !new RegExp(_.get(rule, 'parameter')).test(value) && copy.nl.error_generic
+                return !new RegExp(_.get(rule, 'parameter')).test(value) && getErrorMessage(copy.nl.error_generic)
             case validate.types.FUNCTION:
-                return !_.get(rule, 'parameter')(value) && copy.nl.error_generic
+                return !_.get(rule, 'parameter')(value) && getErrorMessage(copy.nl.error_generic)
             case validate.types.IS_SELECTED:
-                return !value && copy.nl.error_is_selected
+                return !value && getErrorMessage(copy.nl.error_is_selected)
             case validate.types.IS_CHECKED:
-                return !value && copy.nl.error_is_checked
+                return !value && getErrorMessage(copy.nl.error_is_checked)
             case validate.types.IS_NUMBER:
-                return !/^(?=.*[0-9])/.test(value) && copy.nl.error_not_numeric
+                return !/^(?=.*[0-9])/.test(value) && getErrorMessage(copy.nl.error_not_numeric)
             case validate.types.IS_PASSWORD:
-                return !value && copy.nl.error_is_password
+                return !value && getErrorMessage(copy.nl.error_is_password)
             default:
                 throw new Error(`Unhandled validator rule: ${_.get(rule, 'type')}`)
         }
