@@ -28,10 +28,10 @@ npm install structoform
 #### `jsonConfig={ string }`
 An optional string containing a JSON parsable object. The contents of this object may override the `className`, `layout`, `layoutDirection` or `initValues` prop.
 
-### `className={ string }`
+#### `className={ string }`
 A className string to append to the `<form>` wrapper className.
 
-### `layout={ object }`
+#### `layout={ object }`
 An object containing all the form fields, indexed by a unique key.
 ```js
 const layout = {
@@ -47,13 +47,13 @@ const layout = {
 }
 ```
 
-### `layoutDirection={ string }`
+#### `layoutDirection={ string }`
 Determines how labels should position themselves relative to their respective form element. Specify either `"row"` or `"column"`.
 
-### s`ubmitButton={ node }`
+#### s`ubmitButton={ node }`
 A react element consisting of or containing a `<button>`, to trigger the form `onSubmit` logic.
 
-### `onSubmit={ func }`
+#### `onSubmit={ func }`
 Callback function for submit logic
 
 ## Things todo
