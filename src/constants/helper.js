@@ -33,9 +33,17 @@ const copy = {
     }
 }
 
+const comparators = {
+    IS: 'is',
+    ISNOT: 'isnot',
+    MORE: 'morethan',
+    LESS: 'lessthan'
+}
+
 export {
     id,
     uniqueId,
     copy,
-    direction
+    direction,
+    comparators
 }
