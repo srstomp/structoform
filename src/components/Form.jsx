@@ -55,7 +55,7 @@ const Form = ({ className = '', layout, layoutDirection, initValues = [], submit
                                   placeholder={value.placeholder || ''} value={values[key]}
                                   showError={!_.isEmpty(errors[key])} errorMessage={_.head(errors[key]) || ''}/>
             case 'radio':
-                return <RadioButtonGroup key={index} label={value.label} inline={value.inline} items={value.values}
+                return <RadioButtonGroup key={index} label={value.label} direction={dir} inline={value.inline} items={value.values}
                                          name={key} showError={!_.isEmpty(errors[key])} onChange={handleChange}
                                          errorMessage={_.head(errors[key]) || ''}/>
             default:
