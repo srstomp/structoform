@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { direction, uniqueId } from '../constants/helper'
+import FormItem from './FormItem'
 import _ from 'lodash'
 
 const TextArea = ({label, name, value = '', direction, placeholder, onChange, errorMessage, showError}) => {
@@ -14,18 +15,14 @@ const TextArea = ({label, name, value = '', direction, placeholder, onChange, er
     const handleChange = e => setCurrentValue(e.target.value)
 
      return (
-         <div className={`form-item form-item${direction}`}>
-
-             {label !== '' && <label className={`form-item__label`} htmlFor={id}>{label}</label>}
-
+        <FormItem label={label} id={id} direction={direction}>
              <div className="form-item__inner">
                 <textarea className={`form-item__textarea ${showError ? 'error' : ''}`} placeholder={placeholder}
                           onChange={handleChange} name={name} htmlFor={id} value={value}>
                 </textarea>
                  <span className={`error-label ${showError ? '' : 'hide'}`}>{errorMessage}</span>
              </div>
-
-         </div>
+         </FormItem>
      )
 }
 
