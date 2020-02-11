@@ -6,7 +6,7 @@ import _ from 'lodash'
 
 const TextField = ({label, name, placeholder, value, direction, type, errorMessage, showError, onChange}) => {
     const [ id ] = useState(() => uniqueId(`${_.camelCase(label)}-`))
-    const [currentValue, setCurrentValue] = useState('')
+    const [currentValue, setCurrentValue] = useState(value)
 
     useEffect(() => {
         onChange(name, currentValue)
@@ -17,13 +17,17 @@ const TextField = ({label, name, placeholder, value, direction, type, errorMessa
     return (
         <FormItem label={label} id={id} direction={direction}>
             <input className={`form-item__input ${showError ? 'error' : ''}`} placeholder={placeholder} type={type}
-                   onChange={handleChange} name={name} htmlFor={id} value={currentValue} defaultValue={value}/>
+                   onChange={handleChange} name={name} htmlFor={id} value={currentValue}/>
             <span className={`error-label ${showError ? '' : 'hide'}`}>{errorMessage}</span>
         </FormItem>
     )
 }
 
 export default TextField
+
+TextField.defaultProps = {
+    value: ''
+}
 
 TextField.propTypes = {
     label: PropTypes.string.isRequired,
