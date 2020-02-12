@@ -56,7 +56,7 @@ const useForm = (callback, validators) => {
             const field =  _.get(conditional, 'field')
             const value = _.get(conditional, 'value')
 
-            if (!field || !value) {
+            if (!field || _.isNil(value)) {
                 return false
             }
 
