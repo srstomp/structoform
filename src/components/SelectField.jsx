@@ -3,9 +3,9 @@ import PropTypes from 'prop-types'
 import { uniqueId, direction } from '../constants/helper'
 import FormItem from './FormItem'
 
-const SelectField = ({label, name, placeholder, values, direction, disabled = false, errorMessage, showError, onChange}) => {
+const SelectField = ({label, name, placeholder, values, value, direction, disabled = false, errorMessage, showError, onChange}) => {
     const [ id ] = useState(() => uniqueId(`${_.camelCase(label)}-`))
-    const [ currentValue, setCurrentValue ] = useState(placeholder)
+    const [ currentValue, setCurrentValue ] = useState(value)
     const [ isChecked, setIsChecked ] = useState(false)
 
     useEffect(() => {
@@ -43,6 +43,7 @@ SelectField.propTypes = {
     name: PropTypes.string.isRequired,
     placeholder: PropTypes.string,
     values: PropTypes.arrayOf(PropTypes.shape).isRequired,
+    value: PropTypes.string,
     direction: PropTypes.oneOf(Object.values(direction)),
     disabled: PropTypes.bool,
     errorMessage: PropTypes.string,

@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import { TextField, SelectField, DateField, Checkbox, TextArea, RadioButtonGroup, useForm } from "../index"
 import { direction } from '../constants/helper'
 
-const Form = ({ className = '', layout, layoutDirection, initValues = [], submitButton, onSubmit }) => {
+const Form = ({ className = '', layout, layoutDirection, initValues, submitButton, onSubmit }) => {
 
     const validationRules = {...layout}
 
@@ -19,7 +19,7 @@ const Form = ({ className = '', layout, layoutDirection, initValues = [], submit
     const getValue = (key) => {
         // If no inputes are given, then return default valutes or empty string
         if (!values[key]) {
-            return initValues[key] || ''
+            return _.get(initValues, key, '')
         }
         return values[key]
     }
@@ -39,7 +39,7 @@ const Form = ({ className = '', layout, layoutDirection, initValues = [], submit
                                   placeholder={value.placeholder || ''} value={values[key]} onChange={handleChange}
                                   showError={!_.isEmpty(errors[key])} errorMessage={_.head(errors[key]) || ''}/>
             case 'select':
-                return <SelectField key={key} label={value.label} values={value.values || []} direction={dir}
+                return <SelectField key={key} label={value.label} values={value.values || []} value={getValue(key)} direction={dir}
                                     name={key} placeholder={value.placeholder || ''} onChange={handleChange}
                                     showError={!_.isEmpty(errors[key])} errorMessage={_.head(errors[key]) || ''}/>
             case 'checkbox':
@@ -77,9 +77,13 @@ const Form = ({ className = '', layout, layoutDirection, initValues = [], submit
 
 export default Form
 
+Form.defaultProps = {
+    initValues: {}
+}
+
 Form.propTypes = {
     className: PropTypes.string,
     layout: PropTypes.object.isRequired,
     layoutDirection: PropTypes.string,
-    initValues: PropTypes.array,
+    initValues: PropTypes.object,
 }
