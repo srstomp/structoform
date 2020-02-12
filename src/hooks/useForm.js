@@ -1,5 +1,5 @@
 import {useState, useEffect} from 'react'
-import { copy } from '../constants/helper';
+import { copy, comparators } from '../constants/helper';
 
 const useForm = (callback, validators) => {
     const [values, setValues] = useState({})
@@ -42,11 +42,38 @@ const useForm = (callback, validators) => {
         setValues(values => ({ ...values, [key]: value}))
     }
 
+    const checkConditionals = (item) => {
+        const conditionals = _.get(item, 'conditionals', [])
+
+        return conditionals.every(conditional => {
+            const field =  _.get(conditional, 'field')
+            const value = _.get(conditional, 'value')
+
+            if (!field || !value) {
+                return false
+            }
+
+            switch(_.get(conditional, 'condition', 'equals')) {
+                case comparators.IS:
+                    return values[field] === value
+                case comparators.ISNOT:
+                    return values[field] !== value
+                case comparators.MORE:
+                    return Number(values[field]) > Number(value)
+                case comparators.LESS:
+                    return Number(values[field] < Number(value))
+                default:
+                    return true
+            }
+        })
+    }
+
     return {
         values,
         errors,
         handleSubmit,
-        handleChange
+        handleChange,
+        checkConditionals
     }
 }
 

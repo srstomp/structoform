@@ -2,7 +2,7 @@ import React from 'react'
 import _ from 'lodash'
 import PropTypes from 'prop-types'
 import { TextField, SelectField, DateField, Checkbox, TextArea, RadioButtonGroup, useForm } from "../index"
-import { direction, comparators } from '../constants/helper'
+import { direction } from '../constants/helper'
 
 const Form = ({ className = '', layout, layoutDirection, initValues = [], submitButton, onSubmit }) => {
 
@@ -12,35 +12,9 @@ const Form = ({ className = '', layout, layoutDirection, initValues = [], submit
         validationRules[item] = {type: validationRules[item].type, rules: validationRules[item].validators}
     )
 
-    const { values, errors, handleSubmit, handleChange } = useForm(() => submit(), validationRules)
+    const { values, errors, handleSubmit, handleChange, checkConditionals } = useForm(() => submit(), validationRules)
 
     const dir = layoutDirection === 'row' ? direction.row : direction.column
-
-    const checkConditionals = (key) => {
-        const conditionals = _.get(layout, [key, 'conditionals'], [])
-
-        return conditionals.every(conditional => {
-            const field =  _.get(conditional, 'field')
-            const value = _.get(conditional, 'value')
-
-            if (!field || !value) {
-                return false
-            }
-
-            switch(_.get(conditional, 'condition', 'equals')) {
-                case comparators.IS:
-                    return getValue(field) === value
-                case comparators.ISNOT:
-                    return getValue(field) !== value
-                case comparators.MORE:
-                    return Number(getValue(field)) > Number(value)
-                case comparators.LESS:
-                    return Number(getValue(field) < Number(value))
-                default:
-                    return true
-            }
-        })
-    }
 
     const getValue = (key) => {
         // If no inputes are given, then return default valutes or empty string
@@ -93,7 +67,7 @@ const Form = ({ className = '', layout, layoutDirection, initValues = [], submit
         <form className={`form ${className}`} onSubmit={handleSubmit} noValidate >
             {
                 Object.keys(layout).map((key, i) => {
-                    return checkConditionals(key) && getItem(key, layout[key], i)
+                    return checkConditionals(_.get(layout, key, {})) && getItem(key, layout[key], i)
                 })
             }
             { submitButton }
