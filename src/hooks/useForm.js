@@ -53,14 +53,16 @@ const useForm = (callback, validators) => {
         const conditionals = _.get(item, 'conditionals', [])
 
         return conditionals.every(conditional => {
-            const field =  _.get(conditional, 'field')
-            const value = _.get(conditional, 'value')
-
-            if (!field || _.isNil(value)) {
-                return false
+            if (typeof conditional === "boolean") {
+                return conditional
             }
 
-            switch(_.get(conditional, 'condition', 'equals')) {
+            const rule = _.isPlainObject(conditional) ? conditional : { field: conditional, condition: comparators.TRUTHY }
+
+            const field =  _.get(rule, 'field', '')
+            const value = _.get(rule, 'value')
+
+            switch(_.get(rule, 'condition', comparators.IS)) {
                 case comparators.IS:
                     return values[field] === value
                 case comparators.ISNOT:
@@ -69,8 +71,9 @@ const useForm = (callback, validators) => {
                     return Number(values[field]) > Number(value)
                 case comparators.LESS:
                     return Number(values[field] < Number(value))
+                case comparators.TRUTHY:
                 default:
-                    return true
+                    return !!values[field]
             }
         })
     }

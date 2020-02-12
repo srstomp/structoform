@@ -34,6 +34,7 @@ const copy = {
 }
 
 const comparators = {
+    TRUTHY: 'truthy',
     IS: 'is',
     ISNOT: 'isnot',
     MORE: 'morethan',
