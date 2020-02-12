@@ -3,17 +3,17 @@ import PropTypes from 'prop-types'
 import { direction, uniqueId } from '../constants/helper'
 import _ from 'lodash'
 
-const TextArea = ({label, name, value = '', direction, placeholder, onChange, errorMessage, showError}) => {
+const TextArea = ({label, name, value = '', direction, placeholder, onChange, errorMessage, showError, isVisible}) => {
     const [ id ] = useState(() => uniqueId(`${_.camelCase(label)}-`))
     const [ currentValue, setCurrentValue ] = useState('')
 
     useEffect(() => {
-        onChange(name, currentValue)
-    }, [currentValue])
+        onChange(name, currentValue, { isVisible })
+    }, [currentValue, isVisible])
 
     const handleChange = e => setCurrentValue(e.target.value)
 
-     return (
+     return isVisible && (
          <div className={`form-item form-item${direction}`}>
 
              {label !== '' && <label className={`form-item__label`} htmlFor={id}>{label}</label>}
@@ -39,5 +39,6 @@ TextArea.propTypes = {
     placeholder: PropTypes.string,
     errorMessage: PropTypes.string,
     showError: PropTypes.bool.isRequired,
-    onChange: PropTypes.func.isRequired
+    onChange: PropTypes.func.isRequired,
+    isVisible: PropTypes.bool.isRequired
 }
