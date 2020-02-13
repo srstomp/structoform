@@ -34,6 +34,10 @@ const RadioButtonGroup = ({items, name, label, inline, errorMessage, showError, 
 
 export default RadioButtonGroup
 
+RadioButtonGroup.defaultProps = {
+    isVisible: true,
+}
+
 RadioButtonGroup.propTypes = {
     items: PropTypes.arrayOf(PropTypes.shape).isRequired,
     name: PropTypes.string.isRequired,

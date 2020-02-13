@@ -31,6 +31,10 @@ const TextArea = ({label, name, value = '', direction, placeholder, onChange, er
 
 export default TextArea
 
+TextArea.defaultProps = {
+    isVisible: true,
+}
+
 TextArea.propTypes = {
     label: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,

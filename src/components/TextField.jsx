@@ -26,7 +26,8 @@ const TextField = ({label, name, placeholder, value, direction, type, errorMessa
 export default TextField
 
 TextField.defaultProps = {
-    value: ''
+    value: '',
+    isVisible: true,
 }
 
 TextField.propTypes = {

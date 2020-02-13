@@ -76,6 +76,11 @@ const DateField = ({label, name, placeholder, value, direction, errorMessage, sh
 
 export default DateField
 
+DateField.defaultProps = {
+    value: '',
+    isVisible: true,
+}
+
 DateField.propTypes = {
     label: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,

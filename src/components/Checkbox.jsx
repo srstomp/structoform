@@ -25,6 +25,10 @@ const Checkbox = ({label, name, value, showError, onChange, isVisible}) => {
 
 export default Checkbox
 
+Checkbox.defaultProps = {
+    isVisible: true,
+}
+
 Checkbox.propTypes = {
     label: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,

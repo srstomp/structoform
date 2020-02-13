@@ -38,6 +38,10 @@ const SelectField = ({label, name, placeholder, values, direction, disabled = fa
 
 export default SelectField
 
+SelectField.defaultProps = {
+    isVisible: true,
+}
+
 SelectField.propTypes = {
     label: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
