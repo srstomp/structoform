@@ -5,7 +5,7 @@ import RadioButton from './RadioButton'
 import FormItem from './FormItem'
 import _ from "lodash";
 
-const RadioButtonGroup = ({items, name, label, direction, inline, errorMessage, showError, onChange}) => {
+const RadioButtonGroup = ({items, name, label, direction, inline, renderTabs, errorMessage, showError, onChange}) => {
     const [ id ] = useState(() => uniqueId(`${_.camelCase(label)}-`))
     const [ currentValue, setCurrentValue] = useState('')
 
@@ -24,7 +24,7 @@ const RadioButtonGroup = ({items, name, label, direction, inline, errorMessage, 
                 {
                     items.map(item => <RadioButton key={uniqueId(`${_.camelCase(item.label)}-`)} label={item.label}
                                                    value={item.value} group={name} onChange={handleChange}
-                                                   isChecked={item.value === currentValue}/>)
+                                                   isChecked={item.value === currentValue} renderTabs={renderTabs} />)
                 }
             </div>
             <span className={`error-label ${showError ? '' : 'hide'}`}>{errorMessage}</span>
@@ -40,6 +40,7 @@ RadioButtonGroup.propTypes = {
     label: PropTypes.string.isRequired,
     direction: PropTypes.oneOf(Object.values(directions)),
     inline: PropTypes.bool,
+    renderTabs: PropTypes.bool,
     errorMessage: PropTypes.string,
     showError: PropTypes.bool.isRequired,
     onChange: PropTypes.func.isRequired
