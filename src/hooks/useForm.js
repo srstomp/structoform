@@ -53,8 +53,9 @@ const useForm = (callback, validators) => {
 export default useForm
 
 const validate = (value, validators) => {
+    const rules = _.get(validators, 'rules', [])
 
-    let errors = validators.rules.map(rule => {
+    let errors = rules.map(rule => {
         switch (rule) {
             case validate.types.REQUIRED:
                 return !value && copy.nl.error_is_required
