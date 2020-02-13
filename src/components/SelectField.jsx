@@ -6,16 +6,14 @@ import FormItem from './FormItem'
 const SelectField = ({label, name, placeholder, values, value, direction, disabled = false, errorMessage, showError, onChange}) => {
     const [ id ] = useState(() => uniqueId(`${_.camelCase(label)}-`))
     const [ currentValue, setCurrentValue ] = useState(value)
-    const [ isChecked, setIsChecked ] = useState(false)
 
     useEffect(() => {
-        onChange(name, isChecked ? currentValue : null)
+        onChange(name, currentValue)
     }, [currentValue])
 
     const placeholderStyling = () => `${currentValue === placeholder && 'form-item__select--placeholder'}`
 
     const handleChange = (e => {
-        setIsChecked(true)
         setCurrentValue(e.target.value)
     })
 
