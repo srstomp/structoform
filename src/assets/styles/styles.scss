@@ -172,9 +172,7 @@ $graphite: #4A4A4A;
   &__radio {
     &--tabs {
       & + label {
-        width: 100%;
         text-align: center;
-        padding: 0;
         height: initial !important;
         line-height: 3em;
         border-bottom: 1px solid $grey;
