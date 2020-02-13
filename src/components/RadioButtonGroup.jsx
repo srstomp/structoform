@@ -5,9 +5,9 @@ import RadioButton from './RadioButton'
 import FormItem from './FormItem'
 import _ from "lodash";
 
-const RadioButtonGroup = ({items, name, label, direction, inline, renderTabs, errorMessage, showError, onChange}) => {
+const RadioButtonGroup = ({items, name, label, value, direction, inline, renderTabs, errorMessage, showError, onChange}) => {
     const [ id ] = useState(() => uniqueId(`${_.camelCase(label)}-`))
-    const [ currentValue, setCurrentValue] = useState('')
+    const [ currentValue, setCurrentValue] = useState(value)
 
     useEffect(() => {
         onChange(name, currentValue)
@@ -34,10 +34,15 @@ const RadioButtonGroup = ({items, name, label, direction, inline, renderTabs, er
 
 export default RadioButtonGroup
 
+RadioButtonGroup.defaultProps = {
+    value: ''
+}
+
 RadioButtonGroup.propTypes = {
     items: PropTypes.arrayOf(PropTypes.shape).isRequired,
     name: PropTypes.string.isRequired,
     label: PropTypes.string.isRequired,
+    value: PropTypes.string,
     direction: PropTypes.oneOf(Object.values(directions)),
     inline: PropTypes.bool,
     renderTabs: PropTypes.bool,
