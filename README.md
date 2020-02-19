@@ -3,8 +3,12 @@ A form builder for React
 
 ## Supported form elements
 * Checkbox
-* TextField
+* DateField
 * SelectField
+* Radio Button
+* TextArea
+* TextField
+
 
 ## Steps for local developement
 * run `npm link`
@@ -13,9 +17,8 @@ A form builder for React
 ### Things todo
 - [ ] Write documentation
 - [ ] Add tests
-- [ ] Date Field
 - [ ] Password Field
 - [ ] Phone Field
-- [X] Add validators
 - [ ] Autosuggest / Autocomplete
-- [X] Support Custom styling
+- [ ] Restrict input of DateField
+- [ ] Support multiple languages

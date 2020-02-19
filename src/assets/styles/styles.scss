@@ -1,2 +1,486 @@
-@import 'colors';
-@import "form";
+$night: #131C4E;
+$red: #C20013;
+$teal: #4DCBC3;
+$light-grey: #E4E4E4;
+$grey: #9E9E9E;
+$graphite: #4A4A4A;
+
+@keyframes ripple {
+  0% {
+    box-shadow: 0px 0px 0px 1px rgba(0, 0, 0, 0.0);
+  }
+
+  50% {
+    box-shadow: 0px 0px 0px 5px rgba(0, 0, 0, 0.1);
+  }
+
+  100% {
+    box-shadow: 0px 0px 0px 5px rgba(0, 0, 0, 0);
+  }
+}
+
+
+*, *:before, *:after {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.form-item {
+  margin-bottom: 24px;
+  position: relative;
+
+  &--column{
+    display: flex;
+    flex-direction: column;
+  }
+
+  &--row {
+    display: flex;
+    flex-direction: row;
+
+    .form-item__label {
+      width: 40%;
+    }
+  }
+
+  &__inner {
+    width: 100%;
+  }
+
+  &__input-wrapper {
+    display: flex;
+    position: relative;
+  }
+
+  &__label {
+    margin: 0 0 6px 0;
+    display: block;
+    font-size: 0.875rem;
+  }
+
+  /*
+  SELECT
+   */
+  &__select {
+    border-radius: 6px;
+    padding: 0.75rem;
+    border: 1px solid $grey;
+    outline: none;
+    box-shadow: none;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    appearance: none;
+    background-color: #fff;
+    display: block;
+    background-image: url("data:image/svg+xml,%3C%3Fxml version='1.0' encoding='UTF-8'%3F%3E%3Csvg width='14px' height='9px' viewBox='0 0 14 9' version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'%3E%3C!-- Generator: Sketch 53.2 (72643) - https://sketchapp.com --%3E%3Ctitle%3EIcons/24/Chevron%3C/title%3E%3Cdesc%3ECreated with Sketch.%3C/desc%3E%3Cg stroke='none' stroke-width='1' fill='none' fill-rule='evenodd'%3E%3Cg id='user-management----overview-2.0' transform='translate(-5.000000, -9.000000)'%3E%3Crect id='Bounding-Box' x='0' y='0' width='24' height='24'%3E%3C/rect%3E%3Cpolygon id='Page-1-Copy-6' fill='%234DCCC4' fill-rule='nonzero' points='11.9999346 17.6153846 12.8928443 16.7706111 19 10.9618441 17.2142023 9 12 13.9571125 6.78579775 9 5 10.9618441 11.1071557 16.7706111'%3E%3C/polygon%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    background-repeat: no-repeat, repeat;
+    background-position: right 1em top 50%, 0 0;
+    background-size: 1em auto, 100%;
+    color: $night;
+    font-size: 0.875rem;
+
+    width: 100%;
+    margin: 0;
+
+    option {
+      font-size: 1rem;
+    }
+
+    &:hover, &:focus, &:active {
+      border: 1px solid $graphite;
+      box-shadow: none;
+    }
+
+    &.error {
+      border: 1px solid $red;
+      box-shadow: 0px 0px 0px 1px $red;
+    }
+
+    &--placeholder {
+      color: $grey;
+    }
+
+    &:disabled {
+      border-color: $light-grey;
+      background-color: $light-grey;
+      background-image: url("data:image/svg+xml,%3C%3Fxml version='1.0' encoding='UTF-8'%3F%3E%3Csvg width='14px' height='9px' viewBox='0 0 14 9' version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'%3E%3C!-- Generator: Sketch 53.2 (72643) - https://sketchapp.com --%3E%3Ctitle%3EIcons/24/Chevron%3C/title%3E%3Cdesc%3ECreated with Sketch.%3C/desc%3E%3Cg stroke='none' stroke-width='1' fill='none' fill-rule='evenodd'%3E%3Cg id='user-management----overview-2.0' transform='translate(-5.000000, -9.000000)'%3E%3Crect id='Bounding-Box' x='0' y='0' width='24' height='24'%3E%3C/rect%3E%3Cpolygon id='Page-1-Copy-6' fill='%239E9E9E' fill-rule='nonzero' points='11.9999346 17.6153846 12.8928443 16.7706111 19 10.9618441 17.2142023 9 12 13.9571125 6.78579775 9 5 10.9618441 11.1071557 16.7706111'%3E%3C/polygon%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    }
+  }
+
+  /*
+  INPUT & TEXTAREA
+   */
+  &__input, &__textarea {
+    border-radius: 6px;
+    padding: 0.75rem;
+    border: 1px solid $grey;
+    color: $night;
+    outline: none;
+    appearance: none;
+    width: 100%;
+    font-size: 0.875rem;
+
+    &:hover, &:focus, &:active {
+      border: 1px solid $night;
+    }
+
+    &.error {
+      border: 1px solid $red;
+      box-shadow: 0px 0px 0px 1px $red;
+    }
+  }
+
+  &__textarea {
+    height: 200px;
+    resize: none;
+    font-size: 1em;
+    line-height: 1.5em;
+  }
+
+  /*
+  INPUT BUTTON
+   */
+  &__input-button, &__input-icon {
+    position: absolute;
+    right: 0.25rem;
+    top: 0px;
+    border: none;
+    background-color: transparent;
+    outline: none;
+    cursor: pointer;
+    transform: scale(0.8) translate(0, 50%);
+  }
+
+  &__input-icon {
+    cursor: auto;
+  }
+
+  /*
+  RADIO BUTTON
+   */
+  &__radio {
+
+    &__wrapper {
+      display: flex;
+      flex-direction: column;
+    }
+    &[type='radio'] {
+      display: none;
+    }
+
+    &:checked + label:before {
+      border-color: $grey;
+      //animation: ripple 0.2s linear forwards;
+    }
+
+    &:checked + label:after {
+      transform: scale(1);
+    }
+
+    & + label {
+      display: inline-block;
+      height: 20px;
+      position: relative;
+      padding: 0 30px;
+      margin-bottom: 0;
+      cursor: pointer;
+      vertical-align: bottom;
+
+      &:before, &:after {
+        position: absolute;
+        content: '';
+        border-radius: 50%;
+        transition: all .3s ease;
+        transition-property: transform, border-color;
+      }
+
+      &:before {
+        left: 0;
+        top: 0;
+        width: 20px;
+        height: 20px;
+        border: 1px solid $grey;
+      }
+
+      &:after {
+        top: (20px - 12px) / 2;
+        left: (20px - 12px) / 2;
+        width: 12px;
+        height: 12px;
+        transform: scale(0);
+        background: $teal;
+      }
+    }
+  }
+
+  &__radiogroup {
+
+    &--column{
+      display: flex;
+      flex-direction: column;
+
+      .radio-wrapper {
+        margin-bottom: 12px;
+      }
+    }
+
+    &--row {
+      display: flex;
+      flex-direction: row;
+    }
+  }
+  /*
+  CHECKBOX
+   */
+  &__checkbox {
+    /* Base for label styling */
+    &:not(:checked), &:checked {
+      position: absolute;
+      left: -9999px;
+
+      & + label {
+        position: relative;
+        padding-left: 1.95em;
+        cursor: pointer;
+
+        /* checkbox aspect */
+        &:before {
+          content: '';
+          position: absolute;
+          left: 0;
+          top: -2px;
+          width: 1.25em;
+          height: 1.25em;
+          border: 1px solid $grey;
+          background: #ffffff;
+          border-radius: 4px;
+        }
+
+        /* checked mark aspect */
+        &:after {
+          content: '\2713';
+          position: absolute;
+          top: 0.0em;
+          left: .15em;
+          font-size: 1.2em;
+          line-height: 0.8;
+          color: #ffffff;
+          transition: all .2s;
+          font-family: 'Lucida Sans Unicode', 'Arial Unicode MS', Arial;
+        }
+
+        &.error-label:before {
+          border: 1px solid $red;
+        }
+      }
+
+      /* accessibility */
+      &:focus + label:before,
+      &:focus + label:before {
+        border: 1px solid $night;
+      }
+    }
+
+    &:checked + label {
+      &:before {
+        background: $teal;
+        border: 1px solid $teal;
+      }
+
+      &:after {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    &:not(:checked) + label:after {
+      opacity: 0;
+      transform: scale(0);
+    }
+
+    /* disabled checkbox */
+    &:disabled {
+      & + label {
+        color: #aaa;
+      }
+
+      &:checked + label,
+      &:not(:checked) + label {
+        &:before {
+          box-shadow: none;
+          border-color: #bbb;
+          background-color: #ddd;
+        }
+
+        &:after {
+          color: #999;
+        }
+      }
+    }
+  }
+}
+
+.error-label {
+  display: block;
+  margin-top: 0.5rem;
+  color: $red;
+  display: block;
+
+  &.hide {
+    display: none;
+  }
+}
+
+/*
+CALENDAR
+ */
+.calendar {
+
+  &__wrapper {
+    background-color: #fff;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+    border-radius: 6px;
+    width: 274px;
+    margin-top: 6px;
+    position: absolute;
+    z-index: 50;
+  }
+
+  &__header {
+    border-bottom: 1px solid $grey;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 12px;
+    position: relative;
+  }
+
+  &__pagination {
+    width: 24px;
+    height: 24px;
+    background-color: $grey;
+    border-radius: 12px;
+    border: none;
+    cursor: pointer;
+    outline: none;
+    position: absolute;
+
+    &--left {
+      left: 12px;
+    }
+
+    &--right {
+      transform: rotate(180deg);
+      right: 12px;
+    }
+
+    svg {
+      display: block;
+      margin: 6px auto;
+    }
+
+    &:hover {
+      background-color: $night;
+      svg > g {
+        fill: #fff;
+      }
+    }
+  }
+
+  &__table {
+    padding: 18px 24px 24px;
+  }
+
+  &__tbody-year {
+    height: 160px;
+    overflow-y: scroll;
+    display:block;
+  }
+
+  &__weekdays {
+    color: $night;
+    font-size: 0.875rem;
+    width: 30px;
+  }
+
+  &__cell {
+    font-size: 0.875rem;
+    background-color: #fff;
+    color: $night;
+    text-align: center;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+
+    span {
+      width: 24px;
+      height: 24px;
+      margin:auto;
+      display:block;
+      line-height:24px;
+      border-radius: 12px;
+    }
+
+    &:hover > span {
+      background-color: $grey;
+      color: $night;
+    }
+
+    &--today > span {
+      background-color: $night;
+      color: #fff;
+    }
+
+    &--selected > span {
+      background-color: #fff;
+      color: $night;
+      border: 1px solid $night;
+    }
+
+    &--month, &--year {
+      width: 100px;
+
+      span {
+        width: 100%;
+      }
+    }
+
+    &--blank {
+      background-color: #fff;
+      cursor: none;
+    }
+  }
+
+  &__toggle {
+    border: none;
+    height: 24px;
+    padding: 0 12px;
+    border-radius: 12px;
+    cursor: pointer;
+    outline: none;
+    background-color: $night;
+    color: #fff;
+
+    &:hover {
+      background-color: $grey;
+      color: $night;
+    }
+
+    &--month {
+      border-radius: 12px 0 0 12px;
+    }
+
+    &--year {
+      border-radius: 0 12px 12px 0;
+      margin-left: 3px;
+    }
+  }
+}

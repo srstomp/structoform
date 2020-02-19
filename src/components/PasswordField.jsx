@@ -1,9 +1,9 @@
 import React, {useState, useRef} from 'react';
 import PropTypes from "prop-types";
 import { id } from '../constants/helper';
+import FormItem from "./FormItem";
 
-const PasswordField = ({label, name, value, direction, type, placeholder, onChange, errorMessage, showError = false,
-                           className = ""}) => {
+const PasswordField = ({label, name, value, direction, type, placeholder, onChange, errorMessage, showError}) => {
     const [passwordIsShown, setPasswordIsShown] = useState(false)
     const inputEl = useRef(null)
 
@@ -24,15 +24,14 @@ const PasswordField = ({label, name, value, direction, type, placeholder, onChan
      }
 
     return (
-        <div className={`form-item form-item${direction} ${className}`}>
-            {label !== '' ? <label className={`form-item__label`} htmlFor={id}>{label}</label> : null}
+        <FormItem label={label} direction={direction}>
             <div className="form-item__inner">
                 <input className={`form-item__input ${showError ? 'error' : ''}`} placeholder={placeholder}
                        ref={inputEl} type={type} onChange={onChange} name={name} htmlFor={id} value={value}/>
                 {passwordToggleButton()}
-                <span className={`form-item__error-label ${showError ? '' : 'hide'}`}>{errorMessage}</span>
+                <span className={`error-label ${showError ? '' : 'hide'}`}>{errorMessage}</span>
             </div>
-        </div>
+        </FormItem>
     )
 }
 
@@ -52,5 +51,5 @@ PasswordField.propTypes = {
     placeholder: PropTypes.string,
     onChange: PropTypes.func,
     errorMessage: PropTypes.string,
-    showError: PropTypes.bool
+    showError: PropTypes.bool.isRequired
 }
