@@ -23,6 +23,7 @@ const direction = {
 const copy = {
     nl: {
         // errors
+        'error_generic': 'De invoer voldoet niet aan de voorwaarden',
         'error_is_required': 'Het invoerveld is niet ingevuld',
         'error_min_length': 'De invoer minimaal van lengte X zijn',
         'error_invalid_email': 'Er is geen geldig e-mailadres ingevuld',
