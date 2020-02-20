@@ -3,19 +3,17 @@ import PropTypes from 'prop-types'
 import { uniqueId, direction } from '../constants/helper'
 import FormItem from './FormItem'
 
-const SelectField = ({label, name, placeholder, values, direction, disabled = false, errorMessage, showError, onChange, isVisible}) => {
+const SelectField = ({label, name, placeholder, values, value, direction, disabled = false, errorMessage, showError, onChange, isVisible}) => {
     const [ id ] = useState(() => uniqueId(`${_.camelCase(label)}-`))
-    const [ currentValue, setCurrentValue ] = useState(placeholder)
-    const [ isChecked, setIsChecked ] = useState(false)
+    const [ currentValue, setCurrentValue ] = useState(value)
 
     useEffect(() => {
-        onChange(name, isChecked ? currentValue : null, { isVisible })
+        onChange(name, currentValue, { isVisible })
     }, [currentValue, isVisible])
 
     const placeholderStyling = () => `${currentValue === placeholder && 'form-item__select--placeholder'}`
 
     const handleChange = (e => {
-        setIsChecked(true)
         setCurrentValue(e.target.value)
     })
 
@@ -47,6 +45,7 @@ SelectField.propTypes = {
     name: PropTypes.string.isRequired,
     placeholder: PropTypes.string,
     values: PropTypes.arrayOf(PropTypes.shape).isRequired,
+    value: PropTypes.string,
     direction: PropTypes.oneOf(Object.values(direction)),
     disabled: PropTypes.bool,
     errorMessage: PropTypes.string,

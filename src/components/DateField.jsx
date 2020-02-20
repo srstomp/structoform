@@ -16,7 +16,7 @@ const CalendarIcon = () =>
 
 const DateField = ({label, name, placeholder, value, direction, errorMessage, showError, onChange, isVisible}) => {
     const [ id ] = useState(() => uniqueId(`${_.camelCase(label)}-`))
-    const [ currentValue, setCurrentValue ] = useState('')
+    const [ currentValue, setCurrentValue ] = useState(value)
 
     const node = useRef();
     const refValue = useRef();
@@ -61,7 +61,7 @@ const DateField = ({label, name, placeholder, value, direction, errorMessage, sh
             <div className="form-item__input-wrapper">
                 <input className={`form-item__input ${showError && 'error'}`} placeholder={placeholder}
                        onClick={handleInputClick} name={name} htmlFor={id} onChange={handleChange}
-                       value={currentValue} defaultValue={value}/>
+                       value={currentValue}/>
                 <CalendarIcon/>
             </div>
             <span className={`error-label ${showError ? '' : 'hide'}`}>{errorMessage}</span>
