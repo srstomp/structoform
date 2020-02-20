@@ -20,7 +20,7 @@ const RadioButtonGroup = ({items, name, label, value, direction, inline, renderT
 
     return isVisible && (
         <FormItem label={label} id={id} direction={direction}>
-            <div className={`form-item__radiogroup${inline ? direction.row : direction.column}`}>
+            <div className={`form-item__radiogroup${inline ? directions.row : directions.column}`}>
                 {
                     items.map(item => <RadioButton key={uniqueId(`${_.camelCase(item.label)}-`)} label={item.label}
                                                    value={item.value} group={name} onChange={handleChange}

@@ -8,7 +8,7 @@ const SelectField = ({label, name, placeholder, values, value, direction, disabl
     const [ currentValue, setCurrentValue ] = useState(value)
 
     useEffect(() => {
-        onChange(name, isChecked ? currentValue : null, { isVisible })
+        onChange(name, currentValue, { isVisible })
     }, [currentValue, isVisible])
 
     const placeholderStyling = () => `${currentValue === placeholder && 'form-item__select--placeholder'}`
