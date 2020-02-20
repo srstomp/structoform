@@ -5,22 +5,22 @@ import RadioButton from './RadioButton'
 import FormItem from './FormItem'
 import _ from "lodash";
 
-const RadioButtonGroup = ({items, name, label, value, direction, inline, renderTabs, errorMessage, showError, onChange}) => {
+const RadioButtonGroup = ({items, name, label, value, direction, inline, renderTabs, errorMessage, showError, onChange, isVisible}) => {
     const [ id ] = useState(() => uniqueId(`${_.camelCase(label)}-`))
     const [ currentValue, setCurrentValue] = useState(value)
 
     useEffect(() => {
-        onChange(name, currentValue)
-    }, [currentValue])
+        onChange(name, currentValue, { isVisible })
+    }, [currentValue, isVisible])
 
     const handleChange = (e) => {
         e.preventDefault()
         setCurrentValue(e.target.value)
     }
 
-    return (
+    return isVisible && (
         <FormItem label={label} id={id} direction={direction}>
-            <div className={`form-item__radiogroup${inline ? directions.row : directions.column}`}>
+            <div className={`form-item__radiogroup${inline ? direction.row : direction.column}`}>
                 {
                     items.map(item => <RadioButton key={uniqueId(`${_.camelCase(item.label)}-`)} label={item.label}
                                                    value={item.value} group={name} onChange={handleChange}
@@ -35,7 +35,8 @@ const RadioButtonGroup = ({items, name, label, value, direction, inline, renderT
 export default RadioButtonGroup
 
 RadioButtonGroup.defaultProps = {
-    value: ''
+    value: '',
+    isVisible: true,
 }
 
 RadioButtonGroup.propTypes = {
@@ -48,5 +49,6 @@ RadioButtonGroup.propTypes = {
     renderTabs: PropTypes.bool,
     errorMessage: PropTypes.string,
     showError: PropTypes.bool.isRequired,
-    onChange: PropTypes.func.isRequired
+    onChange: PropTypes.func.isRequired,
+    isVisible: PropTypes.bool.isRequired
 }

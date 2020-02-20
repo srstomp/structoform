@@ -12,7 +12,7 @@ const Form = ({ className = '', layout, layoutDirection, initValues, submitButto
         validationRules[item] = { type: validationRules[item].type, rules: validationRules[item].validators }
     )
 
-    const { values, errors, handleSubmit, handleChange } = useForm(() => submit(), validationRules)
+    const { values, errors, handleSubmit, handleChange, checkConditionals } = useForm(() => submit(), validationRules)
 
     const dir = layoutDirection === 'row' ? direction.row : direction.column
 
@@ -28,7 +28,7 @@ const Form = ({ className = '', layout, layoutDirection, initValues, submitButto
         onSubmit(Object.values(errors).every(x => x === null) ? null : errors, values)
     }
 
-    const getItem = (key, value, index) => {
+    const getItem = (key, value, index, isVisible) => {
         switch (value.type) {
             case 'text':
             case 'password':
@@ -37,28 +37,32 @@ const Form = ({ className = '', layout, layoutDirection, initValues, submitButto
             case 'number':
                 return <TextField key={index} type={value.type} name={key} label={value.label} direction={dir}
                     placeholder={value.placeholder || ''} value={values[key]} onChange={handleChange}
-                    showError={!_.isEmpty(errors[key])} errorMessage={_.head(errors[key]) || ''} />
+                    showError={!_.isEmpty(errors[key])} errorMessage={_.head(errors[key]) || ''}
+                    isVisible={isVisible} />
             case 'select':
                 return <SelectField key={key} label={value.label} values={value.values || []} value={getValue(key)} direction={dir}
                     name={key} placeholder={value.placeholder || ''} onChange={handleChange}
-                    showError={!_.isEmpty(errors[key])} errorMessage={_.head(errors[key]) || ''} />
+                    showError={!_.isEmpty(errors[key])} errorMessage={_.head(errors[key]) || ''}
+                    isVisible={isVisible} />
             case 'checkbox':
                 return <Checkbox key={key} label={value.label} name={key} value={getValue(key) || false}
                     onChange={handleChange} showError={!_.isEmpty(errors[key])}
-                    errorMessage={_.head(errors[key]) || ''} />
+                    errorMessage={_.head(errors[key]) || ''}
+                    isVisible={isVisible} />
             case 'textarea':
                 return <TextArea key={key} label={value.label} name={key} direction={dir} onChange={handleChange}
                     showError={!_.isEmpty(errors[key])} placeholder={value.placeholder}
-                    errorMessage={_.head(errors[key]) || ''} value={values[key]} />
+                    errorMessage={_.head(errors[key]) || ''} value={values[key]}
+                    isVisible={isVisible} />
             case 'date':
                 return <DateField key={index} name={key} label={value.label} direction={dir} onChange={handleChange}
                     placeholder={value.placeholder || ''} value={values[key]}
-                    showError={!_.isEmpty(errors[key])} errorMessage={_.head(errors[key]) || ''} />
+                    showError={!_.isEmpty(errors[key])} errorMessage={_.head(errors[key]) || ''}
+                    isVisible={isVisible} />
             case 'radio':
-                return <RadioButtonGroup key={index} label={value.label} value={getValue(key)} direction={dir}
-                    inline={value.inline} items={value.values}
-                    name={key} showError={!_.isEmpty(errors[key])} onChange={handleChange}
-                    errorMessage={_.head(errors[key]) || ''} renderTabs={value.renderTabs} />
+                return <RadioButtonGroup key={index} label={value.label} direction={dir} value={getValue(key)} inline={value.inline} 
+                    items={value.values} name={key} showError={!_.isEmpty(errors[key])} onChange={handleChange}
+                    errorMessage={_.head(errors[key]) || ''} isVisible={isVisible} renderTabs={value.renderTabs} />
             case 'displaytext':
                 return <DisplayText key={index} label={value.label} direction={dir} value={value.content} wrapper={value.wrapper} />
             default:
@@ -70,7 +74,7 @@ const Form = ({ className = '', layout, layoutDirection, initValues, submitButto
         <form className={`form ${className}`} onSubmit={handleSubmit} noValidate >
             {
                 Object.keys(layout).map((key, i) => {
-                    return getItem(key, layout[key], i)
+                    return getItem(key, layout[key], i, checkConditionals(_.get(layout, key, {})))
                 })
             }
             {submitButton}

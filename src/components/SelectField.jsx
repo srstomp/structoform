@@ -3,13 +3,13 @@ import PropTypes from 'prop-types'
 import { uniqueId, direction } from '../constants/helper'
 import FormItem from './FormItem'
 
-const SelectField = ({label, name, placeholder, values, value, direction, disabled = false, errorMessage, showError, onChange}) => {
+const SelectField = ({label, name, placeholder, values, value, direction, disabled = false, errorMessage, showError, onChange, isVisible}) => {
     const [ id ] = useState(() => uniqueId(`${_.camelCase(label)}-`))
     const [ currentValue, setCurrentValue ] = useState(value)
 
     useEffect(() => {
-        onChange(name, currentValue)
-    }, [currentValue])
+        onChange(name, isChecked ? currentValue : null, { isVisible })
+    }, [currentValue, isVisible])
 
     const placeholderStyling = () => `${currentValue === placeholder && 'form-item__select--placeholder'}`
 
@@ -17,7 +17,7 @@ const SelectField = ({label, name, placeholder, values, value, direction, disabl
         setCurrentValue(e.target.value)
     })
 
-    return (
+    return isVisible && (
         <FormItem label={label} id={id} direction={direction}>
             <select className={`form-item__select ${placeholderStyling()} ${showError ? 'error' : ''}`}
                     htmlFor={id} name={name} onChange={handleChange} value={currentValue} 
@@ -36,6 +36,10 @@ const SelectField = ({label, name, placeholder, values, value, direction, disabl
 
 export default SelectField
 
+SelectField.defaultProps = {
+    isVisible: true,
+}
+
 SelectField.propTypes = {
     label: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
@@ -46,5 +50,6 @@ SelectField.propTypes = {
     disabled: PropTypes.bool,
     errorMessage: PropTypes.string,
     showError: PropTypes.bool.isRequired,
-    onChange: PropTypes.func.isRequired
+    onChange: PropTypes.func.isRequired,
+    isVisible: PropTypes.bool.isRequired
 }

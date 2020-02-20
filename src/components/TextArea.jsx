@@ -4,17 +4,17 @@ import { direction, uniqueId } from '../constants/helper'
 import FormItem from './FormItem'
 import _ from 'lodash'
 
-const TextArea = ({label, name, value = '', direction, placeholder, onChange, errorMessage, showError}) => {
+const TextArea = ({label, name, value = '', direction, placeholder, onChange, errorMessage, showError, isVisible}) => {
     const [ id ] = useState(() => uniqueId(`${_.camelCase(label)}-`))
     const [ currentValue, setCurrentValue ] = useState('')
 
     useEffect(() => {
-        onChange(name, currentValue)
-    }, [currentValue])
+        onChange(name, currentValue, { isVisible })
+    }, [currentValue, isVisible])
 
     const handleChange = e => setCurrentValue(e.target.value)
 
-     return (
+     return isVisible && (
         <FormItem label={label} id={id} direction={direction}>
              <div className="form-item__inner">
                 <textarea className={`form-item__textarea ${showError ? 'error' : ''}`} placeholder={placeholder}
@@ -28,6 +28,10 @@ const TextArea = ({label, name, value = '', direction, placeholder, onChange, er
 
 export default TextArea
 
+TextArea.defaultProps = {
+    isVisible: true,
+}
+
 TextArea.propTypes = {
     label: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
@@ -36,5 +40,6 @@ TextArea.propTypes = {
     placeholder: PropTypes.string,
     errorMessage: PropTypes.string,
     showError: PropTypes.bool.isRequired,
-    onChange: PropTypes.func.isRequired
+    onChange: PropTypes.func.isRequired,
+    isVisible: PropTypes.bool.isRequired
 }

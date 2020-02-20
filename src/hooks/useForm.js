@@ -1,9 +1,10 @@
 import {useState, useEffect} from 'react'
-import { copy } from '../constants/helper';
+import { copy, comparators } from '../constants/helper';
 
 const useForm = (callback, validators) => {
     const [values, setValues] = useState({})
     const [errors, setErrors] = useState({})
+    const [statuses, setStatuses] = useState({})
     const [isSubmitting, setIsSubmitting] = useState(false)
 
     useEffect(() => {
@@ -25,7 +26,7 @@ const useForm = (callback, validators) => {
 
         Object.keys(validators).forEach( validator => {
             Object.keys(values).forEach((key) => {
-                if ( key === validator ) {
+                if ( key === validator && _.get(statuses, [key, 'isVisible'], true) ) {
                     setErrors(errors => ( { ...errors, [key]: validate(values[key], validators[validator])} ))
                 }
             })
@@ -34,19 +35,55 @@ const useForm = (callback, validators) => {
         setIsSubmitting(true)
     }
 
-    const handleChange = (key, value) => {
+    const handleChange = (key, value, status) => {
         // Remove current error on typing
         setErrors(errors => ({ ...errors, [key]: null}))
 
         // Store values of input elements
         setValues(values => ({ ...values, [key]: value}))
+
+        // Store statuses of input elements
+        setStatuses(statuses => ({ ...statuses, [key]: status}))
+    }
+
+    const checkConditionals = (item) => {
+        /**
+         * Returns true if all the conditions are met
+         */
+        const conditionals = _.get(item, 'conditionals', [])
+
+        return conditionals.every(conditional => {
+            if (typeof conditional === "boolean") {
+                return conditional
+            }
+
+            const rule = _.isPlainObject(conditional) ? conditional : { field: conditional, condition: comparators.TRUTHY }
+
+            const field =  _.get(rule, 'field', '')
+            const value = _.get(rule, 'value')
+
+            switch(_.get(rule, 'condition', comparators.IS)) {
+                case comparators.IS:
+                    return values[field] === value
+                case comparators.ISNOT:
+                    return values[field] !== value
+                case comparators.MORE:
+                    return Number(values[field]) > Number(value)
+                case comparators.LESS:
+                    return Number(values[field] < Number(value))
+                case comparators.TRUTHY:
+                default:
+                    return !!values[field]
+            }
+        })
     }
 
     return {
         values,
         errors,
         handleSubmit,
-        handleChange
+        handleChange,
+        checkConditionals
     }
 }
 

@@ -1,6 +1,6 @@
 {
     "name": "structoform",
-    "version": "1.0.9",
+    "version": "1.1.0",
     "description": "React form components",
     "main": "dist/index.js",
     "files": [
@@ -10,7 +10,6 @@
         "css": "node-sass --output-style compressed src/assets/styles/styles.scss -o dist/css",
         "autoprefixer": "postcss -u autoprefixer -r dist/css/*",
         "test": "echo \"Error: no test specified\" && exit 1",
-        "prepare": "babel ./src --out-dir ./dist -s inline && npm run build-css && npm run autoprefixer",
         "prep": "babel ./src --out-dir ./dist -s inline && npm run css && npm run autoprefixer"
     },
     "repository": {
