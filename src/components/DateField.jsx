@@ -14,7 +14,7 @@ const CalendarIcon = () =>
         </g>
     </svg>
 
-const DateField = ({label, name, placeholder, value, direction, errorMessage, showError, onChange}) => {
+const DateField = ({label, name, placeholder, value, direction, errorMessage, showError, onChange, isVisible}) => {
     const [ id ] = useState(() => uniqueId(`${_.camelCase(label)}-`))
     const [ currentValue, setCurrentValue ] = useState('')
 
@@ -26,7 +26,7 @@ const DateField = ({label, name, placeholder, value, direction, errorMessage, sh
         if (refValue.current !== currentValue) {
             refValue.current = currentValue
 
-            onChange(name, currentValue)
+            onChange(name, currentValue, { isVisible })
 
             setIsCalendarPresent(false)
         }
@@ -39,7 +39,7 @@ const DateField = ({label, name, placeholder, value, direction, errorMessage, sh
 
         return () => document.removeEventListener('mousedown', handleClickOutside)
 
-    }, [isCalendarPresent, currentValue])
+    }, [isCalendarPresent, currentValue, isVisible])
 
     const handleClickOutside = e => {
         if (node.current.contains(e.target)) {
@@ -56,7 +56,7 @@ const DateField = ({label, name, placeholder, value, direction, errorMessage, sh
 
     const handleChange = e => setCurrentValue(e.target.value)
 
-    return (
+    return isVisible && (
         <FormItem label={label} id={id} direction={direction}>
             <div className="form-item__input-wrapper">
                 <input className={`form-item__input ${showError && 'error'}`} placeholder={placeholder}
@@ -76,6 +76,11 @@ const DateField = ({label, name, placeholder, value, direction, errorMessage, sh
 
 export default DateField
 
+DateField.defaultProps = {
+    value: '',
+    isVisible: true,
+}
+
 DateField.propTypes = {
     label: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
@@ -84,5 +89,6 @@ DateField.propTypes = {
     direction: PropTypes.oneOf(Object.values(direction)),
     errorMessage: PropTypes.string,
     showError: PropTypes.bool.isRequired,
-    onChange: PropTypes.func.isRequired
+    onChange: PropTypes.func.isRequired,
+    isVisible: PropTypes.bool.isRequired
 }
