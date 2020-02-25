@@ -1,6 +1,6 @@
 {
     "name": "structoform",
-    "version": "1.1.0",
+    "version": "1.1.2",
     "description": "React form components",
     "main": "dist/index.js",
     "files": [
@@ -17,6 +17,9 @@
         "url": "git+https://github.com/srstomp/structoform.git"
     },
     "author": "Steve Stomp",
+    "contributors": [
+        "Robin de Bondt"
+    ],
     "license": "MIT",
     "bugs": {
         "url": "https://github.com/srstomp/structoform/issues"

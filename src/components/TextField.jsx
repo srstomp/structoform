@@ -4,26 +4,49 @@ import { uniqueId, direction } from '../constants/helper'
 import FormItem from './FormItem'
 import _ from 'lodash'
 
-const TextField = ({label, name, placeholder, value, direction, type, errorMessage, showError, onChange}) => {
+const TextField = ({label, name, placeholder, value, direction, type, errorMessage, showError, onChange, isVisible}) => {
     const [ id ] = useState(() => uniqueId(`${_.camelCase(label)}-`))
-    const [currentValue, setCurrentValue] = useState('')
+    const [currentValue, setCurrentValue] = useState(value)
 
     useEffect(() => {
-        onChange(name, currentValue)
-    }, [currentValue])
+        onChange(name, currentValue, { isVisible })
+    }, [currentValue, isVisible])
 
     const handleChange = e => setCurrentValue(e.target.value)
 
-    return (
+    const inputMode = () => {
+        switch (type) {
+            case 'email':
+                return 'email'
+            case 'phone':
+                return 'tel'
+            case 'number':
+                return 'numeric'
+            default:
+                return 'latin'
+        }
+    }
+
+    return isVisible && (
         <FormItem label={label} id={id} direction={direction}>
-            <input className={`form-item__input ${showError ? 'error' : ''}`} placeholder={placeholder} type={type}
-                   onChange={handleChange} name={name} htmlFor={id} value={currentValue} defaultValue={value}/>
+            <input className={`form-item__input ${showError ? 'error' : ''}`}
+                   placeholder={placeholder}
+                   type={type}
+                   onChange={handleChange}
+                   name={name} htmlFor={id}
+                   value={currentValue}
+                   inputMode={inputMode}/>
             <span className={`error-label ${showError ? '' : 'hide'}`}>{errorMessage}</span>
         </FormItem>
     )
 }
 
 export default TextField
+
+TextField.defaultProps = {
+    value: '',
+    isVisible: true,
+}
 
 TextField.propTypes = {
     label: PropTypes.string.isRequired,
@@ -34,5 +57,6 @@ TextField.propTypes = {
     type: PropTypes.string.isRequired,
     errorMessage: PropTypes.string,
     showError: PropTypes.bool.isRequired,
-    onChange: PropTypes.func.isRequired
+    onChange: PropTypes.func.isRequired,
+    isVisible: PropTypes.bool.isRequired
 }

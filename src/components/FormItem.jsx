@@ -17,5 +17,8 @@ FormItem.propTypes = {
     label: PropTypes.string,
     id: PropTypes.string.isRequired,
     direction: PropTypes.oneOf(Object.values(direction)),
-    children: PropTypes.array,
+    children: PropTypes.oneOfType([
+        PropTypes.arrayOf(PropTypes.node),
+        PropTypes.node
+    ])
 }
