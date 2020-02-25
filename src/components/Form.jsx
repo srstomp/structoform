@@ -36,7 +36,7 @@ const Form = ({ className = '', layout, layoutDirection, initValues, submitButto
             case 'phone':
             case 'number':
                 return <TextField key={index} type={value.type} name={key} label={value.label} direction={dir}
-                    placeholder={value.placeholder || ''} value={values[key]} onChange={handleChange}
+                    placeholder={value.placeholder || ''} value={getValue(key)} onChange={handleChange}
                     showError={!_.isEmpty(errors[key])} errorMessage={_.head(errors[key]) || ''}
                     isVisible={isVisible} />
             case 'select':
@@ -52,11 +52,11 @@ const Form = ({ className = '', layout, layoutDirection, initValues, submitButto
             case 'textarea':
                 return <TextArea key={key} label={value.label} name={key} direction={dir} onChange={handleChange}
                     showError={!_.isEmpty(errors[key])} placeholder={value.placeholder}
-                    errorMessage={_.head(errors[key]) || ''} value={values[key]}
+                    errorMessage={_.head(errors[key]) || ''} value={getValue(key)}
                     isVisible={isVisible} />
             case 'date':
                 return <DateField key={index} name={key} label={value.label} direction={dir} onChange={handleChange}
-                    placeholder={value.placeholder || ''} value={values[key]}
+                    placeholder={value.placeholder || ''} value={getValue(key)}
                     showError={!_.isEmpty(errors[key])} errorMessage={_.head(errors[key]) || ''}
                     isVisible={isVisible} />
             case 'radio':

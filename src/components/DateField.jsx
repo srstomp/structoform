@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 import { uniqueId, direction } from '../constants/helper'
 import FormItem from './FormItem'
 import Calendar from './Calendar'
+import moment from 'moment'
 
 const CalendarIcon = () =>
     <svg width="25px" height="24px" viewBox="0 0 25 24" version="1.1" xmlns="http://www.w3.org/2000/svg" className='form-item__input-icon'>
@@ -16,7 +17,7 @@ const CalendarIcon = () =>
 
 const DateField = ({label, name, placeholder, value, direction, errorMessage, showError, onChange, isVisible}) => {
     const [ id ] = useState(() => uniqueId(`${_.camelCase(label)}-`))
-    const [ currentValue, setCurrentValue ] = useState(value)
+    const [ currentValue, setCurrentValue ] = useState(moment(value).format('D/MM/YYYY'))
 
     const node = useRef();
     const refValue = useRef();
