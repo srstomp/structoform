@@ -24,9 +24,7 @@ const Form = ({ className = '', layout, layoutDirection, initValues, submitButto
         return values[key]
     }
 
-    const submit = () => {
-        onSubmit(Object.values(errors).every(x => x === null) ? null : errors, values)
-    }
+    const submit = () => onSubmit(Object.values(errors).every(x => x === null) ? null : errors, values)
 
     const getItem = (key, value, index, isVisible) => {
         switch (value.type) {
@@ -60,7 +58,7 @@ const Form = ({ className = '', layout, layoutDirection, initValues, submitButto
                     showError={!_.isEmpty(errors[key])} errorMessage={_.head(errors[key]) || ''}
                     isVisible={isVisible} />
             case 'radio':
-                return <RadioButtonGroup key={index} label={value.label} direction={dir} value={getValue(key)} inline={value.inline} 
+                return <RadioButtonGroup key={index} label={value.label} direction={dir} value={getValue(key)} inline={value.inline}
                     items={value.values} name={key} showError={!_.isEmpty(errors[key])} onChange={handleChange}
                     errorMessage={_.head(errors[key]) || ''} isVisible={isVisible} renderTabs={value.renderTabs} />
             case 'displaytext':
