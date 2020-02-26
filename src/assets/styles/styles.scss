@@ -165,12 +165,35 @@ $graphite: #4A4A4A;
   /*
   RADIO BUTTON
    */
+  .radio-wrapper {
+    flex: 1;
+  }
+  
   &__radio {
+    &--tabs {
+      & + label {
+        text-align: center;
+        height: initial !important;
+        line-height: 3em;
+        border-bottom: 1px solid $grey;
+        color: $grey;
+        display: block;
+      }
 
-    &__wrapper {
-      display: flex;
-      flex-direction: column;
+      &:checked + label {
+        border-bottom: 1px solid $night;
+        color: $night;
+      }
+
+      & + label:before {
+        display: none
+      }
+
+      & + label:after {
+        display: none
+      }
     }
+    
     &[type='radio'] {
       display: none;
     }
@@ -185,7 +208,6 @@ $graphite: #4A4A4A;
     }
 
     & + label {
-      display: inline-block;
       height: 20px;
       position: relative;
       padding: 0 30px;

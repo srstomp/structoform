@@ -4,6 +4,7 @@ import DateField from './components/DateField'
 import TextArea from './components/TextArea'
 import PasswordField from './components/PasswordField'
 import Checkbox from './components/Checkbox'
+import DisplayText from './components/DisplayText'
 import Form from './components/Form'
 import useForm from './hooks/useForm'
 import RadioButtonGroup from './components/RadioButtonGroup'
@@ -15,6 +16,7 @@ export {
     PasswordField,
     Checkbox,
     TextArea,
+    DisplayText,
     Form,
     useForm,
     RadioButtonGroup
