@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import { TextField, SelectField, DateField, Checkbox, TextArea, RadioButtonGroup, useForm, DisplayText } from "../index"
 import { direction } from '../constants/helper'
 
-const Form = ({ jsonConfig = '{}', className = '', layout, layoutDirection, initValues, submitButton, onSubmit }) => {
+const Form = ({ jsonConfig, className = '', layout, layoutDirection, initValues, submitButton, onSubmit }) => {
 
     const parsedConfig = jsonConfig ? JSON.parse(jsonConfig) : {}
 
@@ -93,7 +93,8 @@ const Form = ({ jsonConfig = '{}', className = '', layout, layoutDirection, init
 export default Form
 
 Form.defaultProps = {
-    initValues: {}
+    initValues: {},
+    jsonConfig: '{}',
 }
 
 Form.propTypes = {
