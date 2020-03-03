@@ -169,31 +169,7 @@ $graphite: #4A4A4A;
     flex: 1;
   }
   
-  &__radio {
-    &--tabs {
-      & + label {
-        text-align: center;
-        height: initial !important;
-        line-height: 3em;
-        border-bottom: 1px solid $grey;
-        color: $grey;
-        display: block;
-      }
-
-      &:checked + label {
-        border-bottom: 1px solid $night;
-        color: $night;
-      }
-
-      & + label:before {
-        display: none
-      }
-
-      & + label:after {
-        display: none
-      }
-    }
-    
+  &__radio { 
     &[type='radio'] {
       display: none;
     }
@@ -240,6 +216,30 @@ $graphite: #4A4A4A;
         background: $teal;
       }
     }
+
+    &--tabs {
+      & + label {
+        text-align: center;
+        border-bottom: 1px solid $grey;
+        color: $grey;
+        display: block;
+        padding: 12px;
+        height: 100%;
+      }
+
+      &:checked + label {
+        border-bottom: 1px solid $night;
+        color: $night;
+      }
+
+      & + label:before {
+        display: none
+      }
+
+      & + label:after {
+        display: none
+      }
+    }
   }
 
   &__radiogroup {
@@ -256,6 +256,7 @@ $graphite: #4A4A4A;
     &--row {
       display: flex;
       flex-direction: row;
+      flex-wrap: wrap;
     }
   }
   /*
