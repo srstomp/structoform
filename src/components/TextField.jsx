@@ -14,19 +14,6 @@ const TextField = ({label, name, placeholder, value, direction, type, errorMessa
 
     const handleChange = e => setCurrentValue(e.target.value)
 
-    const inputMode = () => {
-        switch (type) {
-            case 'email':
-                return 'email'
-            case 'phone':
-                return 'tel'
-            case 'number':
-                return 'numeric'
-            default:
-                return 'latin'
-        }
-    }
-
     return isVisible && (
         <FormItem label={label} id={id} direction={direction}>
             <input className={`form-item__input ${showError ? 'error' : ''}`}
@@ -35,7 +22,7 @@ const TextField = ({label, name, placeholder, value, direction, type, errorMessa
                    onChange={handleChange}
                    name={name} htmlFor={id}
                    value={currentValue}
-                   inputMode={inputMode}/>
+            />
             <span className={`error-label ${showError ? '' : 'hide'}`}>{errorMessage}</span>
         </FormItem>
     )
