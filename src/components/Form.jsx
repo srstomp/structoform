@@ -4,9 +4,19 @@ import PropTypes from 'prop-types'
 import { TextField, SelectField, DateField, Checkbox, TextArea, RadioButtonGroup, useForm, DisplayText } from "../index"
 import { direction } from '../constants/helper'
 
-const Form = ({ className = '', layout, layoutDirection, initValues, submitButton, onSubmit }) => {
+const Form = ({ jsonConfig, className = '', layout, layoutDirection, initValues, submitButton, onSubmit }) => {
 
-    const validationRules = { ...layout }
+    const parsedConfig = jsonConfig ? JSON.parse(jsonConfig) : {}
+
+    const config = {
+        className,
+        layout,
+        layoutDirection,
+        initValues,
+        ...parsedConfig,
+    }
+
+    const validationRules = { ...config.layout }
 
     Object.keys(validationRules).map((item, i) =>
         validationRules[item] = { type: validationRules[item].type, rules: validationRules[item].validators }
@@ -14,12 +24,12 @@ const Form = ({ className = '', layout, layoutDirection, initValues, submitButto
 
     const { values, errors, handleSubmit, handleChange, checkConditionals } = useForm(() => submit(), validationRules)
 
-    const dir = layoutDirection === 'row' ? direction.row : direction.column
+    const dir = config.layoutDirection === 'row' ? direction.row : direction.column
 
     const getValue = (key) => {
         // If no inputes are given, then return default valutes or empty string
         if (!values[key]) {
-            return _.get(initValues, key, '')
+            return _.get(config, ['initValues', key], '')
         }
         return values[key]
     }
@@ -69,10 +79,10 @@ const Form = ({ className = '', layout, layoutDirection, initValues, submitButto
     }
 
     return (
-        <form className={`form ${className}`} onSubmit={handleSubmit} noValidate >
+        <form className={`form ${config.className}`} onSubmit={handleSubmit} noValidate >
             {
-                Object.keys(layout).map((key, i) => {
-                    return getItem(key, layout[key], i, checkConditionals(_.get(layout, key, {})))
+                Object.keys(config.layout).map((key, i) => {
+                    return getItem(key, config.layout[key], i, checkConditionals(_.get(config.layout, key, {})))
                 })
             }
             {submitButton}
@@ -83,12 +93,19 @@ const Form = ({ className = '', layout, layoutDirection, initValues, submitButto
 export default Form
 
 Form.defaultProps = {
-    initValues: {}
+    initValues: {},
+    jsonConfig: '{}',
 }
 
 Form.propTypes = {
+    jsonConfig: PropTypes.string,
     className: PropTypes.string,
-    layout: PropTypes.object.isRequired,
+    layout: PropTypes.object,
     layoutDirection: PropTypes.string,
     initValues: PropTypes.object,
+    submitButton: PropTypes.oneOfType([
+        PropTypes.arrayOf(PropTypes.node),
+        PropTypes.node
+    ]),
+    onSubmit: PropTypes.func
 }

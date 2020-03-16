@@ -1,5 +1,4 @@
 import React, { useEffect, useState, useRef } from 'react'
-import ReactDOM from 'react-dom'
 import PropTypes from 'prop-types'
 import { uniqueId, direction } from '../constants/helper'
 import FormItem from './FormItem'
@@ -17,7 +16,7 @@ const CalendarIcon = () =>
 
 const DateField = ({label, name, placeholder, value, direction, errorMessage, showError, onChange, isVisible}) => {
     const [ id ] = useState(() => uniqueId(`${_.camelCase(label)}-`))
-    const [ currentValue, setCurrentValue ] = useState(moment(value).format('D/MM/YYYY'))
+    const [ currentValue, setCurrentValue ] = useState(value ? moment(value).format('D/MM/YYYY') : '')
 
     const node = useRef();
     const refValue = useRef();
