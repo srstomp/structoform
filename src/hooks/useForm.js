@@ -1,5 +1,6 @@
 import {useState, useEffect} from 'react'
 import { copy, comparators } from '../constants/helper';
+import _ from "lodash";
 
 const useForm = (callback, validators) => {
     const [values, setValues] = useState({})
@@ -90,7 +91,7 @@ const useForm = (callback, validators) => {
 export default useForm
 
 const validate = (value, validators) => {
-    let errors = validators.rules.map(validator => {
+    let errors = _.get(validators, 'rules', []).map(validator => {
         const rule = _.isPlainObject(validator) ? validator : { type: validator }
         const getErrorMessage = (fallback) => _.get(rule, 'errorMessage') || fallback
 
