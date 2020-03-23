@@ -5,7 +5,7 @@ import _ from "lodash";
 
 const Checkbox = ({label, name, value, showError, onChange, isVisible}) => {
     const [ id ] = useState(() => uniqueId(`${_.camelCase(label)}-`))
-    const [ isChecked, setIsChecked ] = useState(false)
+    const [ isChecked, setIsChecked ] = useState(value)
 
     const handleChange = e => setIsChecked(e.target.checked)
 
