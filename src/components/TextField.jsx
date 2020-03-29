@@ -23,7 +23,7 @@ const TextField = ({label, name, placeholder, value, direction, type, errorMessa
             case 'number':
                 return 'numeric'
             default:
-                return 'latin'
+                return 'text'
         }
     }
 
