@@ -35,7 +35,7 @@ const TextField = ({label, name, placeholder, value, direction, type, errorMessa
                    onChange={handleChange}
                    name={name} htmlFor={id}
                    value={currentValue}
-                   inputMode={inputmode}/>
+                   inputMode={inputmode()}/>
             <span className={`error-label ${showError ? '' : 'hide'}`}>{errorMessage}</span>
         </FormItem>
     )
