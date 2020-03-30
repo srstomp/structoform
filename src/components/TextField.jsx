@@ -52,7 +52,7 @@ TextField.propTypes = {
     value: PropTypes.string,
     direction: PropTypes.oneOf(Object.values(direction)),
     type: PropTypes.string.isRequired,
-    showError: PropTypes.bool.isRequired,
+    showError: PropTypes.bool,
     onChange: PropTypes.func.isRequired,
-    isVisible: PropTypes.bool.isRequired
+    isVisible: PropTypes.bool
 }

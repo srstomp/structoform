@@ -91,7 +91,7 @@ DateField.propTypes = {
     placeholder: PropTypes.string,
     value: PropTypes.string,
     direction: PropTypes.oneOf(Object.values(direction)),
-    showError: PropTypes.bool.isRequired,
+    showError: PropTypes.bool,
     onChange: PropTypes.func.isRequired,
-    isVisible: PropTypes.bool.isRequired
+    isVisible: PropTypes.bool
 }

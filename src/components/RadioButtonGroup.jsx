@@ -46,5 +46,5 @@ RadioButtonGroup.propTypes = {
     inline: PropTypes.bool,
     renderTabs: PropTypes.bool,
     onChange: PropTypes.func.isRequired,
-    isVisible: PropTypes.bool.isRequired
+    isVisible: PropTypes.bool
 }
