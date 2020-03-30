@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
-import { direction } from '../constants/helper'
 
 const SelectField = ({ id, name, placeholder, values, value, disabled, showError, onChange }) => {
     const [currentValue, setCurrentValue] = useState(value)
@@ -39,7 +38,6 @@ SelectField.propTypes = {
     placeholder: PropTypes.string,
     values: PropTypes.arrayOf(PropTypes.shape).isRequired,
     value: PropTypes.string,
-    direction: PropTypes.oneOf(Object.values(direction)),
     disabled: PropTypes.bool,
     showError: PropTypes.bool,
     onChange: PropTypes.func.isRequired,

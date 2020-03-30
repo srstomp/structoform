@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
-import { direction } from '../constants/helper'
 import _ from 'lodash'
 
 const TextArea = ({ id, name, value, placeholder, onChange, showError }) => {
@@ -31,7 +30,6 @@ TextArea.propTypes = {
     id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     value: PropTypes.string,
-    direction: PropTypes.oneOf(Object.values(direction)),
     placeholder: PropTypes.string,
     showError: PropTypes.bool,
     onChange: PropTypes.func.isRequired,

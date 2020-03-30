@@ -1,6 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react'
 import PropTypes from 'prop-types'
-import { direction } from '../constants/helper'
 import Calendar from './Calendar'
 import moment from 'moment'
 
@@ -89,7 +88,6 @@ DateField.propTypes = {
     name: PropTypes.string.isRequired,
     placeholder: PropTypes.string,
     value: PropTypes.string,
-    direction: PropTypes.oneOf(Object.values(direction)),
     showError: PropTypes.bool,
     onChange: PropTypes.func.isRequired,
 }

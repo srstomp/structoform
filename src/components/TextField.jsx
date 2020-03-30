@@ -50,7 +50,6 @@ TextField.propTypes = {
     name: PropTypes.string.isRequired,
     placeholder: PropTypes.string,
     value: PropTypes.string,
-    direction: PropTypes.oneOf(Object.values(direction)),
     type: PropTypes.string.isRequired,
     showError: PropTypes.bool,
     onChange: PropTypes.func.isRequired,
