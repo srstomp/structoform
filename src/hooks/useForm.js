@@ -75,13 +75,13 @@ const useForm = (callback, validators, customComponents) => {
             return (
                 <FormItem label={_.get(itemLayout, 'label')} id={id} direction={direction}>
                     <FormComponent
-                        type={_.get(itemLayout, 'type')}
+                        {...itemLayout}
+                        id={id}
                         name={key}
-                        placeholder={_.get(itemLayout, 'placeholder')}
-                        values={_.get(itemLayout, 'values')}
                         value={value}
                         onChange={handleChange}
                         isVisible={isVisible}
+                        showError={showError}
                     />
                     <span className={`error-label ${showError ? '' : 'hide'}`}>{_.head(errors[key]) || ''}</span>
                 </FormItem>

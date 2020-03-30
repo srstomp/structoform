@@ -1,7 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react'
 import PropTypes from 'prop-types'
-import { uniqueId, direction } from '../constants/helper'
-import FormItem from './FormItem'
+import { direction } from '../constants/helper'
 import Calendar from './Calendar'
 import moment from 'moment'
 
@@ -14,13 +13,12 @@ const CalendarIcon = () =>
         </g>
     </svg>
 
-const DateField = ({label, name, placeholder, value, direction, errorMessage, showError, onChange, isVisible}) => {
-    const [ id ] = useState(() => uniqueId(`${_.camelCase(label)}-`))
-    const [ currentValue, setCurrentValue ] = useState(value ? moment(value).format('D/MM/YYYY') : '')
+const DateField = ({ id, name, placeholder, value, showError, onChange, isVisible }) => {
+    const [currentValue, setCurrentValue] = useState(value ? moment(value).format('D/MM/YYYY') : '')
 
     const node = useRef();
     const refValue = useRef();
-    const [ isCalendarPresent, setIsCalendarPresent ] = useState(false)
+    const [isCalendarPresent, setIsCalendarPresent] = useState(false)
 
     useEffect(() => {
         if (refValue.current !== currentValue) {
@@ -56,21 +54,26 @@ const DateField = ({label, name, placeholder, value, direction, errorMessage, sh
 
     const handleChange = e => setCurrentValue(e.target.value)
 
-    return isVisible && (
-        <FormItem label={label} id={id} direction={direction}>
+    return (
+        <>
             <div className="form-item__input-wrapper">
-                <input className={`form-item__input ${showError && 'error'}`} placeholder={placeholder}
-                       onClick={handleInputClick} name={name} htmlFor={id} onChange={handleChange}
-                       value={currentValue}/>
-                <CalendarIcon/>
+                <input
+                    className={`form-item__input ${showError && 'error'}`}
+                    placeholder={placeholder}
+                    onClick={handleInputClick}
+                    name={name}
+                    htmlFor={id}
+                    onChange={handleChange}
+                    value={currentValue}
+                />
+                <CalendarIcon />
             </div>
-            <span className={`error-label ${showError ? '' : 'hide'}`}>{errorMessage}</span>
             <div ref={node}>
                 {
-                    isCalendarPresent && <Calendar onSelect={handleDateSelection} date={currentValue}/>
+                    isCalendarPresent && <Calendar onSelect={handleDateSelection} date={currentValue} />
                 }
             </div>
-        </FormItem>
+        </>
     )
 }
 
@@ -82,12 +85,11 @@ DateField.defaultProps = {
 }
 
 DateField.propTypes = {
-    label: PropTypes.string.isRequired,
+    id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     placeholder: PropTypes.string,
     value: PropTypes.string,
     direction: PropTypes.oneOf(Object.values(direction)),
-    errorMessage: PropTypes.string,
     showError: PropTypes.bool.isRequired,
     onChange: PropTypes.func.isRequired,
     isVisible: PropTypes.bool.isRequired

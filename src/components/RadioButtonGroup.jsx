@@ -1,13 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
-import {direction as directions, uniqueId} from '../constants/helper'
+import { direction as directions, uniqueId } from '../constants/helper'
 import RadioButton from './RadioButton'
-import FormItem from './FormItem'
-import _ from "lodash";
+import _ from 'lodash';
 
-const RadioButtonGroup = ({values, name, label, value, direction, inline, renderTabs, errorMessage, showError, onChange, isVisible}) => {
-    const [ id ] = useState(() => uniqueId(`${_.camelCase(label)}-`))
-    const [ currentValue, setCurrentValue] = useState(value)
+const RadioButtonGroup = ({ values, name, value, inline, renderTabs, onChange, isVisible }) => {
+    const [currentValue, setCurrentValue] = useState(value)
 
     useEffect(() => {
         onChange(name, currentValue, { isVisible })
@@ -18,17 +16,18 @@ const RadioButtonGroup = ({values, name, label, value, direction, inline, render
         setCurrentValue(e.target.value)
     }
 
-    return isVisible && (
-        <FormItem label={label} id={id} direction={direction}>
-            <div className={`form-item__radiogroup${inline ? directions.row : directions.column}`}>
-                {
-                    values.map(item => <RadioButton key={uniqueId(`${_.camelCase(item.label)}-`)} label={item.label}
-                                                   value={item.value} group={name} onChange={handleChange}
-                                                   isChecked={item.value === currentValue} renderTabs={renderTabs} />)
-                }
-            </div>
-            <span className={`error-label ${showError ? '' : 'hide'}`}>{errorMessage}</span>
-        </FormItem>
+    return (
+        <div className={`form-item__radiogroup${inline ? directions.row : directions.column} ${showError && 'error'}`}>
+            {values.map(item => <RadioButton
+                key={uniqueId(`${_.camelCase(item.label)}-`)}
+                label={item.label}
+                value={item.value}
+                group={name}
+                onChange={handleChange}
+                isChecked={item.value === currentValue}
+                renderTabs={renderTabs}
+            />)}
+        </div>
     )
 }
 
@@ -42,13 +41,10 @@ RadioButtonGroup.defaultProps = {
 RadioButtonGroup.propTypes = {
     values: PropTypes.arrayOf(PropTypes.shape).isRequired,
     name: PropTypes.string.isRequired,
-    label: PropTypes.string.isRequired,
     value: PropTypes.string,
     direction: PropTypes.oneOf(Object.values(directions)),
     inline: PropTypes.bool,
     renderTabs: PropTypes.bool,
-    errorMessage: PropTypes.string,
-    showError: PropTypes.bool.isRequired,
     onChange: PropTypes.func.isRequired,
     isVisible: PropTypes.bool.isRequired
 }
