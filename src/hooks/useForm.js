@@ -78,7 +78,7 @@ const useForm = (callback, validators, customComponents) => {
                         type={_.get(itemLayout, 'type')}
                         name={key}
                         placeholder={_.get(itemLayout, 'placeholder')}
-                        items={_.get(itemLayout, 'items')}
+                        values={_.get(itemLayout, 'values')}
                         value={value}
                         onChange={handleChange}
                         isVisible={isVisible}
@@ -89,7 +89,6 @@ const useForm = (callback, validators, customComponents) => {
         }
 
         throw new Error(`Unhandled validator rule: ${_.get(itemLayout, 'type')}`)
-        return <p>hi!</p>
     }
 
     // Returns true if all the conditions are met
