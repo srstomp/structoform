@@ -20,7 +20,7 @@ const SelectField = ({label, name, placeholder, values, value, direction, disabl
     return isVisible && (
         <FormItem label={label} id={id} direction={direction}>
             <select className={`form-item__select ${placeholderStyling()} ${showError ? 'error' : ''}`}
-                    htmlFor={id} name={name} onChange={handleChange} value={currentValue} 
+                    htmlFor={id} name={name} onChange={handleChange} value={currentValue}
                     disabled={disabled}>
                 <option disabled default>{placeholder}</option>
                 {

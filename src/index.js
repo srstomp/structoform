@@ -6,6 +6,7 @@ import PasswordField from './components/PasswordField'
 import Checkbox from './components/Checkbox'
 import DisplayText from './components/DisplayText'
 import Form from './components/Form'
+import FormItem from './components/FormItem'
 import useForm from './hooks/useForm'
 import RadioButtonGroup from './components/RadioButtonGroup'
 
@@ -18,6 +19,7 @@ export {
     TextArea,
     DisplayText,
     Form,
+    FormItem,
     useForm,
     RadioButtonGroup
 }
