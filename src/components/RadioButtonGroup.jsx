@@ -4,7 +4,7 @@ import { direction as directions, uniqueId } from '../constants/helper'
 import RadioButton from './RadioButton'
 import _ from 'lodash';
 
-const RadioButtonGroup = ({ values, name, value, inline, renderTabs, onChange, isVisible }) => {
+const RadioButtonGroup = ({ values, name, value, inline, renderTabs, showError, onChange, isVisible }) => {
     const [currentValue, setCurrentValue] = useState(value)
 
     useEffect(() => {
@@ -45,6 +45,7 @@ RadioButtonGroup.propTypes = {
     direction: PropTypes.oneOf(Object.values(directions)),
     inline: PropTypes.bool,
     renderTabs: PropTypes.bool,
+    showError: PropTypes.bool,
     onChange: PropTypes.func.isRequired,
     isVisible: PropTypes.bool
 }
