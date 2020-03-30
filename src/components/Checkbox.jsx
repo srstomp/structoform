@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import _ from 'lodash';
 
-const Checkbox = ({ id, name, value, onChange, isVisible }) => {
+const Checkbox = ({ id, name, value, onChange, isVisible, showError }) => {
     const [isChecked, setIsChecked] = useState(value)
 
     const handleChange = e => setIsChecked(e.target.checked)
