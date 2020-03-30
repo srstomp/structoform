@@ -3,10 +3,9 @@ import { uniqueId, copy, comparators } from '../constants/helper';
 import _ from "lodash";
 import { TextField, SelectField, DateField, Checkbox, TextArea, RadioButtonGroup, DisplayText, FormItem } from '..';
 
-const useForm = (callback, validators, customComponents) => {
+const useForm = (callback, layout, customComponents) => {
     const [values, setValues] = useState({})
     const [errors, setErrors] = useState({})
-    const [statuses, setStatuses] = useState({})
     const [isSubmitting, setIsSubmitting] = useState(false)
 
     const formComponents = {
@@ -41,26 +40,26 @@ const useForm = (callback, validators, customComponents) => {
             event.preventDefault()
         }
 
-        Object.keys(validators).forEach(validator => {
-            Object.keys(values).forEach((key) => {
-                if (key === validator && _.get(statuses, [key, 'isVisible'], true)) {
-                    setErrors(errors => ({ ...errors, [key]: validate(values[key], validators[validator]) }))
-                }
-            })
+        // Reset errors
+        // setErrors({})
+
+        Object.keys(layout).forEach(itemKey => {
+            const value = _.get(values, itemKey)
+
+            if (checkConditionals(_.get(layout, [itemKey, 'conditionals'], []))) {
+                setErrors(errors => ({ ...errors, [itemKey]: validate(value, _.get(layout, [itemKey, 'validators'], [])) }))
+            }
         })
 
         setIsSubmitting(true)
     }
 
-    const handleChange = (key, value, status) => {
+    const handleChange = (key, value) => {
         // Remove current error on typing
         setErrors(errors => ({ ...errors, [key]: null }))
 
         // Store values of input elements
         setValues(values => ({ ...values, [key]: value }))
-
-        // Store statuses of input elements
-        setStatuses(statuses => ({ ...statuses, [key]: status }))
     }
 
     const getFormItemComponent = (type) => _.get(formComponents, type)
@@ -72,7 +71,7 @@ const useForm = (callback, validators, customComponents) => {
         const showError = !_.isEmpty(errors[key])
 
         if (FormComponent) {
-            return (
+            return isVisible && (
                 <FormItem label={_.get(itemLayout, 'label')} id={id} direction={direction}>
                     <FormComponent
                         {...itemLayout}
@@ -130,7 +129,7 @@ const useForm = (callback, validators, customComponents) => {
 export default useForm
 
 const validate = (value, validators) => {
-    let errors = _.get(validators, 'rules', []).map(validator => {
+    let errors = validators.map(validator => {
         const rule = _.isPlainObject(validator) ? validator : { type: validator }
         const getErrorMessage = (fallback) => _.get(rule, 'errorMessage') || fallback
 

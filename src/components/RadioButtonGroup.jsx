@@ -4,12 +4,12 @@ import { direction as directions, uniqueId } from '../constants/helper'
 import RadioButton from './RadioButton'
 import _ from 'lodash';
 
-const RadioButtonGroup = ({ values, name, value, inline, renderTabs, showError, onChange, isVisible }) => {
+const RadioButtonGroup = ({ values, name, value, inline, renderTabs, showError, onChange }) => {
     const [currentValue, setCurrentValue] = useState(value)
 
     useEffect(() => {
-        onChange(name, currentValue, { isVisible })
-    }, [currentValue, isVisible])
+        onChange(name, currentValue)
+    }, [currentValue])
 
     const handleChange = (e) => {
         e.preventDefault()
@@ -34,8 +34,7 @@ const RadioButtonGroup = ({ values, name, value, inline, renderTabs, showError, 
 export default RadioButtonGroup
 
 RadioButtonGroup.defaultProps = {
-    value: '',
-    isVisible: true,
+    value: ''
 }
 
 RadioButtonGroup.propTypes = {
@@ -46,6 +45,5 @@ RadioButtonGroup.propTypes = {
     inline: PropTypes.bool,
     renderTabs: PropTypes.bool,
     showError: PropTypes.bool,
-    onChange: PropTypes.func.isRequired,
-    isVisible: PropTypes.bool
+    onChange: PropTypes.func.isRequired
 }

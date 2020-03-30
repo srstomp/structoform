@@ -2,12 +2,12 @@ import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { direction } from '../constants/helper'
 
-const SelectField = ({ id, name, placeholder, values, value, disabled, showError, onChange, isVisible }) => {
+const SelectField = ({ id, name, placeholder, values, value, disabled, showError, onChange }) => {
     const [currentValue, setCurrentValue] = useState(value)
 
     useEffect(() => {
-        onChange(name, currentValue, { isVisible })
-    }, [currentValue, isVisible])
+        onChange(name, currentValue)
+    }, [currentValue])
 
     const placeholderStyling = () => `${currentValue === placeholder && 'form-item__select--placeholder'}`
 
@@ -33,10 +33,6 @@ const SelectField = ({ id, name, placeholder, values, value, disabled, showError
 
 export default SelectField
 
-SelectField.defaultProps = {
-    isVisible: true
-}
-
 SelectField.propTypes = {
     id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
@@ -47,5 +43,4 @@ SelectField.propTypes = {
     disabled: PropTypes.bool,
     showError: PropTypes.bool,
     onChange: PropTypes.func.isRequired,
-    isVisible: PropTypes.bool
 }

@@ -13,7 +13,7 @@ const CalendarIcon = () =>
         </g>
     </svg>
 
-const DateField = ({ id, name, placeholder, value, showError, onChange, isVisible }) => {
+const DateField = ({ id, name, placeholder, value, showError, onChange }) => {
     const [currentValue, setCurrentValue] = useState(value ? moment(value).format('D/MM/YYYY') : '')
 
     const node = useRef();
@@ -24,7 +24,7 @@ const DateField = ({ id, name, placeholder, value, showError, onChange, isVisibl
         if (refValue.current !== currentValue) {
             refValue.current = currentValue
 
-            onChange(name, currentValue, { isVisible })
+            onChange(name, currentValue)
 
             setIsCalendarPresent(false)
         }
@@ -37,7 +37,7 @@ const DateField = ({ id, name, placeholder, value, showError, onChange, isVisibl
 
         return () => document.removeEventListener('mousedown', handleClickOutside)
 
-    }, [isCalendarPresent, currentValue, isVisible])
+    }, [isCalendarPresent, currentValue])
 
     const handleClickOutside = e => {
         if (node.current.contains(e.target)) {
@@ -82,7 +82,6 @@ export default DateField
 
 DateField.defaultProps = {
     value: '',
-    isVisible: true,
 }
 
 DateField.propTypes = {
@@ -93,5 +92,4 @@ DateField.propTypes = {
     direction: PropTypes.oneOf(Object.values(direction)),
     showError: PropTypes.bool,
     onChange: PropTypes.func.isRequired,
-    isVisible: PropTypes.bool
 }

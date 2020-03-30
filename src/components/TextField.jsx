@@ -3,27 +3,28 @@ import PropTypes from 'prop-types'
 import { direction } from '../constants/helper'
 import _ from 'lodash'
 
-const TextField = ({ id, name, placeholder, value, type, showError, onChange, isVisible }) => {
+const getInputMode = type => {
+    switch (type) {
+        case 'email':
+            return 'email'
+        case 'phone':
+            return 'tel'
+        case 'number':
+            return 'numeric'
+        default:
+            return 'text'
+    }
+}
+
+const TextField = ({ id, name, placeholder, value, type, showError, onChange }) => {
     const [currentValue, setCurrentValue] = useState(value)
 
     useEffect(() => {
-        onChange(name, currentValue, { isVisible })
-    }, [currentValue, isVisible])
+        onChange(name, currentValue)
+    }, [currentValue])
 
     const handleChange = e => setCurrentValue(e.target.value)
-
-    const inputmode = () => {
-        switch (type) {
-            case 'email':
-                return 'email'
-            case 'phone':
-                return 'tel'
-            case 'number':
-                return 'numeric'
-            default:
-                return 'text'
-        }
-    }
+    const inputMode = getInputMode(type)
 
     return (
         <input
@@ -33,7 +34,7 @@ const TextField = ({ id, name, placeholder, value, type, showError, onChange, is
             onChange={handleChange}
             name={name} htmlFor={id}
             value={currentValue}
-            inputMode={inputmode()}
+            inputMode={inputMode}
         />
     )
 }
@@ -42,7 +43,6 @@ export default TextField
 
 TextField.defaultProps = {
     value: '',
-    isVisible: true,
 }
 
 TextField.propTypes = {
@@ -54,5 +54,4 @@ TextField.propTypes = {
     type: PropTypes.string.isRequired,
     showError: PropTypes.bool,
     onChange: PropTypes.func.isRequired,
-    isVisible: PropTypes.bool
 }

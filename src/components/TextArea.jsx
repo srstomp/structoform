@@ -3,12 +3,12 @@ import PropTypes from 'prop-types'
 import { direction } from '../constants/helper'
 import _ from 'lodash'
 
-const TextArea = ({ id, name, value, placeholder, onChange, showError, isVisible }) => {
+const TextArea = ({ id, name, value, placeholder, onChange, showError }) => {
     const [currentValue, setCurrentValue] = useState('')
 
     useEffect(() => {
-        onChange(name, currentValue, { isVisible })
-    }, [currentValue, isVisible])
+        onChange(name, currentValue)
+    }, [currentValue])
 
     const handleChange = e => setCurrentValue(e.target.value)
 
@@ -24,7 +24,6 @@ const TextArea = ({ id, name, value, placeholder, onChange, showError, isVisible
 export default TextArea
 
 TextArea.defaultProps = {
-    isVisible: true,
     value: '',
 }
 
@@ -36,5 +35,4 @@ TextArea.propTypes = {
     placeholder: PropTypes.string,
     showError: PropTypes.bool,
     onChange: PropTypes.func.isRequired,
-    isVisible: PropTypes.bool
 }

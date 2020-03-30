@@ -16,13 +16,7 @@ const Form = ({ jsonConfig, className, layout, layoutDirection, initValues, subm
         ...parsedConfig,
     }
 
-    const validationRules = { ...config.layout }
-
-    Object.keys(validationRules).map((item, i) =>
-        validationRules[item] = { type: validationRules[item].type, rules: validationRules[item].validators }
-    )
-
-    const { values, errors, handleSubmit, getFormItem } = useForm(() => submit(), validationRules, customComponents)
+    const { values, errors, handleSubmit, getFormItem } = useForm(() => submit(), _.get(config, 'layout'), customComponents)
 
     const dir = config.layoutDirection === 'row' ? direction.row : direction.column
 
