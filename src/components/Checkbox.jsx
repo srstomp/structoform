@@ -2,8 +2,9 @@ import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import _ from 'lodash';
 
-const Checkbox = ({ id, name, value, onChange, showError }) => {
-    const [isChecked, setIsChecked] = useState(value)
+const Checkbox = ({ id, name, value, inlineLabel, onChange, showError }) => {
+    console.log("checkbox", value)
+    const [isChecked, setIsChecked] = useState(!!value)
 
     const handleChange = e => setIsChecked(e.target.checked)
 
@@ -12,7 +13,7 @@ const Checkbox = ({ id, name, value, onChange, showError }) => {
     }, [isChecked])
 
     return (
-        <div className={`form-item`}>
+        <div className={`form-item--row`}>
             <input
                 className={`form-item__checkbox ${showError && 'error'}`}
                 type='checkbox'
@@ -21,6 +22,7 @@ const Checkbox = ({ id, name, value, onChange, showError }) => {
                 checked={isChecked}
                 id={id}
             />
+            <label className="form-item__checkbox--inline-label" htmlFor={id}>{inlineLabel}</label>
         </div>
     )
 }
