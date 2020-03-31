@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import _ from 'lodash'
 
-const TextField = ({ value, wrapper }) => React.createElement(wrapper, {}, value)
+const TextField = ({ content, wrapper }) => React.createElement(wrapper, {}, content)
 
 export default TextField
 
@@ -20,6 +20,6 @@ TextField.defaultProps = {
 }
 
 TextField.propTypes = {
-    value: PropTypes.string,
+    content: PropTypes.string,
     wrapper: PropTypes.oneOf(Object.values(TextField.wrapperTypes)),
 }
