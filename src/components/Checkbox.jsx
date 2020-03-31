@@ -3,9 +3,7 @@ import PropTypes from 'prop-types'
 import _ from 'lodash';
 
 const Checkbox = ({ id, name, value, inlineLabel, onChange, showError }) => {
-    console.log("checkbox", value)
     const [isChecked, setIsChecked] = useState(!!value)
-
     const handleChange = e => setIsChecked(e.target.checked)
 
     useEffect(() => {

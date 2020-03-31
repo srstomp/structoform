@@ -6,7 +6,6 @@ const RadioButton = ({label, value, group, onChange, isChecked, renderTabs}) => 
     const [ id ] = useState(() => uniqueId(`${_.camelCase(label)}-`))
 
     const handleChange = (e) => {
-        console.log(e.target.checked)
         onChange(e)
     }
 
