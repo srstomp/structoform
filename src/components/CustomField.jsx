@@ -9,14 +9,14 @@ const CustomField = (props) => {
     //     onChange(name, currentValue)
     // }, [currentValue])
 
-    const handleChange = e => setCurrentValue(e.target.value)
+    const handleChange = e => onChange(name, e.target.value)
 
     return React.createElement(component, {
         className: `form-item__input ${showError ? 'error' : ''}`,
         htmlFor: id,
         ...props,
-        // onChange: handleChange,
-        // value: currentValue
+        onChange: handleChange,
+        value: value
     })
 }
 

@@ -2,23 +2,24 @@ import React, { useState, useEffect } from 'react'
 import { uniqueId, copy, comparators } from '../constants/helper';
 import _ from "lodash";
 import { TextField, SelectField, DateField, Checkbox, TextArea, RadioButtonGroup, DisplayText, FormItem } from '..';
-import CustomField from '../components/CustomField';
+// import CustomField from '../components/CustomField';
 
 const useForm = (callback, layout, customComponents) => {
     const [values, setValues] = useState({})
     const [errors, setErrors] = useState({})
     const [isSubmitting, setIsSubmitting] = useState(false)
 
-    const wrappedCustomComponents = Object
-        .keys(customComponents)
-        .reduce((acc, key) => {
-            acc[key] = (props) => <CustomField {...props} component={customComponents[key]} />
+    // TODO: Make a CustomComponent wrapper that manages the state of the custom components
+    // const wrappedCustomComponents = Object
+    //     .keys(customComponents)
+    //     .reduce((acc, key) => {
+    //         acc[key] = (props) => <CustomField {...props} component={customComponents[key]} />
 
-            return acc
-        }, {})
+    //         return acc
+    //     }, {})
 
     const formComponents = {
-        ...wrappedCustomComponents,
+        ...customComponents,
         'text': TextField,
         'password': TextField,
         'email': TextField,
