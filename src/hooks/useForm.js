@@ -1,12 +1,37 @@
-import {useState, useEffect} from 'react'
-import { copy, comparators } from '../constants/helper';
+import React, { useState, useEffect } from 'react'
+import { uniqueId, copy, comparators } from '../constants/helper';
 import _ from "lodash";
+import { TextField, SelectField, DateField, Checkbox, TextArea, RadioButtonGroup, DisplayText, FormItem } from '..';
+// import CustomField from '../components/CustomField';
 
-const useForm = (callback, validators) => {
+const useForm = (callback, layout, customComponents) => {
     const [values, setValues] = useState({})
     const [errors, setErrors] = useState({})
-    const [statuses, setStatuses] = useState({})
     const [isSubmitting, setIsSubmitting] = useState(false)
+
+    // TODO: Make a CustomComponent wrapper that manages the state of the custom components
+    // const wrappedCustomComponents = Object
+    //     .keys(customComponents)
+    //     .reduce((acc, key) => {
+    //         acc[key] = (props) => <CustomField {...props} component={customComponents[key]} />
+
+    //         return acc
+    //     }, {})
+
+    const formComponents = {
+        ...customComponents,
+        'text': TextField,
+        'password': TextField,
+        'email': TextField,
+        'phone': TextField,
+        'number': TextField,
+        'select': SelectField,
+        'checkbox': Checkbox,
+        'textarea': TextArea,
+        'date': DateField,
+        'radio': RadioButtonGroup,
+        'displaytext': DisplayText,
+    }
 
     useEffect(() => {
         if (isSubmitting) {
@@ -25,65 +50,88 @@ const useForm = (callback, validators) => {
             event.preventDefault()
         }
 
-        Object.keys(validators).forEach( validator => {
-            Object.keys(values).forEach((key) => {
-                if ( key === validator && _.get(statuses, [key, 'isVisible'], true) ) {
-                    setErrors(errors => ( { ...errors, [key]: validate(values[key], validators[validator])} ))
-                }
-            })
+        // Reset errors
+        // setErrors({})
+
+        Object.keys(layout).forEach(itemKey => {
+            const value = _.get(values, itemKey)
+
+            if (checkConditionals(_.get(layout, [itemKey, 'conditionals'], []))) {
+                setErrors(errors => ({ ...errors, [itemKey]: validate(value, _.get(layout, [itemKey, 'validators'], [])) }))
+            }
         })
 
         setIsSubmitting(true)
     }
 
-    const handleChange = (key, value, status) => {
+    const handleChange = (key, value) => {
         // Remove current error on typing
-        setErrors(errors => ({ ...errors, [key]: null}))
+        setErrors(errors => ({ ...errors, [key]: null }))
 
         // Store values of input elements
-        setValues(values => ({ ...values, [key]: value}))
-
-        // Store statuses of input elements
-        setStatuses(statuses => ({ ...statuses, [key]: status}))
+        setValues(values => ({ ...values, [key]: value }))
     }
 
-    const checkConditionals = (item) => {
-        /**
-         * Returns true if all the conditions are met
-         */
-        const conditionals = _.get(item, 'conditionals', [])
+    const getFormItemComponent = (type) => _.get(formComponents, type)
 
-        return conditionals.every(conditional => {
-            if (typeof conditional === "boolean") {
-                return conditional
-            }
+    const getFormItem = (key, itemLayout, direction, value) => {
+        const [id] = useState(() => uniqueId(`${_.camelCase(_.get(itemLayout, 'label'))}-`))
+        const FormComponent = getFormItemComponent(_.get(itemLayout, 'type'))
+        const isVisible = checkConditionals(_.get(itemLayout, 'conditionals', []))
+        const showError = !_.isEmpty(errors[key])
 
-            const rule = _.isPlainObject(conditional) ? conditional : { field: conditional, condition: comparators.TRUTHY }
+        if (FormComponent) {
+            return isVisible && (
+                <FormItem label={_.get(itemLayout, 'label')} id={id} direction={direction}>
+                    <FormComponent
+                        {...itemLayout}
+                        id={id}
+                        name={key}
+                        value={value}
+                        onChange={handleChange}
+                        isVisible={isVisible}
+                        showError={showError}
+                    />
+                    <span className={`error-label ${showError ? '' : 'hide'}`}>{_.head(errors[key]) || ''}</span>
+                </FormItem>
+            )
+        }
 
-            const field =  _.get(rule, 'field', '')
-            const value = _.get(rule, 'value')
-
-            switch(_.get(rule, 'condition', comparators.IS)) {
-                case comparators.IS:
-                    return values[field] === value
-                case comparators.ISNOT:
-                    return values[field] !== value
-                case comparators.MORE:
-                    return Number(values[field]) > Number(value)
-                case comparators.LESS:
-                    return Number(values[field] < Number(value))
-                case comparators.TRUTHY:
-                default:
-                    return !!values[field]
-            }
-        })
+        throw new Error(`Unhandled validator rule: ${_.get(itemLayout, 'type')}`)
     }
+
+    // Returns true if all the conditions are met
+    const checkConditionals = conditionals => conditionals.every(conditional => {
+        if (typeof conditional === "boolean") {
+            return conditional
+        }
+
+        const rule = _.isPlainObject(conditional) ? conditional : { field: conditional, condition: comparators.TRUTHY }
+
+        const field = _.get(rule, 'field', '')
+        const value = _.get(rule, 'value')
+
+        switch (_.get(rule, 'condition', comparators.IS)) {
+            case comparators.IS:
+                return values[field] === value
+            case comparators.ISNOT:
+                return values[field] !== value
+            case comparators.MORE:
+                return Number(values[field]) > Number(value)
+            case comparators.LESS:
+                return Number(values[field] < Number(value))
+            case comparators.TRUTHY:
+            default:
+                return !!values[field]
+        }
+    })
 
     return {
         values,
         errors,
         handleSubmit,
         handleChange,
+        getFormItem,
         checkConditionals
     }
 }
@@ -91,7 +139,7 @@ const useForm = (callback, validators) => {
 export default useForm
 
 const validate = (value, validators) => {
-    let errors = _.get(validators, 'rules', []).map(validator => {
+    let errors = validators.map(validator => {
         const rule = _.isPlainObject(validator) ? validator : { type: validator }
         const getErrorMessage = (fallback) => _.get(rule, 'errorMessage') || fallback
 
@@ -115,7 +163,7 @@ const validate = (value, validators) => {
             default:
                 throw new Error(`Unhandled validator rule: ${_.get(rule, 'type')}`)
         }
-    }).filter(item => typeof(item) === 'string')
+    }).filter(item => typeof (item) === 'string')
 
     return _.isEmpty(errors) ? null : errors
 }

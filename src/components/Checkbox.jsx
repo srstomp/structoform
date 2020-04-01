@@ -1,39 +1,36 @@
 import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
-import { uniqueId } from '../constants/helper'
-import _ from "lodash";
+import _ from 'lodash';
 
-const Checkbox = ({label, name, value, showError, onChange, isVisible}) => {
-    const [ id ] = useState(() => uniqueId(`${_.camelCase(label)}-`))
-    const [ isChecked, setIsChecked ] = useState(value)
-
+const Checkbox = ({ id, name, value, inlineLabel, onChange, showError }) => {
+    const [isChecked, setIsChecked] = useState(!!value)
     const handleChange = e => setIsChecked(e.target.checked)
 
     useEffect(() => {
-        onChange(name, isChecked, { isVisible })
-    }, [isChecked, isVisible])
+        onChange(name, isChecked)
+    }, [isChecked])
 
-    return isVisible && (
-        <div className={`form-item`}>
-            <input className={`form-item__checkbox`} type='checkbox' name={name} onChange={handleChange}
-                   checked={isChecked} id={id}/>
-            <label className={`${showError ? 'error-label' : ''}`} htmlFor={id}>{label}</label>
-            {/*<span className={`error-label ${showError ? '' : 'hide'}`}>{errorMessage}</span>*/}
+    return (
+        <div className={`form-item--row`}>
+            <input
+                className={`form-item__checkbox ${showError && 'error'}`}
+                type='checkbox'
+                name={name}
+                onChange={handleChange}
+                checked={isChecked}
+                id={id}
+            />
+            <label className="form-item__checkbox--inline-label" htmlFor={id}>{inlineLabel}</label>
         </div>
     )
 }
 
 export default Checkbox
 
-Checkbox.defaultProps = {
-    isVisible: true,
-}
-
 Checkbox.propTypes = {
-    label: PropTypes.string.isRequired,
+    id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     value: PropTypes.bool,
-    showError: PropTypes.bool,
     onChange: PropTypes.func.isRequired,
-    isVisible: PropTypes.bool.isRequired
+    showError: PropTypes.bool
 }

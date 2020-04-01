@@ -1,18 +1,8 @@
-import React, { useState } from 'react'
-import PropTypes from "prop-types"
-import { uniqueId, direction } from '../constants/helper'
-import FormItem from './FormItem'
+import React from 'react'
+import PropTypes from 'prop-types'
 import _ from 'lodash'
 
-const TextField = ({label, value, wrapper, direction }) => {
-    const [ id ] = useState(() => uniqueId(`${_.camelCase(label)}-`))
-
-    return (
-        <FormItem label={label} id={id} direction={direction}>
-            {React.createElement(wrapper, {}, value)}
-        </FormItem>
-    )
-}
+const TextField = ({ content, wrapper }) => React.createElement(wrapper, {}, content)
 
 export default TextField
 
@@ -30,8 +20,6 @@ TextField.defaultProps = {
 }
 
 TextField.propTypes = {
-    label: PropTypes.string,
-    value: PropTypes.string,
+    content: PropTypes.string,
     wrapper: PropTypes.oneOf(Object.values(TextField.wrapperTypes)),
-    direction: PropTypes.oneOf(Object.values(direction)),
 }
