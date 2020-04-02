@@ -79,6 +79,7 @@ const useForm = (callback, layout, customComponents) => {
         const FormComponent = getFormItemComponent(_.get(itemLayout, 'type'))
         const isVisible = checkConditionals(_.get(itemLayout, 'conditionals', []))
         const showError = !_.isEmpty(errors[key])
+        const hint = _.get(itemLayout, 'hint')
 
         if (FormComponent) {
             return isVisible && (
@@ -92,6 +93,7 @@ const useForm = (callback, layout, customComponents) => {
                         isVisible={isVisible}
                         showError={showError}
                     />
+                    {hint && <span className="hint-label">{hint}</span>}
                     <span className={`error-label ${showError ? '' : 'hide'}`}>{_.head(errors[key]) || ''}</span>
                 </FormItem>
             )
