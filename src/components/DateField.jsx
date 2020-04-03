@@ -55,12 +55,11 @@ const DateField = ({ id, name, placeholder, value, showError, onChange }) => {
 
     return (
         <>
-            <div className="form-item__input-wrapper">
+            <div className="form-item__input-wrapper" onClick={handleInputClick}>
                 <input
                     className={`form-item__input ${showError && 'error'}`}
                     autoComplete="off"
                     placeholder={placeholder}
-                    onClick={handleInputClick}
                     name={name}
                     htmlFor={id}
                     onChange={handleChange}
