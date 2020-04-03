@@ -29,12 +29,12 @@ const DateField = ({ id, name, placeholder, value, showError, onChange }) => {
         }
 
         if (isCalendarPresent) {
-            document.addEventListener('mousedown', handleClickOutside)
+            document.addEventListener('mouseup', handleClickOutside)
         } else {
-            document.removeEventListener('mousedown', handleClickOutside)
+            document.removeEventListener('mouseup', handleClickOutside)
         }
 
-        return () => document.removeEventListener('mousedown', handleClickOutside)
+        return () => document.removeEventListener('mouseup', handleClickOutside)
 
     }, [isCalendarPresent, currentValue])
 
