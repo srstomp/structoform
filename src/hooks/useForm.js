@@ -25,6 +25,8 @@ const useForm = (callback, layout, customComponents) => {
         'email': TextField,
         'phone': TextField,
         'number': TextField,
+        'percentage': TextField,
+        'euro': TextField,
         'select': SelectField,
         'checkbox': Checkbox,
         'textarea': TextArea,

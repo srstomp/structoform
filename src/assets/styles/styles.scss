@@ -62,6 +62,38 @@ $graphite: #4A4A4A;
     position: relative;
   }
 
+  &__text-wrapper {
+    &--euro {
+      position: relative;
+
+      input {
+        padding-left: 1.75em;
+      }
+
+      &:before {
+        content: "€";
+        position: absolute;
+        top: 0.75em;
+        left: 0.75em;
+      }
+    }
+
+    &--percentage {
+      position: relative;
+
+      input {
+        padding-right: 1.75em;
+      }
+
+      &:after {
+        content: "%";
+        position: absolute;
+        top: 0.75em;
+        right: 0.75em;
+      }
+    }
+  }
+
   &__label {
     margin: 0 0 6px 0;
     display: block;
