@@ -11,13 +11,28 @@ const getInputMode = type => {
             return 'tel'
         case 'number':
             return 'numeric'
+        case 'percentage':
+            return 'numeric'
+        case 'euro':
+            return 'numeric'
         default:
             return 'text'
     }
 }
 
+const getInputWrapperClass = type => {
+    switch (type) {
+        case 'percentage':
+        case 'euro':
+            return `form-item__text-wrapper form-item__text-wrapper--${type}`
+        default:
+            return 'form-item__text-wrapper'
+    }
+}
+
 const TextField = ({ id, name, placeholder, value, type, showError, onChange }) => {
     const [currentValue, setCurrentValue] = useState(value)
+    const wrapperClass = getInputWrapperClass(type)
 
     useEffect(() => {
         onChange(name, currentValue)
@@ -27,15 +42,17 @@ const TextField = ({ id, name, placeholder, value, type, showError, onChange }) 
     const inputMode = getInputMode(type)
 
     return (
-        <input
-            className={`form-item__input ${showError ? 'error' : ''}`}
-            placeholder={placeholder}
-            type={type}
-            onChange={handleChange}
-            name={name} htmlFor={id}
-            value={currentValue}
-            inputMode={inputMode}
-        />
+        <div className={wrapperClass}>
+            <input
+                className={`form-item__input ${showError ? 'error' : ''}`}
+                placeholder={placeholder}
+                type={type}
+                onChange={handleChange}
+                name={name} htmlFor={id}
+                value={currentValue}
+                inputMode={inputMode}
+            />
+        </div>
     )
 }
 

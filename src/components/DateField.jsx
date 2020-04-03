@@ -29,12 +29,12 @@ const DateField = ({ id, name, placeholder, value, showError, onChange }) => {
         }
 
         if (isCalendarPresent) {
-            document.addEventListener('mousedown', handleClickOutside)
+            document.addEventListener('mouseup', handleClickOutside)
         } else {
-            document.removeEventListener('mousedown', handleClickOutside)
+            document.removeEventListener('mouseup', handleClickOutside)
         }
 
-        return () => document.removeEventListener('mousedown', handleClickOutside)
+        return () => document.removeEventListener('mouseup', handleClickOutside)
 
     }, [isCalendarPresent, currentValue])
 
@@ -55,12 +55,11 @@ const DateField = ({ id, name, placeholder, value, showError, onChange }) => {
 
     return (
         <>
-            <div className="form-item__input-wrapper">
+            <div className="form-item__input-wrapper" onClick={handleInputClick}>
                 <input
                     className={`form-item__input ${showError && 'error'}`}
                     autoComplete="off"
                     placeholder={placeholder}
-                    onClick={handleInputClick}
                     name={name}
                     htmlFor={id}
                     onChange={handleChange}
