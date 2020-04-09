@@ -146,10 +146,10 @@ const Calendar = ({onSelect, date}) => {
     }
 
     const YearCells = () => {
-        const currentYear = new Date().getFullYear()
+        const startYear = new Date().getFullYear() + 40
         const years = [...Array(100).keys()].map(i =>
-            <td className={`calendar__cell calendar__cell--month`} key={`year-${i}`} onClick={e => onYearClick(e, (currentYear + 40) - i)}>
-                <span>{(currentYear + 40) - i}</span>
+            <td className={`calendar__cell calendar__cell--month`} key={`year-${i}`} onClick={e => onYearClick(e, startYear - i)}>
+                <span>{startYear - i}</span>
             </td>
         )
         return generateCells(years, 4)
