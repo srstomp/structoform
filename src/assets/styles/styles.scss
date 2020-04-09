@@ -60,6 +60,7 @@ $graphite: #4A4A4A;
   &__input-wrapper {
     display: flex;
     position: relative;
+    align-items: center;
   }
 
   &__text-wrapper {
@@ -89,7 +90,7 @@ $graphite: #4A4A4A;
       &:after {
         content: "%";
         position: absolute;
-        top: 0.75em;
+        top: 1em;
         right: 0.75em;
       }
     }
@@ -185,13 +186,12 @@ $graphite: #4A4A4A;
    */
   &__input-button, &__input-icon {
     position: absolute;
-    right: 0.25rem;
-    top: 0px;
+    right: 0.5rem;
     border: none;
     background-color: transparent;
     outline: none;
     cursor: pointer;
-    transform: scale(0.8) translate(0, 50%);
+    transform: scale(0.8);
   }
 
   &__input-icon {
@@ -273,8 +273,8 @@ $graphite: #4A4A4A;
       }
 
       &:after {
-        top: (20px - 12px) / 2;
-        left: (20px - 12px) / 2;
+        top: (20px - 10px) / 2;
+        left: (20px - 10px) / 2;
         width: 12px;
         height: 12px;
         transform: scale(0);
