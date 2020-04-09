@@ -30,7 +30,7 @@ const useForm = (callback, layout, customComponents) => {
         'select': SelectField,
         'checkbox': Checkbox,
         'textarea': TextArea,
-        'date': DateField,
+        'date': DateFiOeld,
         'radio': RadioButtonGroup,
         'displaytext': DisplayText,
     }
