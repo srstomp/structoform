@@ -20,7 +20,7 @@ $graphite: #4A4A4A;
 }
 
 
-*, *:before, *:after {
+* {
   box-sizing: border-box;
 }
 
@@ -65,15 +65,16 @@ $graphite: #4A4A4A;
   &__text-wrapper {
     &--euro {
       position: relative;
+      display: flex;
+      align-items: center;
 
       input {
-        padding-left: 1.75em;
+        padding-left: 2em;
       }
 
       &:before {
         content: "€";
         position: absolute;
-        top: 0.75em;
         left: 0.75em;
       }
     }
@@ -105,7 +106,7 @@ $graphite: #4A4A4A;
    */
   &__select {
     border-radius: 6px;
-    padding: 0.75rem;
+    padding: 1rem;
     border: 1px solid $grey;
     outline: none;
     box-shadow: none;
@@ -154,7 +155,7 @@ $graphite: #4A4A4A;
    */
   &__input, &__textarea {
     border-radius: 6px;
-    padding: 0.75rem;
+    padding: 1rem;
     border: 1px solid $grey;
     color: $night;
     outline: none;
