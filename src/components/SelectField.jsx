@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 
 const SelectField = ({ id, name, placeholder, values, value, disabled, showError, onChange }) => {
-    const [currentValue, setCurrentValue] = useState(value)
+    const [currentValue, setCurrentValue] = useState(value || "")
 
     useEffect(() => {
         onChange(name, currentValue)
@@ -20,7 +20,7 @@ const SelectField = ({ id, name, placeholder, values, value, disabled, showError
             htmlFor={id} name={name} onChange={handleChange} value={currentValue}
             disabled={disabled}
         >
-            <option disabled default>{placeholder}</option>
+            <option disabled value="">{placeholder}</option>
             {
                 values.map((item, i) => {
                     return <option key={i} value={item.value}>{item.option}</option>
