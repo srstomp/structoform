@@ -10,11 +10,11 @@ const getInputMode = type => {
         case 'phone':
             return 'tel'
         case 'number':
-            return 'numeric'
+            return 'decimal'
         case 'percentage':
-            return 'numeric'
+            return 'decimal'
         case 'euro':
-            return 'numeric'
+            return 'decimal'
         default:
             return 'text'
     }
