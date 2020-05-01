@@ -12,7 +12,7 @@ const CalendarIcon = () =>
         </g>
     </svg>
 
-const DateField = ({ id, name, placeholder, value, showError, onChange }) => {
+const DateField = ({ id, name, placeholder, value, readOnly, showError, onChange }) => {
     const [currentValue, setCurrentValue] = useState(value ? moment(value).format('D/MM/YYYY') : '')
 
     const node = useRef();
@@ -64,6 +64,7 @@ const DateField = ({ id, name, placeholder, value, showError, onChange }) => {
                     htmlFor={id}
                     onChange={handleChange}
                     value={currentValue}
+                    readOnly
                 />
                 <CalendarIcon />
             </div>
@@ -87,6 +88,7 @@ DateField.propTypes = {
     name: PropTypes.string.isRequired,
     placeholder: PropTypes.string,
     value: PropTypes.string,
+    readOnly: PropTypes.bool,
     showError: PropTypes.bool,
     onChange: PropTypes.func.isRequired,
 }
