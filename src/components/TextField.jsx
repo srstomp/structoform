@@ -30,6 +30,32 @@ const getInputWrapperClass = type => {
     }
 }
 
+const formatMonetaryString = value => parseFloat(value)
+    .toLocaleString('nl-NL', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
+
+const getFormattedInput = (type, value) => {
+    switch (type) {
+        case 'euro':
+            // If the value equals 0 or '', do nothing
+            if (!value) {
+                return value
+            }
+
+            // Check if the value ends with .99 or ,99 (assume those are cents)
+            const match = /^([0-9\.,]+)[\.,]([0-9]{2})$/.exec(value)
+
+            if (match) {
+                // Remove dots and comma's, add the cents and return
+                return formatMonetaryString(`${_.replace(match[1], new RegExp('[\\.,]', 'g'), '')}.${match[2]}`)
+            }
+
+            // Return the value with all dots and comma's removed
+            return formatMonetaryString(_.replace(value, new RegExp('[\\.,]', 'g'), ''))
+        default:
+            return value
+    }
+}
+
 const TextField = ({ id, name, placeholder, value, type, showError, onChange }) => {
     const [currentValue, setCurrentValue] = useState(value)
     const wrapperClass = getInputWrapperClass(type)
@@ -51,6 +77,7 @@ const TextField = ({ id, name, placeholder, value, type, showError, onChange }) 
                 name={name} htmlFor={id}
                 value={currentValue}
                 inputMode={inputMode}
+                onBlur={() => setCurrentValue(getFormattedInput(type, currentValue))}
             />
         </div>
     )
