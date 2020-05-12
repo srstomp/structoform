@@ -42,11 +42,11 @@ const getFormattedInput = (type, value) => {
             }
 
             // Check if the value ends with .99 or ,99 (assume those are cents)
-            const match = /^([0-9\.,]+)[\.,]([0-9]{2})$/.exec(value)
+            const match = /^([0-9\.,]+)?[\.,]([0-9]+)$/.exec(value)
 
             if (match) {
                 // Remove dots and comma's, add the cents and return
-                return formatMonetaryString(`${_.replace(match[1], new RegExp('[\\.,]', 'g'), '')}.${match[2]}`)
+                return formatMonetaryString(`${_.replace(match[1] || '0', new RegExp('[\\.,]', 'g'), '')}.${match[2].substring(0, 2)}`)
             }
 
             // Return the value with all dots and comma's removed
