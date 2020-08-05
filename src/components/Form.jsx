@@ -9,24 +9,20 @@ const Form = ({ jsonConfig, className, layout, layoutDirection, initValues, subm
     const parsedConfig = jsonConfig ? JSON.parse(jsonConfig) : {}
 
     const config = {
+        ...parsedConfig,
         className,
         layout,
         layoutDirection,
         initValues,
-        ...parsedConfig,
     }
 
-    const { values, errors, handleSubmit, getFormItem } = useForm(() => submit(), _.get(config, 'layout'), customComponents)
+    const { values, errors, handleSubmit, getFormItem } = useForm(() => submit(), _.get(config, 'layout'), customComponents, initValues)
 
     const dir = config.layoutDirection === 'row' ? direction.row : direction.column
 
-    const getValue = (key) => {
-        // If no inputes are given, then return default valutes or empty string
-        if (!values[key]) {
-            return _.get(config, ['initValues', key], '')
-        }
-        return values[key]
-    }
+    const getValue = key =>
+        // If no inputs are given, return default values or empty string
+        _.get(values, key, _.get(config, ['initValues', key], ''))
 
     const submit = () => onSubmit(Object.values(errors).every(x => x === null) ? null : errors, values)
 
