@@ -19,7 +19,7 @@ npm install structoform
 
 ## Steps for local developement
 * run `npm link`
-* run `npm run prepare` to build the package
+* run `npm run prep` to build the package
 
 ## Api documentation
 
