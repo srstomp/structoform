@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import _ from 'lodash'
 
 const TextArea = ({ id, name, value, placeholder, onChange, showError }) => {
-    const [currentValue, setCurrentValue] = useState('')
+    const [currentValue, setCurrentValue] = useState(value)
 
     useEffect(() => {
         onChange(name, currentValue)
@@ -13,8 +13,13 @@ const TextArea = ({ id, name, value, placeholder, onChange, showError }) => {
 
     return (
         <div className="form-item__inner">
-            <textarea className={`form-item__textarea ${showError ? 'error' : ''}`} placeholder={placeholder}
-                onChange={handleChange} name={name} htmlFor={id} value={value}>
+            <textarea
+                className={`form-item__textarea ${showError ? 'error' : ''}`}
+                placeholder={placeholder}
+                onChange={handleChange}
+                name={name}
+                htmlFor={id}
+                value={value}>
             </textarea>
         </div>
     )
