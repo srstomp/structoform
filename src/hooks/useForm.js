@@ -4,8 +4,8 @@ import _ from "lodash";
 import { TextField, SelectField, DateField, Checkbox, TextArea, RadioButtonGroup, DisplayText, FormItem } from '..';
 // import CustomField from '../components/CustomField';
 
-const useForm = (callback, layout, customComponents) => {
-    const [values, setValues] = useState({})
+const useForm = (callback, layout, customComponents, _values = {}) => {
+    const [values, setValues] = useState(_values)
     const [errors, setErrors] = useState({})
     const [isSubmitting, setIsSubmitting] = useState(false)
 
@@ -34,6 +34,12 @@ const useForm = (callback, layout, customComponents) => {
         'radio': RadioButtonGroup,
         'displaytext': DisplayText,
     }
+
+    useEffect(() => {
+        if (_.size(_.omit(_values, _.identity)) > 0) {
+            setValues(_values)
+        }
+    }, [_values])
 
     useEffect(() => {
         if (isSubmitting) {

@@ -4,29 +4,25 @@ import PropTypes from 'prop-types'
 import { useForm } from "../index"
 import { direction } from '../constants/helper'
 
-const Form = ({ jsonConfig, className, layout, layoutDirection, initValues, submitButton, onSubmit, customComponents }) => {
+const Form = ({ jsonConfig, className, layout, layoutDirection, initValues, formValues, submitButton, onSubmit, customComponents }) => {
 
     const parsedConfig = jsonConfig ? JSON.parse(jsonConfig) : {}
 
     const config = {
+        ...parsedConfig,
         className,
         layout,
         layoutDirection,
         initValues,
-        ...parsedConfig,
     }
 
-    const { values, errors, handleSubmit, getFormItem } = useForm(() => submit(), _.get(config, 'layout'), customComponents)
+    const { values, errors, handleSubmit, getFormItem } = useForm(() => submit(), _.get(config, 'layout'), customComponents, formValues)
 
     const dir = config.layoutDirection === 'row' ? direction.row : direction.column
 
-    const getValue = (key) => {
-        // If no inputes are given, then return default valutes or empty string
-        if (!values[key]) {
-            return _.get(config, ['initValues', key], '')
-        }
-        return values[key]
-    }
+    const getValue = key =>
+        // If no inputs are given, return default values or empty string
+        _.get(values, key, _.get(config, ['initValues', key], ''))
 
     const submit = () => onSubmit(Object.values(errors).every(x => x === null) ? null : errors, values)
 
@@ -63,6 +59,7 @@ Form.propTypes = {
     layout: PropTypes.object,
     layoutDirection: PropTypes.string,
     initValues: PropTypes.object,
+    formValues: PropTypes.object,
     submitButton: PropTypes.oneOfType([
         PropTypes.arrayOf(PropTypes.node),
         PropTypes.node

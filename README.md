@@ -19,7 +19,7 @@ npm install structoform
 
 ## Steps for local developement
 * run `npm link`
-* run `npm run prepare` to build the package
+* run `npm run prep` to build the package
 
 ## Api documentation
 
@@ -55,6 +55,12 @@ A react element consisting of or containing a `<button>`, to trigger the form `o
 
 #### `onSubmit={ func }`
 Callback function for submit logic
+
+#### `initValues={ object }`
+Values to prefill the form with
+
+#### `formValues={ object }`
+Optional external form field state, essentially utilizing the form as a _controlled_ component.
 
 ## Things todo
 - [ ] Write documentation
