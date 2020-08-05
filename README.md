@@ -50,7 +50,7 @@ const layout = {
 #### `layoutDirection={ string }`
 Determines how labels should position themselves relative to their respective form element. Specify either `"row"` or `"column"`.
 
-#### s`ubmitButton={ node }`
+#### `submitButton={ node }`
 A react element consisting of or containing a `<button>`, to trigger the form `onSubmit` logic.
 
 #### `onSubmit={ func }`
