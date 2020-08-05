@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import { useForm } from "../index"
 import { direction } from '../constants/helper'
 
-const Form = ({ jsonConfig, className, layout, layoutDirection, initValues, submitButton, onSubmit, customComponents }) => {
+const Form = ({ jsonConfig, className, layout, layoutDirection, initValues, formValues, submitButton, onSubmit, customComponents }) => {
 
     const parsedConfig = jsonConfig ? JSON.parse(jsonConfig) : {}
 
@@ -16,7 +16,7 @@ const Form = ({ jsonConfig, className, layout, layoutDirection, initValues, subm
         initValues,
     }
 
-    const { values, errors, handleSubmit, getFormItem } = useForm(() => submit(), _.get(config, 'layout'), customComponents, initValues)
+    const { values, errors, handleSubmit, getFormItem } = useForm(() => submit(), _.get(config, 'layout'), customComponents, formValues)
 
     const dir = config.layoutDirection === 'row' ? direction.row : direction.column
 
@@ -59,6 +59,7 @@ Form.propTypes = {
     layout: PropTypes.object,
     layoutDirection: PropTypes.string,
     initValues: PropTypes.object,
+    formValues: PropTypes.object,
     submitButton: PropTypes.oneOfType([
         PropTypes.arrayOf(PropTypes.node),
         PropTypes.node
