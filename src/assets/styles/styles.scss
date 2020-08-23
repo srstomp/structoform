@@ -38,6 +38,7 @@ $graphite: #4A4A4A;
 .form-item {
   margin-bottom: 24px;
   position: relative;
+    flex: 0 0 auto;
 
   &--column{
     display: flex;
