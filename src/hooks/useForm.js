@@ -167,7 +167,7 @@ const validate = (value, validators) => {
             case validate.types.IS_CHECKED:
                 return !value && getErrorMessage(copy.nl.error_is_checked)
             case validate.types.IS_NUMBER:
-                return !/^(?=.*[0-9])/.test(value) && getErrorMessage(copy.nl.error_not_numeric)
+                return !/^\d+$/.test(value) && getErrorMessage(copy.nl.error_not_numeric)
             case validate.types.IS_PASSWORD:
                 return !value && getErrorMessage(copy.nl.error_is_password)
             default:
