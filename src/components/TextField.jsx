@@ -31,6 +31,7 @@ const getInputWrapperClass = type => {
 }
 
 const formatMonetaryString = value => parseFloat(value)
+    .toFixed(2)
     .toLocaleString('nl-NL', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
 
 const getFormattedInput = (type, value) => {
@@ -42,15 +43,15 @@ const getFormattedInput = (type, value) => {
             }
 
             // Check if the value ends with .99 or ,99 (assume those are cents)
-            const match = /^([0-9\.,]+)?[\.,]([0-9]+)$/.exec(value)
-
-            if (match) {
-                // Remove dots and comma's, add the cents and return
-                return formatMonetaryString(`${_.replace(match[1] || '0', new RegExp('[\\.,]', 'g'), '')}.${match[2].substring(0, 2)}`)
-            }
+            // const match = /^([0-9\.,]+)?[\.,]([0-9]+)$/.exec(value)
+            //
+            // if (match) {
+            //     // Remove dots and comma's, add the cents and return
+            //     return formatMonetaryString(`${_.replace(match[1] || '0', new RegExp('[\\.,]', 'g'), '')}.${match[2].substring(0, 2)}`)
+            // }
 
             // Return the value with all dots and comma's removed
-            return formatMonetaryString(_.replace(value, new RegExp('[\\.,]', 'g'), ''))
+            return formatMonetaryString(value)//formatMonetaryString(_.replace(value, new RegExp('[\\.,]', 'g'), ''))
         default:
             return value
     }
@@ -74,7 +75,8 @@ const TextField = ({ id, name, placeholder, value, type, showError, onChange }) 
                 placeholder={placeholder}
                 type={type}
                 onChange={handleChange}
-                name={name} htmlFor={id}
+                name={name}
+                htmlFor={id}
                 value={currentValue}
                 inputMode={inputMode}
                 onBlur={() => setCurrentValue(getFormattedInput(type, currentValue))}
