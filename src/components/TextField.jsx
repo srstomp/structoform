@@ -31,8 +31,7 @@ const getInputWrapperClass = type => {
 }
 
 const formatMonetaryString = value => parseFloat(value)
-    .toFixed(2)
-    .toLocaleString('nl-NL', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
+    .toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
 
 const getFormattedInput = (type, value) => {
     switch (type) {
