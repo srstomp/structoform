@@ -33,6 +33,16 @@ const getInputWrapperClass = type => {
 const formatMonetaryString = value => parseFloat(value)
     .toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
 
+const unformatString = (string, locale) => {
+    var parts = (1234.5).toLocaleString(locale).match(/(\D+)/g);
+    var unformatted = string;
+
+    unformatted = unformatted.split(parts[0]).join("");
+    unformatted = unformatted.split(parts[1]).join(".");
+
+    return parseFloat(unformatted);
+}
+
 const getFormattedInput = (type, value) => {
     switch (type) {
         case 'euro':
@@ -64,7 +74,9 @@ const TextField = ({ id, name, placeholder, value, type, showError, onChange }) 
         onChange(name, currentValue)
     }, [currentValue])
 
-    const handleChange = e => setCurrentValue(e.target.value)
+    const handleChange = e => {
+        setCurrentValue(e.target.value)
+    }
     const inputMode = getInputMode(type)
 
     return (
@@ -78,7 +90,7 @@ const TextField = ({ id, name, placeholder, value, type, showError, onChange }) 
                 htmlFor={id}
                 value={currentValue}
                 inputMode={inputMode}
-                onBlur={() => setCurrentValue(getFormattedInput(type, currentValue))}
+                onBlur={() => setCurrentValue(getFormattedInput(type, unformatString(currentValue, 'de-DE')))}
             />
         </div>
     )
