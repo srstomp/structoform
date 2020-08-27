@@ -90,7 +90,7 @@ const TextField = ({ id, name, placeholder, value, type, showError, onChange }) 
                 htmlFor={id}
                 value={currentValue}
                 inputMode={inputMode}
-                onBlur={() => setCurrentValue(getFormattedInput(type, unformatString(currentValue, 'de-DE')))}
+                onBlur={() => setCurrentValue(getFormattedInput(type, type === 'euro' ? unformatString(currentValue, 'de-DE') : currentValue))}
             />
         </div>
     )
