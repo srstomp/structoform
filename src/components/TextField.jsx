@@ -61,7 +61,7 @@ const getFormattedInput = (type, value) => {
             const formatted = unformatString(value, 'de-DE')
 
             // Return the value with all dots and comma's removed
-            const result = formatMonetaryString(_.isNaN(formatted) ? 0 : formatted)//formatMonetaryString(_.replace(value, new RegExp('[\\.,]', 'g'), ''))
+            return formatMonetaryString(_.isNaN(formatted) ? 0 : formatted)//formatMonetaryString(_.replace(value, new RegExp('[\\.,]', 'g'), ''))
         default:
             return value
     }
@@ -91,7 +91,7 @@ const TextField = ({ id, name, placeholder, value, type, showError, onChange }) 
                 htmlFor={id}
                 value={currentValue}
                 inputMode={inputMode}
-                onBlur={() => setCurrentValue(getFormattedInput(currentValue))}
+                onBlur={() => setCurrentValue(getFormattedInput(type, currentValue))}
             />
         </div>
     )
