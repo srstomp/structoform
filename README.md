@@ -18,8 +18,8 @@ npm install structoform
 * TextField
 
 ## Steps for local developement
-* run `npm link`
-* run `npm run prep` to build the package
+* run `yarn link`
+* run `yarn prep` to build the package
 
 ## Api documentation
 
