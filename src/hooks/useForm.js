@@ -83,7 +83,7 @@ const useForm = (callback, layout, customComponents, _values = {}) => {
     const getFormItemComponent = (type) => _.get(formComponents, type)
 
     const getFormItem = (key, itemLayout, direction, value) => {
-        const [id] = useState(() => uniqueId(`${_.camelCase(_.get(itemLayout, 'label'))}-`))
+        const id = uniqueId(`${_.camelCase(_.get(itemLayout, 'label'))}-`)
         const FormComponent = getFormItemComponent(_.get(itemLayout, 'type'))
         const isVisible = checkConditionals(_.get(itemLayout, 'conditionals', []))
         const showError = !_.isEmpty(errors[key])
