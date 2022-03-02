@@ -189,10 +189,17 @@ $graphite: #4A4A4A;
     position: absolute;
     right: 0.5rem;
     border: none;
-    background-color: transparent;
     outline: none;
     cursor: pointer;
-    transform: scale(0.8);
+    padding: 6px 12px;
+    background-color: white;
+    color: black;
+    border-radius: 4px;
+
+    &__input-button--active {
+      background-color: black;
+      color: white;
+    }
   }
 
   &__input-icon {

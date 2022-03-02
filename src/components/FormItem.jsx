@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import _ from 'lodash'
-import {direction} from "../constants/helper";
+import { direction } from '../constants/helper'
 
 const FormItem = ({label, id, direction, children}) =>
     <div className={`form-item form-item${direction}`}>

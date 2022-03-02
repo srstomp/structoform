@@ -15,9 +15,9 @@ const PasswordField = ({label, name, value, direction, type, placeholder, onChan
      const passwordToggleButton = () => {
          return (
              type === 'password' ?
-                 <button className="form-item__input-button" onClick={togglePassword}>
+                 <button className={`form-item__input-button${!passwordIsShown ? '--active' : ''}`} onClick={togglePassword}>
                      {
-                         passwordIsShown ? toggleLabelShow : toggleLabelHide
+                         !passwordIsShown ? toggleLabelShow : toggleLabelHide
                      }
                  </button> : null
          )
@@ -25,7 +25,7 @@ const PasswordField = ({label, name, value, direction, type, placeholder, onChan
 
     return (
         <FormItem label={label} direction={direction}>
-            <div className="form-item__inner">
+            <div className="form-item__inner" style={{display: 'flex', alignItems: 'center'}}>
                 <input className={`form-item__input ${showError ? 'error' : ''}`} placeholder={placeholder}
                        ref={inputEl} type={type} onChange={onChange} name={name} htmlFor={id} value={value}/>
                 {passwordToggleButton()}
