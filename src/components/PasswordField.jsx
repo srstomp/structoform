@@ -15,7 +15,7 @@ const PasswordField = ({label, name, value, direction, type, placeholder, onChan
      const passwordToggleButton = () => {
          return (
              type === 'password' ?
-                 <button className={`form-item__input-button ${!passwordIsShown ? '.active' : ''}`} onClick={togglePassword}>
+                 <button className={`form-item__input-button ${!passwordIsShown ? 'active' : ''}`} onClick={togglePassword}>
                      {
                          !passwordIsShown ? toggleLabelShow : toggleLabelHide
                      }
