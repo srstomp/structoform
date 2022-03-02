@@ -1,6 +1,6 @@
 {
     "name": "structoform",
-    "version": "1.1.31",
+    "version": "1.1.32",
     "description": "React form components",
     "main": "dist/index.js",
     "files": [
@@ -34,7 +34,7 @@
         "@babel/preset-env": "^7.10.4",
         "@babel/preset-react": "^7.10.4",
         "autoprefixer": "^9.8.4",
-        "node-sass": "^4.14.1",
+        "node-sass": "^7.0.0",
         "postcss-cli": "^7.1.1"
     },
     "dependencies": {

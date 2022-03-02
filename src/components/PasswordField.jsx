@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { id } from '../constants/helper';
 import FormItem from "./FormItem";
 
-const PasswordField = ({label, name, value, direction, type, placeholder, onChange, errorMessage, showError}) => {
+const PasswordField = ({label, name, value, direction, type, placeholder, onChange, errorMessage, showError, toggleLabelShow, toggleLabelHide}) => {
     const [passwordIsShown, setPasswordIsShown] = useState(false)
     const inputEl = useRef(null)
 
@@ -17,7 +17,7 @@ const PasswordField = ({label, name, value, direction, type, placeholder, onChan
              type === 'password' ?
                  <button className="form-item__input-button" onClick={togglePassword}>
                      {
-                         passwordIsShown ? <EyeOpen width={35} height={25}/> : <Eye width={35} height={25}/>
+                         passwordIsShown ? toggleLabelShow : toggleLabelHide
                      }
                  </button> : null
          )
@@ -44,6 +44,8 @@ PasswordField.direction = {
 
 PasswordField.propTypes = {
     label: PropTypes.string.isRequired,
+    toggleLabelShow: PropTypes.string,
+    toggleLabelHide: PropTypes.string,
     name: PropTypes.string.isRequired,
     value: PropTypes.string.isRequired,
     direction: PropTypes.oneOf(Object.values(PasswordField.direction)),
