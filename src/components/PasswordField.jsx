@@ -41,7 +41,6 @@ const PasswordField = ({id, name, placeholder, value, type, showError, onChange,
                         }
                     </button> : null
             }
-            <span className={`error-label ${showError ? '' : 'hide'}`}>{errorMessage}</span>
         </div>
     )
 }
