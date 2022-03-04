@@ -1,7 +1,17 @@
 import React, { useState, useEffect } from 'react'
 import { uniqueId, copy, comparators } from '../constants/helper';
 import _ from "lodash";
-import { TextField, SelectField, DateField, Checkbox, TextArea, RadioButtonGroup, DisplayText, FormItem } from '..';
+import {
+    TextField,
+    SelectField,
+    DateField,
+    Checkbox,
+    TextArea,
+    RadioButtonGroup,
+    DisplayText,
+    FormItem,
+    PasswordField
+} from '..';
 // import CustomField from '../components/CustomField';
 
 const useForm = (callback, layout, customComponents, _values = {}) => {
@@ -21,7 +31,7 @@ const useForm = (callback, layout, customComponents, _values = {}) => {
     const formComponents = {
         ...customComponents,
         'text': TextField,
-        'password': TextField,
+        'password': PasswordField,
         'email': TextField,
         'phone': TextField,
         'number': TextField,
