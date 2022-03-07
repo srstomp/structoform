@@ -34,7 +34,7 @@ const PasswordField = ({id, name, placeholder, value, type, showError, onChange,
             />
             {
                 type === 'password' ?
-                    <button className={`form-item__input-button ${!passwordIsShown ? 'active' : ''}`}
+                    <button type="button" className={`form-item__input-button ${!passwordIsShown ? 'active' : ''}`}
                             onClick={togglePassword}>
                         {
                             !passwordIsShown ? toggleLabelShow : toggleLabelHide
