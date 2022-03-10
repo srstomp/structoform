@@ -19,7 +19,7 @@ const TextArea = ({ id, name, value, placeholder, onChange, showError }) => {
                 onChange={handleChange}
                 name={name}
                 htmlFor={id}
-                value={value}>
+                value={currentValue}>
             </textarea>
         </div>
     )
