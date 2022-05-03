@@ -1,6 +1,7 @@
 $night: #131C4E;
 $red: #C20013;
 $teal: #4DCBC3;
+$brown: #C0926C;
 $light-grey: #E4E4E4;
 $grey: #9E9E9E;
 $graphite: #4A4A4A;
@@ -54,6 +55,11 @@ $graphite: #4A4A4A;
     }
   }
 
+  &__label-wrapper {
+    display: flex;
+    flex-direction: row;
+  }
+
   &__inner {
     width: 100%;
   }
@@ -101,6 +107,15 @@ $graphite: #4A4A4A;
     margin: 0 0 6px 0;
     display: block;
     font-size: 0.875rem;
+    flex: 1;
+  }
+
+  &__sublabel {
+    margin: 0 0 6px 0;
+    display: block;
+    font-size: 0.775rem;
+    font-weight: bold;
+    color: $brown;
   }
 
   /*
