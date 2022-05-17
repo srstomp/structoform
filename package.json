@@ -1,6 +1,6 @@
 {
     "name": "structoform",
-    "version": "1.1.41",
+    "version": "1.2.0",
     "description": "React form components",
     "main": "dist/index.js",
     "files": [
