@@ -19,7 +19,7 @@ export default FormItem
 
 FormItem.propTypes = {
     label: PropTypes.string,
-    isRequired: PropTypes.bool,
+    subLabel: PropTypes.string,
     id: PropTypes.string.isRequired,
     direction: PropTypes.oneOf(Object.values(direction)),
     children: PropTypes.oneOfType([
