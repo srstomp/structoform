@@ -6,8 +6,8 @@ import { direction } from '../constants/helper'
 const FormItem = ({label, subLabel, id, direction, children}) =>
     <div className={`form-item form-item${direction}`}>
         <div className="form-item__label-wrapper">
-            {!_.isNil(label) && <label className={`form-item__label`} htmlFor={id}>{label}</label>}
-            {!_.isNil(subLabel) && <span className={`form-item__sublabel`}>{subLabel}</span>}
+            {!!label && <label className={`form-item__label`} htmlFor={id}>{label}</label>}
+            {!!subLabel && <span className={`form-item__sublabel`}>{subLabel}</span>}
         </div>
 
         <div className="form-item__inner">
