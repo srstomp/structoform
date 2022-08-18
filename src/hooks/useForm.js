@@ -101,7 +101,7 @@ const useForm = (callback, layout, customComponents, _values = {}) => {
 
         if (FormComponent) {
             return isVisible && (
-                <FormItem label={_.get(itemLayout, 'label')} id={id} direction={direction}>
+                <FormItem label={_.get(itemLayout, 'label')} subLabel={_.get(itemLayout, 'subLabel')} id={id} direction={direction}>
                     <FormComponent
                         {...itemLayout}
                         id={id}
