@@ -61,7 +61,7 @@ const DateField = ({ id, name, placeholder, value, readOnly, showError, onChange
                     autoComplete="off"
                     placeholder={placeholder}
                     name={name}
-                    htmlFor={id}
+                    id={id}
                     onChange={handleChange}
                     value={currentValue}
                     readOnly

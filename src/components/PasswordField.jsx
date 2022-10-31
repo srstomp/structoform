@@ -27,7 +27,7 @@ const PasswordField = ({id, name, placeholder, value, type, showError, onChange,
                 type={type}
                 onChange={handleChange}
                 name={name}
-                htmlFor={id}
+                id={id}
                 value={currentValue}
                 ref={inputEl}
                 onBlur={() => setCurrentValue(currentValue)}

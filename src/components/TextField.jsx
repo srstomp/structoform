@@ -88,7 +88,7 @@ const TextField = ({ id, name, placeholder, value, type, showError, onChange }) 
                 type={type}
                 onChange={handleChange}
                 name={name}
-                htmlFor={id}
+                id={id}
                 value={currentValue}
                 inputMode={inputMode}
                 onBlur={() => setCurrentValue(getFormattedInput(type, currentValue))}

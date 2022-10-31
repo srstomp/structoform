@@ -17,7 +17,7 @@ const SelectField = ({ id, name, placeholder, values, value, disabled, showError
     return (
         <select
             className={`form-item__select ${placeholderStyling()} ${showError ? 'error' : ''}`}
-            htmlFor={id} name={name} onChange={handleChange} value={currentValue}
+            id={id} name={name} onChange={handleChange} value={currentValue}
             disabled={disabled}
         >
             <option disabled value="">{placeholder}</option>

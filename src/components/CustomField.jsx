@@ -13,7 +13,7 @@ const CustomField = (props) => {
 
     return React.createElement(component, {
         className: `form-item__input ${showError ? 'error' : ''}`,
-        htmlFor: id,
+        id,
         ...props,
         onChange: handleChange,
         value: value
